@@ -1,0 +1,39 @@
+##############################
+## Java
+##############################
+.mtj.tmp/
+*.class
+*.log
+*.ctxt
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+code/ArgumentIR/store/ArgumentIR.jar
+
+##############################
+## NetBeans
+##############################
+nbproject/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+build.xml
+manifest.mf
+
+##############################
+## Visual Studio Code
+##############################
+.vscode/
+.code-workspace
+
+##############################
+## OS X
+##############################
+.DS_Store
