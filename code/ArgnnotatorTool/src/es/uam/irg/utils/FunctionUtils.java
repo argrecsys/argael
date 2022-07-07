@@ -17,7 +17,7 @@
  */
 package es.uam.irg.utils;
 
-//import es.uam.irg.io.IOManager;
+import es.uam.irg.io.IOManager;
 import java.awt.Color;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -104,9 +104,9 @@ public class FunctionUtils {
         Map<String, Object> setup = null;
 
         if (dbType.equals(MYSQL_DB)) {
-            // setup = IOManager.readYamlFile(MSQL_SETUP_FILEPATH);
+            setup = IOManager.readYamlFile(MSQL_SETUP_FILEPATH);
         } else if (dbType.equals(MONGO_DB)) {
-            // setup = IOManager.readYamlFile(MDB_SETUP_FILEPATH);
+            setup = IOManager.readYamlFile(MDB_SETUP_FILEPATH);
         }
 
         return setup;
