@@ -17,6 +17,10 @@
  */
 package es.uam.irg.gui;
 
+import es.uam.irg.io.IOManager;
+import java.io.File;
+import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -51,6 +55,17 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lstFiles = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        textEditor = new javax.swing.JEditorPane();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblRelations = new javax.swing.JTable();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tblArgComponents = new javax.swing.JTable();
+        lblTableArgComponents = new javax.swing.JLabel();
+        lblTableArgRelations = new javax.swing.JLabel();
+        lblFiles = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         mItemImport = new javax.swing.JMenuItem();
@@ -63,16 +78,86 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Argument Annotator Tool");
         setMinimumSize(new java.awt.Dimension(800, 400));
-        setPreferredSize(new java.awt.Dimension(1200, 600));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
 
+        lstFiles.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstFiles.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstFilesValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(lstFiles);
+
+        jScrollPane2.setViewportView(textEditor);
+
+        tblRelations.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null}
+            },
+            new String [] {
+                "ACU 1", "ACU 2", "Rel Type", "Intent"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tblRelations);
+
+        tblArgComponents.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null}
+            },
+            new String [] {
+                "Id", "Text", "Type"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane4.setViewportView(tblArgComponents);
+
+        lblTableArgComponents.setText("Argument Component Units");
+
+        lblTableArgRelations.setText("Argument Relations");
+
+        lblFiles.setText("Files");
+
         menuFile.setText("File");
 
         mItemImport.setText("Import files");
+        mItemImport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItemImportActionPerformed(evt);
+            }
+        });
         menuFile.add(mItemImport);
 
         mItemExport.setText("Export files");
@@ -89,7 +174,8 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
 
         jMenuBar1.add(menuFile);
 
-        menuHelp.setText("Edit");
+        menuHelp.setText("Help");
+        menuHelp.setActionCommand("Help");
 
         mItemAbout.setText("About");
         mItemAbout.addActionListener(new java.awt.event.ActionListener() {
@@ -107,11 +193,39 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1200, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE))
+                    .addComponent(lblFiles))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTableArgComponents))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTableArgRelations))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 580, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTableArgComponents)
+                    .addComponent(lblTableArgRelations)
+                    .addComponent(lblFiles))
+                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane2))
+                .addContainerGap())
         );
 
         pack();
@@ -123,8 +237,8 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         String aboutMsg = """
                           Argument Annotator Tool
                           
-                          Version: 0.1.0
-                          Date: 07/05/2022
+                          Version: 0.2.0
+                          Date: 07/07/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador
                           License: Apache License 2.0
                           Web site: https://argrecsys.github.io/arg-nnotator-tool 
@@ -143,14 +257,55 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         closeForm();
     }//GEN-LAST:event_formWindowClosing
 
+    private void lstFilesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstFilesValueChanged
+        // TODO add your handling code here:
+        if (!lstFiles.isSelectionEmpty() && !evt.getValueIsAdjusting()) {
+            String currFile = lstFiles.getSelectedValue();
+            System.out.println("Selectd file: " + currFile);
+        }
+    }//GEN-LAST:event_lstFilesValueChanged
+
+    private void mItemImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemImportActionPerformed
+        // TODO add your handling code here:
+        JFileChooser jfc = new JFileChooser();
+        jfc.setCurrentDirectory(new java.io.File("."));
+        jfc.setDialogTitle("Select folder");
+        jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        jfc.setAcceptAllFileFilterUsed(false);
+
+        if (jfc.showOpenDialog(ArgnnotatorForm.this) == JFileChooser.APPROVE_OPTION) {
+            String directory =  jfc.getSelectedFile().toString();
+            System.out.println(directory);
+            
+            lstFiles.removeAll();
+            DefaultListModel listModel = new DefaultListModel();
+            listModel.addAll(IOManager.readFilenamesInFolder(directory));
+            lstFiles.setModel(listModel);
+            
+        } else {
+            System.out.println("No Selection ");
+        }
+    }//GEN-LAST:event_mItemImportActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JLabel lblFiles;
+    private javax.swing.JLabel lblTableArgComponents;
+    private javax.swing.JLabel lblTableArgRelations;
+    private javax.swing.JList<String> lstFiles;
     private javax.swing.JMenuItem mItemAbout;
     private javax.swing.JMenuItem mItemClose;
     private javax.swing.JMenuItem mItemExport;
     private javax.swing.JMenuItem mItemImport;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenu menuHelp;
+    private javax.swing.JTable tblArgComponents;
+    private javax.swing.JTable tblRelations;
+    private javax.swing.JEditorPane textEditor;
     // End of variables declaration//GEN-END:variables
 }
