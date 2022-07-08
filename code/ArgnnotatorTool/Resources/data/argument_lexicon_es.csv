@@ -1,0 +1,452 @@
+category_id,sub_category_id,category,sub_category,relation_type,linker
+1,1,CONTRAST,OPPOSITION,attack,a diferencia de
+1,2,CONTRAST,OPPOSITION,attack,a diferencia de la
+1,3,CONTRAST,OPPOSITION,attack,a diferencia de las
+1,4,CONTRAST,OPPOSITION,attack,a diferencia de los
+1,5,CONTRAST,OPPOSITION,attack,a diferencia del
+1,6,CONTRAST,OPPOSITION,attack,a diferencia del hecho de
+1,7,CONTRAST,OPPOSITION,attack,a diferencia del hecho de que
+1,8,CONTRAST,OPPOSITION,attack,al contrario
+1,9,CONTRAST,OPPOSITION,attack,al contrario de
+1,10,CONTRAST,OPPOSITION,attack,al contrario de la
+1,11,CONTRAST,OPPOSITION,attack,al contrario de las
+1,12,CONTRAST,OPPOSITION,attack,al contrario de los
+1,13,CONTRAST,OPPOSITION,attack,al contrario del
+1,14,CONTRAST,OPPOSITION,attack,al contrario del hecho de
+1,15,CONTRAST,OPPOSITION,attack,al contrario del hecho de que
+1,16,CONTRAST,OPPOSITION,attack,al contrario que
+1,17,CONTRAST,OPPOSITION,attack,al revés de
+1,18,CONTRAST,OPPOSITION,attack,al revés de la
+1,19,CONTRAST,OPPOSITION,attack,al revés de las
+1,20,CONTRAST,OPPOSITION,attack,al revés de los
+1,21,CONTRAST,OPPOSITION,attack,al revés del
+1,22,CONTRAST,OPPOSITION,attack,al revés del hecho de
+1,23,CONTRAST,OPPOSITION,attack,al revés del hecho de que
+1,24,CONTRAST,OPPOSITION,attack,constrastada con
+1,25,CONTRAST,OPPOSITION,attack,constrastado con
+1,26,CONTRAST,OPPOSITION,attack,contrariamente
+1,27,CONTRAST,OPPOSITION,attack,de forma diferente
+1,28,CONTRAST,OPPOSITION,attack,de forma diferente a
+1,29,CONTRAST,OPPOSITION,attack,de forma diferente a la
+1,30,CONTRAST,OPPOSITION,attack,de forma diferente a las
+1,31,CONTRAST,OPPOSITION,attack,de forma diferente a los
+1,32,CONTRAST,OPPOSITION,attack,de forma diferente al
+1,33,CONTRAST,OPPOSITION,attack,de forma diferente al hecho de
+1,34,CONTRAST,OPPOSITION,attack,de forma diferente al hecho de que
+1,35,CONTRAST,OPPOSITION,attack,de forma opuesta a
+1,36,CONTRAST,OPPOSITION,attack,de forma opuesta a la
+1,37,CONTRAST,OPPOSITION,attack,de forma opuesta a las
+1,38,CONTRAST,OPPOSITION,attack,de forma opuesta a los
+1,39,CONTRAST,OPPOSITION,attack,de forma opuesta al
+1,40,CONTRAST,OPPOSITION,attack,de forma opuesta al hecho de
+1,41,CONTRAST,OPPOSITION,attack,de forma opuesta al hecho de que
+1,42,CONTRAST,OPPOSITION,attack,de lo contrario
+1,43,CONTRAST,OPPOSITION,attack,de modo diferente
+1,44,CONTRAST,OPPOSITION,attack,de modo diferente a
+1,45,CONTRAST,OPPOSITION,attack,de modo diferente a la
+1,46,CONTRAST,OPPOSITION,attack,de modo diferente a las
+1,47,CONTRAST,OPPOSITION,attack,de modo diferente a los
+1,48,CONTRAST,OPPOSITION,attack,de modo diferente al
+1,49,CONTRAST,OPPOSITION,attack,de modo diferente al hecho de
+1,50,CONTRAST,OPPOSITION,attack,de modo diferente al hecho de que
+1,51,CONTRAST,OPPOSITION,attack,de modo opuesto a
+1,52,CONTRAST,OPPOSITION,attack,de modo opuesto a la
+1,53,CONTRAST,OPPOSITION,attack,de modo opuesto a las
+1,54,CONTRAST,OPPOSITION,attack,de modo opuesto a los
+1,55,CONTRAST,OPPOSITION,attack,de modo opuesto al
+1,56,CONTRAST,OPPOSITION,attack,de modo opuesto al hecho de
+1,57,CONTRAST,OPPOSITION,attack,de modo opuesto al hecho de que
+1,58,CONTRAST,OPPOSITION,attack,diferentemente
+1,59,CONTRAST,OPPOSITION,attack,diferentemente a
+1,60,CONTRAST,OPPOSITION,attack,en caso contrario
+1,61,CONTRAST,OPPOSITION,attack,en contra de
+1,62,CONTRAST,OPPOSITION,attack,en contra de la
+1,63,CONTRAST,OPPOSITION,attack,en contra de las
+1,64,CONTRAST,OPPOSITION,attack,en contra de los
+1,65,CONTRAST,OPPOSITION,attack,en contra del
+1,66,CONTRAST,OPPOSITION,attack,en contra del hecho de
+1,67,CONTRAST,OPPOSITION,attack,en contra del hecho de que
+1,68,CONTRAST,OPPOSITION,attack,en contraste con
+1,69,CONTRAST,OPPOSITION,attack,en oposición a
+1,70,CONTRAST,OPPOSITION,attack,en oposición a la
+1,71,CONTRAST,OPPOSITION,attack,en oposición a las
+1,72,CONTRAST,OPPOSITION,attack,en oposición a los
+1,73,CONTRAST,OPPOSITION,attack,en oposición al
+1,74,CONTRAST,OPPOSITION,attack,en oposición al hecho de
+1,75,CONTRAST,OPPOSITION,attack,en oposición al hecho de que
+1,76,CONTRAST,OPPOSITION,attack,excepto
+1,77,CONTRAST,OPPOSITION,attack,excepto que
+1,78,CONTRAST,OPPOSITION,attack,no obstante
+1,79,CONTRAST,OPPOSITION,attack,pero
+1,80,CONTRAST,OPPOSITION,attack,por el contrario
+1,81,CONTRAST,OPPOSITION,attack,por más que
+1,82,CONTRAST,OPPOSITION,attack,sin embargo
+1,83,CONTRAST,OPPOSITION,attack,sino
+1,84,CONTRAST,OPPOSITION,attack,sino que
+2,1,CONTRAST,CONCESSION,attack,a pesar de
+2,2,CONTRAST,CONCESSION,attack,a pesar de la
+2,3,CONTRAST,CONCESSION,attack,a pesar de las
+2,4,CONTRAST,CONCESSION,attack,a pesar de los
+2,5,CONTRAST,CONCESSION,attack,a pesar de que
+2,6,CONTRAST,CONCESSION,attack,a pesar de todo
+2,7,CONTRAST,CONCESSION,attack,a pesar del
+2,8,CONTRAST,CONCESSION,attack,a pesar del hecho de
+2,9,CONTRAST,CONCESSION,attack,a pesar del hecho de que
+2,10,CONTRAST,CONCESSION,attack,aun así
+2,11,CONTRAST,CONCESSION,attack,aun si
+2,12,CONTRAST,CONCESSION,attack,aunque
+2,13,CONTRAST,CONCESSION,attack,con todo
+2,14,CONTRAST,CONCESSION,attack,de cualquier forma
+2,15,CONTRAST,CONCESSION,attack,de cualquier manera
+2,16,CONTRAST,CONCESSION,attack,de cualquier modo
+2,17,CONTRAST,CONCESSION,attack,de todas formas
+2,18,CONTRAST,CONCESSION,attack,de todas maneras
+2,19,CONTRAST,CONCESSION,attack,de todos modos
+2,20,CONTRAST,CONCESSION,attack,después de todo
+2,21,CONTRAST,CONCESSION,attack,en cualquier caso
+2,22,CONTRAST,CONCESSION,attack,en todo caso
+2,23,CONTRAST,CONCESSION,attack,incluso
+2,24,CONTRAST,CONCESSION,attack,incluso así
+2,25,CONTRAST,CONCESSION,attack,incluso si
+2,26,CONTRAST,CONCESSION,attack,independientemente de
+2,27,CONTRAST,CONCESSION,attack,pese a
+2,28,CONTRAST,CONCESSION,attack,pese a la
+2,29,CONTRAST,CONCESSION,attack,pese a las
+2,30,CONTRAST,CONCESSION,attack,pese a los
+2,31,CONTRAST,CONCESSION,attack,pese al
+2,32,CONTRAST,CONCESSION,attack,pese al hecho de
+2,33,CONTRAST,CONCESSION,attack,pese al hecho de la
+2,34,CONTRAST,CONCESSION,attack,pese al hecho de las
+2,35,CONTRAST,CONCESSION,attack,pese al hecho de los
+2,36,CONTRAST,CONCESSION,attack,pese al hecho de que
+2,37,CONTRAST,CONCESSION,attack,pese al hecho del
+2,38,CONTRAST,CONCESSION,attack,pese al hecho del hecho de
+2,39,CONTRAST,CONCESSION,attack,pese al hecho del hecho de que
+2,40,CONTRAST,CONCESSION,attack,sin considerar
+2,41,CONTRAST,CONCESSION,attack,sin importar
+2,42,CONTRAST,CONCESSION,attack,sin tener en cuenta
+3,1,CONTRAST,COMPARISON,support/attack,a comparación de
+3,2,CONTRAST,COMPARISON,support/attack,a la vez
+3,3,CONTRAST,COMPARISON,support/attack,a la vez de
+3,4,CONTRAST,COMPARISON,support/attack,a la vez de la
+3,5,CONTRAST,COMPARISON,support/attack,a la vez de las
+3,6,CONTRAST,COMPARISON,support/attack,a la vez de los
+3,7,CONTRAST,COMPARISON,support/attack,a la vez de que
+3,8,CONTRAST,COMPARISON,support/attack,a la vez del
+3,9,CONTRAST,COMPARISON,support/attack,a la vez del hecho de
+3,10,CONTRAST,COMPARISON,support/attack,a la vez del hecho de que
+3,11,CONTRAST,COMPARISON,support/attack,al mismo tiempo
+3,12,CONTRAST,COMPARISON,support/attack,al mismo tiempo de
+3,13,CONTRAST,COMPARISON,support/attack,al mismo tiempo de la
+3,14,CONTRAST,COMPARISON,support/attack,al mismo tiempo de las
+3,15,CONTRAST,COMPARISON,support/attack,al mismo tiempo de los
+3,16,CONTRAST,COMPARISON,support/attack,al mismo tiempo del
+3,17,CONTRAST,COMPARISON,support/attack,al mismo tiempo del hecho de
+3,18,CONTRAST,COMPARISON,support/attack,al mismo tiempo del hecho de que
+3,19,CONTRAST,COMPARISON,support/attack,al mismo tiempo de que
+3,20,CONTRAST,COMPARISON,support/attack,al mismo tiempo que
+3,21,CONTRAST,COMPARISON,support/attack,al tiempo
+3,22,CONTRAST,COMPARISON,support/attack,al tiempo de
+3,23,CONTRAST,COMPARISON,support/attack,al tiempo de la
+3,24,CONTRAST,COMPARISON,support/attack,al tiempo de las
+3,25,CONTRAST,COMPARISON,support/attack,al tiempo de los
+3,26,CONTRAST,COMPARISON,support/attack,al tiempo del
+3,27,CONTRAST,COMPARISON,support/attack,al tiempo del hecho de
+3,28,CONTRAST,COMPARISON,support/attack,al tiempo del hecho de que
+3,29,CONTRAST,COMPARISON,support/attack,al tiempo de que
+3,30,CONTRAST,COMPARISON,support/attack,al tiempo que
+3,31,CONTRAST,COMPARISON,support/attack,al únisono
+3,32,CONTRAST,COMPARISON,support/attack,al únisono de
+3,33,CONTRAST,COMPARISON,support/attack,al únisono de la
+3,34,CONTRAST,COMPARISON,support/attack,al únisono de las
+3,35,CONTRAST,COMPARISON,support/attack,al únisono de los
+3,36,CONTRAST,COMPARISON,support/attack,al únisono de que
+3,37,CONTRAST,COMPARISON,support/attack,al únisono del
+3,38,CONTRAST,COMPARISON,support/attack,al únisono del hecho de
+3,39,CONTRAST,COMPARISON,support/attack,al únisono del hecho de que
+3,40,CONTRAST,COMPARISON,support/attack,comparado a
+3,41,CONTRAST,COMPARISON,support/attack,comparado con
+3,42,CONTRAST,COMPARISON,support/attack,en comparación a
+3,43,CONTRAST,COMPARISON,support/attack,en comparación con
+3,44,CONTRAST,COMPARISON,support/attack,mientras
+3,45,CONTRAST,COMPARISON,support/attack,mientras que
+4,1,CONTRAST,ALTERNATIVE,support/attack,alternativamente
+4,2,CONTRAST,ALTERNATIVE,support/attack,alternativamente a
+4,3,CONTRAST,ALTERNATIVE,support/attack,como alternativa
+4,4,CONTRAST,ALTERNATIVE,support/attack,como alternativas
+4,5,CONTRAST,ALTERNATIVE,support/attack,como una alternativa
+4,6,CONTRAST,ALTERNATIVE,support/attack,como unas alternativas
+4,7,CONTRAST,ALTERNATIVE,support/attack,de otra manera
+4,8,CONTRAST,ALTERNATIVE,support/attack,de otro modo
+4,9,CONTRAST,ALTERNATIVE,support/attack,en cambio
+4,10,CONTRAST,ALTERNATIVE,support/attack,en lugar de
+4,11,CONTRAST,ALTERNATIVE,support/attack,en otro caso
+4,12,CONTRAST,ALTERNATIVE,support/attack,en otros casos
+4,13,CONTRAST,ALTERNATIVE,support/attack,en su defecto
+4,14,CONTRAST,ALTERNATIVE,support/attack,en vez de
+4,15,CONTRAST,ALTERNATIVE,support/attack,más que
+4,16,CONTRAST,ALTERNATIVE,support/attack,o
+4,17,CONTRAST,ALTERNATIVE,support/attack,pero mejor
+4,18,CONTRAST,ALTERNATIVE,support/attack,por otra parte
+4,19,CONTRAST,ALTERNATIVE,support/attack,por otro lado
+4,20,CONTRAST,ALTERNATIVE,support/attack,por un lado
+4,21,CONTRAST,ALTERNATIVE,support/attack,por una parte
+4,22,CONTRAST,ALTERNATIVE,support/attack,si aquel no es el caso
+4,23,CONTRAST,ALTERNATIVE,support/attack,si ese no es el caso
+4,24,CONTRAST,ALTERNATIVE,support/attack,si este no es el caso
+4,25,CONTRAST,ALTERNATIVE,support/attack,si no
+4,26,CONTRAST,ALTERNATIVE,support/attack,si no es el caso
+5,1,CAUSE,REASON,support,a través de
+5,2,CAUSE,REASON,support,aduciendo que
+5,3,CAUSE,REASON,support,bajo el argumento de que
+5,4,CAUSE,REASON,support,basándose en que
+5,5,CAUSE,REASON,support,dado que
+5,6,CAUSE,REASON,support,de acuerdo a
+5,7,CAUSE,REASON,support,debido a
+5,8,CAUSE,REASON,support,debido a que
+5,9,CAUSE,REASON,support,en base a
+5,10,CAUSE,REASON,support,gracias a
+5,11,CAUSE,REASON,support,mediante
+5,12,CAUSE,REASON,support,porque
+5,13,CAUSE,REASON,support,pues
+5,14,CAUSE,REASON,support,puesto que
+5,15,CAUSE,REASON,support,según
+5,16,CAUSE,REASON,support,visto que
+5,17,CAUSE,REASON,support,ya que
+6,1,CAUSE,CONDITION,qualifier,a menos que
+6,2,CAUSE,CONDITION,qualifier,a no ser que
+6,3,CAUSE,CONDITION,qualifier,asumamos
+6,4,CAUSE,CONDITION,qualifier,asumamos que
+6,5,CAUSE,CONDITION,qualifier,asumiendo
+6,6,CAUSE,CONDITION,qualifier,asumiendo que
+6,7,CAUSE,CONDITION,qualifier,asúmase
+6,8,CAUSE,CONDITION,qualifier,asúmase que
+6,9,CAUSE,CONDITION,qualifier,bajo la condición de
+6,10,CAUSE,CONDITION,qualifier,bajo la condición de que
+6,11,CAUSE,CONDITION,qualifier,con la condición de
+6,12,CAUSE,CONDITION,qualifier,con la condición de que
+6,13,CAUSE,CONDITION,qualifier,condicionada a
+6,14,CAUSE,CONDITION,qualifier,condicionada a que
+6,15,CAUSE,CONDITION,qualifier,condicionadas a
+6,16,CAUSE,CONDITION,qualifier,condicionadas a que
+6,17,CAUSE,CONDITION,qualifier,condicionado a
+6,18,CAUSE,CONDITION,qualifier,condicionado a que
+6,19,CAUSE,CONDITION,qualifier,condicionados a
+6,20,CAUSE,CONDITION,qualifier,condicionados a que
+6,21,CAUSE,CONDITION,qualifier,considerando
+6,22,CAUSE,CONDITION,qualifier,considerando que
+6,23,CAUSE,CONDITION,qualifier,consideremos
+6,24,CAUSE,CONDITION,qualifier,consideremos que
+6,25,CAUSE,CONDITION,qualifier,considérese
+6,26,CAUSE,CONDITION,qualifier,considérese que
+6,27,CAUSE,CONDITION,qualifier,en caso de
+6,28,CAUSE,CONDITION,qualifier,en caso de que
+6,29,CAUSE,CONDITION,qualifier,en el caso de
+6,30,CAUSE,CONDITION,qualifier,en el caso de que
+6,31,CAUSE,CONDITION,qualifier,en ese caso
+6,32,CAUSE,CONDITION,qualifier,en la medida en que
+6,33,CAUSE,CONDITION,qualifier,en la medida que
+6,34,CAUSE,CONDITION,qualifier,en tal caso
+6,35,CAUSE,CONDITION,qualifier,en tanto
+6,36,CAUSE,CONDITION,qualifier,hasta donde
+6,37,CAUSE,CONDITION,qualifier,hasta el punto en que
+6,38,CAUSE,CONDITION,qualifier,hasta el punto que
+6,39,CAUSE,CONDITION,qualifier,si
+6,40,CAUSE,CONDITION,qualifier,si alguna vez
+6,41,CAUSE,CONDITION,qualifier,si es así
+6,42,CAUSE,CONDITION,qualifier,siempre que
+6,43,CAUSE,CONDITION,qualifier,siempre y cuando
+6,44,CAUSE,CONDITION,qualifier,siempre y cuando que
+6,45,CAUSE,CONDITION,qualifier,supongamos
+6,46,CAUSE,CONDITION,qualifier,supongamos que
+6,47,CAUSE,CONDITION,qualifier,suponiendo
+6,48,CAUSE,CONDITION,qualifier,suponiendo que
+6,49,CAUSE,CONDITION,qualifier,supóngase
+6,50,CAUSE,CONDITION,qualifier,supóngase que
+6,51,CAUSE,CONDITION,qualifier,teniendo en cuenta
+6,52,CAUSE,CONDITION,qualifier,teniendo en cuenta que
+7,1,CONSEQUENCE,RESULT,support,a consecuencia de
+7,2,CONSEQUENCE,RESULT,support,a consecuencia de la
+7,3,CONSEQUENCE,RESULT,support,a consecuencia de las
+7,4,CONSEQUENCE,RESULT,support,a consecuencia de los
+7,5,CONSEQUENCE,RESULT,support,a consecuencia del
+7,6,CONSEQUENCE,RESULT,support,a consecuencia del hecho de
+7,7,CONSEQUENCE,RESULT,support,a consecuencia del hecho de que
+7,8,CONSEQUENCE,RESULT,support,así
+7,9,CONSEQUENCE,RESULT,support,así pues
+7,10,CONSEQUENCE,RESULT,support,así que
+7,11,CONSEQUENCE,RESULT,support,como consecuencia de
+7,12,CONSEQUENCE,RESULT,support,como consecuencia de la
+7,13,CONSEQUENCE,RESULT,support,como consecuencia de las
+7,14,CONSEQUENCE,RESULT,support,como consecuencia de los
+7,15,CONSEQUENCE,RESULT,support,como consecuencia del
+7,16,CONSEQUENCE,RESULT,support,como consecuencia del hecho de
+7,17,CONSEQUENCE,RESULT,support,como consecuencia del hecho de que
+7,18,CONSEQUENCE,RESULT,support,como resultado
+7,19,CONSEQUENCE,RESULT,support,como resultado de
+7,20,CONSEQUENCE,RESULT,support,como resultado de la
+7,21,CONSEQUENCE,RESULT,support,como resultado de las
+7,22,CONSEQUENCE,RESULT,support,como resultado de los
+7,23,CONSEQUENCE,RESULT,support,como resultado del
+7,24,CONSEQUENCE,RESULT,support,como resultado del hecho de
+7,25,CONSEQUENCE,RESULT,support,como resultado del hecho de que
+7,26,CONSEQUENCE,RESULT,support,consecuentemente
+7,27,CONSEQUENCE,RESULT,support,de ahí que
+7,28,CONSEQUENCE,RESULT,support,de esa forma
+7,29,CONSEQUENCE,RESULT,support,de ese modo
+7,30,CONSEQUENCE,RESULT,support,de esta forma
+7,31,CONSEQUENCE,RESULT,support,de este modo
+7,32,CONSEQUENCE,RESULT,support,de forma que
+7,33,CONSEQUENCE,RESULT,support,de modo que
+7,34,CONSEQUENCE,RESULT,support,de tal forma que
+7,35,CONSEQUENCE,RESULT,support,de tal modo que
+7,36,CONSEQUENCE,RESULT,support,en consecuencia
+7,37,CONSEQUENCE,RESULT,support,entonces
+7,38,CONSEQUENCE,RESULT,support,es por ello por lo que
+7,39,CONSEQUENCE,RESULT,support,es por ello que
+7,40,CONSEQUENCE,RESULT,support,luego
+7,41,CONSEQUENCE,RESULT,support,por aquel motivo
+7,42,CONSEQUENCE,RESULT,support,por aquella razón
+7,43,CONSEQUENCE,RESULT,support,por aquellas razones
+7,44,CONSEQUENCE,RESULT,support,por aquellos motivos
+7,45,CONSEQUENCE,RESULT,support,por consiguiente
+7,46,CONSEQUENCE,RESULT,support,por ello que
+7,47,CONSEQUENCE,RESULT,support,por ende
+7,48,CONSEQUENCE,RESULT,support,por esa razón
+7,49,CONSEQUENCE,RESULT,support,por esas razones
+7,50,CONSEQUENCE,RESULT,support,por ese motivo
+7,51,CONSEQUENCE,RESULT,support,por esos motivos
+7,52,CONSEQUENCE,RESULT,support,por esta razón
+7,53,CONSEQUENCE,RESULT,support,por estas razones
+7,54,CONSEQUENCE,RESULT,support,por este motivo
+7,55,CONSEQUENCE,RESULT,support,por estos motivos
+7,56,CONSEQUENCE,RESULT,support,por lo que
+7,57,CONSEQUENCE,RESULT,support,por lo tanto
+7,58,CONSEQUENCE,RESULT,support,por tanto
+8,1,CONSEQUENCE,GOAL,support,aspirar a
+8,2,CONSEQUENCE,GOAL,support,con el fin de
+8,3,CONSEQUENCE,GOAL,support,la cual permite
+8,4,CONSEQUENCE,GOAL,support,las cuales permiten
+8,5,CONSEQUENCE,GOAL,support,lo cual permite
+8,6,CONSEQUENCE,GOAL,support,los cuales permiten
+8,7,CONSEQUENCE,GOAL,support,para
+8,8,CONSEQUENCE,GOAL,support,por
+8,9,CONSEQUENCE,GOAL,support,que conlleva
+8,10,CONSEQUENCE,GOAL,support,que conllevan
+8,11,CONSEQUENCE,GOAL,support,que implica
+8,12,CONSEQUENCE,GOAL,support,que implican
+8,13,CONSEQUENCE,GOAL,support,que permite
+8,14,CONSEQUENCE,GOAL,support,que permiten
+8,15,CONSEQUENCE,GOAL,support,tuvo como objetivo
+9,1,CONSEQUENCE,EXPLANATION,support,de hecho
+9,2,CONSEQUENCE,EXPLANATION,support,en efecto
+9,3,CONSEQUENCE,EXPLANATION,support,en realidad
+9,4,CONSEQUENCE,EXPLANATION,support,para el caso
+9,5,CONSEQUENCE,EXPLANATION,support,por supuesto
+9,6,CONSEQUENCE,EXPLANATION,support,realmente
+10,1,CLARIFICATION,RESTATEMENT,support,dicho con otras palabras
+10,2,CLARIFICATION,RESTATEMENT,support,dicho de otra forma
+10,3,CLARIFICATION,RESTATEMENT,support,dicho de otra manera
+10,4,CLARIFICATION,RESTATEMENT,support,dicho de otro modo
+10,5,CLARIFICATION,RESTATEMENT,support,diciéndolo con otras palabras
+10,6,CLARIFICATION,RESTATEMENT,support,diciéndolo de otra forma
+10,7,CLARIFICATION,RESTATEMENT,support,en otras palabras
+10,8,CLARIFICATION,RESTATEMENT,support,en otros términos
+10,9,CLARIFICATION,RESTATEMENT,support,es decir
+10,10,CLARIFICATION,RESTATEMENT,support,esto es
+10,11,CLARIFICATION,RESTATEMENT,support,expresado con otras palabras
+10,12,CLARIFICATION,RESTATEMENT,support,expresado de otra forma
+10,13,CLARIFICATION,RESTATEMENT,support,expresado de otra manera
+10,14,CLARIFICATION,RESTATEMENT,support,expresado de otro modo
+10,15,CLARIFICATION,RESTATEMENT,support,expresándolo con otras palabras
+10,16,CLARIFICATION,RESTATEMENT,support,expresándolo de otra forma
+10,17,CLARIFICATION,RESTATEMENT,support,mejor dicho
+10,18,CLARIFICATION,RESTATEMENT,support,o lo que es lo mismo
+10,19,CLARIFICATION,RESTATEMENT,support,o sea
+10,20,CLARIFICATION,RESTATEMENT,support,por decirlo con otras palabras
+10,21,CLARIFICATION,RESTATEMENT,support,por decirlo de otra forma
+10,22,CLARIFICATION,RESTATEMENT,support,por decirlo de otra manera
+10,23,CLARIFICATION,RESTATEMENT,support,por decirlo de otro modo
+10,24,CLARIFICATION,RESTATEMENT,support,por expresarlo con otras palabras
+10,25,CLARIFICATION,RESTATEMENT,support,por expresarlo de otra manera
+10,26,CLARIFICATION,RESTATEMENT,support,por expresarlo de otro modo
+11,1,CLARIFICATION,EXEMPLIFICATION,support,como ejemplo
+11,2,CLARIFICATION,EXEMPLIFICATION,support,como ejemplo de
+11,3,CLARIFICATION,EXEMPLIFICATION,support,como por ejemplo
+11,4,CLARIFICATION,EXEMPLIFICATION,support,por considerar un ejemplo
+11,5,CLARIFICATION,EXEMPLIFICATION,support,por dar un ejemplo
+11,6,CLARIFICATION,EXEMPLIFICATION,support,por ejemplo
+11,7,CLARIFICATION,EXEMPLIFICATION,support,por poner un ejemplo
+11,8,CLARIFICATION,EXEMPLIFICATION,support,por tomar un ejemplo
+11,9,CLARIFICATION,EXEMPLIFICATION,support,tal como
+11,10,CLARIFICATION,EXEMPLIFICATION,support,tales como
+11,11,CLARIFICATION,EXEMPLIFICATION,support,un ejemplo
+11,12,CLARIFICATION,EXEMPLIFICATION,support,un ejemplo de
+12,1,CLARIFICATION,SUMMARY,support,en pocas palabras
+12,2,CLARIFICATION,SUMMARY,support,en resumen
+12,3,CLARIFICATION,SUMMARY,support,en resumidas cuentas
+12,4,CLARIFICATION,SUMMARY,support,en suma
+12,5,CLARIFICATION,SUMMARY,support,para resumir
+12,6,CLARIFICATION,SUMMARY,support,por resumir
+12,7,CLARIFICATION,SUMMARY,support,resumiendo
+13,1,CLARIFICATION,CONCLUSION,support,como conclusiones finales
+13,2,CLARIFICATION,CONCLUSION,support,como conclusión
+13,3,CLARIFICATION,CONCLUSION,support,como observaciones finales
+13,4,CLARIFICATION,CONCLUSION,support,concluyendo
+13,5,CLARIFICATION,CONCLUSION,support,considerada toda
+13,6,CLARIFICATION,CONCLUSION,support,consideradas todas
+13,7,CLARIFICATION,CONCLUSION,support,consideradas todas las cosas
+13,8,CLARIFICATION,CONCLUSION,support,consideradas todas las opciones
+13,9,CLARIFICATION,CONCLUSION,support,consideradas todas las posibilidades
+13,10,CLARIFICATION,CONCLUSION,support,considerado todo
+13,11,CLARIFICATION,CONCLUSION,support,considerados todos
+13,12,CLARIFICATION,CONCLUSION,support,considerados todos los aspectos
+13,13,CLARIFICATION,CONCLUSION,support,considerándolo todo
+13,14,CLARIFICATION,CONCLUSION,support,en conclusión
+13,15,CLARIFICATION,CONCLUSION,support,en definitiva
+13,16,CLARIFICATION,CONCLUSION,support,para concluir
+13,17,CLARIFICATION,CONCLUSION,support,por concluir
+13,18,CLARIFICATION,CONCLUSION,support,todas las cosas consideradas
+13,19,CLARIFICATION,CONCLUSION,support,todas las opciones consideradas
+13,20,CLARIFICATION,CONCLUSION,support,todas las posibilidades consideradas
+13,21,CLARIFICATION,CONCLUSION,support,todos los aspectos considerados
+14,1,ELABORATION,PRECISION,support,en particular
+14,2,ELABORATION,PRECISION,support,especialmente
+14,3,ELABORATION,PRECISION,support,específicamente
+14,4,ELABORATION,PRECISION,support,excepcionalmente
+14,5,ELABORATION,PRECISION,support,más específicamente
+14,6,ELABORATION,PRECISION,support,más precisamente
+14,7,ELABORATION,PRECISION,support,particularmente
+14,8,ELABORATION,PRECISION,support,precisamente
+14,9,ELABORATION,PRECISION,support,principalmente
+14,10,ELABORATION,PRECISION,support,sobre toda
+14,11,ELABORATION,PRECISION,support,sobre todas
+14,12,ELABORATION,PRECISION,support,sobre todo
+14,13,ELABORATION,PRECISION,support,sobre todos
+15,1,ELABORATION,SIMILARITY,support,al igual que
+15,2,ELABORATION,SIMILARITY,support,así como
+15,3,ELABORATION,SIMILARITY,support,como
+15,4,ELABORATION,SIMILARITY,support,correspondientemente
+15,5,ELABORATION,SIMILARITY,support,de la misma manera
+15,6,ELABORATION,SIMILARITY,support,del mismo modo
+15,7,ELABORATION,SIMILARITY,support,igualmente
+15,8,ELABORATION,SIMILARITY,support,similar a
+15,9,ELABORATION,SIMILARITY,support,similarmente
+15,10,ELABORATION,SIMILARITY,support,similarmente a
+16,1,ELABORATION,ADDITION,support,a ello se suma
+16,2,ELABORATION,ADDITION,support,además
+16,3,ELABORATION,ADDITION,support,además de
+16,4,ELABORATION,ADDITION,support,adicionalmente
+16,5,ELABORATION,ADDITION,support,adicionalmente a
+16,6,ELABORATION,ADDITION,support,al margen
+16,7,ELABORATION,ADDITION,support,al margen de
+16,8,ELABORATION,ADDITION,support,amén
+16,9,ELABORATION,ADDITION,support,aparte
+16,10,ELABORATION,ADDITION,support,aparte de
+16,11,ELABORATION,ADDITION,support,asimismo
+16,12,ELABORATION,ADDITION,support,aún así
+16,13,ELABORATION,ADDITION,support,encima
+16,14,ELABORATION,ADDITION,support,es más
+16,15,ELABORATION,ADDITION,support,fuera de
+16,16,ELABORATION,ADDITION,support,lo que es más
+16,17,ELABORATION,ADDITION,support,también

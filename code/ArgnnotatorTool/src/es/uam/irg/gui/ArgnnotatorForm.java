@@ -18,7 +18,6 @@
 package es.uam.irg.gui;
 
 import es.uam.irg.io.IOManager;
-import java.io.File;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -29,11 +28,19 @@ import javax.swing.JOptionPane;
  */
 public class ArgnnotatorForm extends javax.swing.JFrame {
 
+    // GUI constants
+    public static final String HTML_CONTENT_TYPE = "text/html";
+    public static final String DECIMAL_FORMAT = "0.000";
+    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private String currDirectory;
+    private final DataModel model;
+
     /**
      * Creates new form ArgnnotatorForm
      */
     public ArgnnotatorForm() {
         initComponents();
+        this.model = new DataModel(DECIMAL_FORMAT, DATE_FORMAT);
         this.setVisible(true);
     }
 
@@ -66,6 +73,9 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         lblTableArgComponents = new javax.swing.JLabel();
         lblTableArgRelations = new javax.swing.JLabel();
         lblFiles = new javax.swing.JLabel();
+        lblAnnotation = new javax.swing.JLabel();
+        cmbArgCompType = new javax.swing.JComboBox<>();
+        btnAdd = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         mItemImport = new javax.swing.JMenuItem();
@@ -92,6 +102,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(lstFiles);
 
+        textEditor.setContentType(HTML_CONTENT_TYPE);
         jScrollPane2.setViewportView(textEditor);
 
         tblRelations.setModel(new javax.swing.table.DefaultTableModel(
@@ -150,6 +161,17 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
 
         lblFiles.setText("Files");
 
+        lblAnnotation.setText("Annotation:");
+
+        cmbArgCompType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Major claim", "Claim", "Premise" }));
+
+        btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
+
         menuFile.setText("File");
 
         mItemImport.setText("Import files");
@@ -175,7 +197,6 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         jMenuBar1.add(menuFile);
 
         menuHelp.setText("Help");
-        menuHelp.setActionCommand("Help");
 
         mItemAbout.setText("About");
         mItemAbout.addActionListener(new java.awt.event.ActionListener() {
@@ -196,11 +217,18 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblFiles))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblAnnotation)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cmbArgCompType, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAdd)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -218,11 +246,14 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTableArgComponents)
                     .addComponent(lblTableArgRelations)
-                    .addComponent(lblFiles))
-                .addGap(9, 9, 9)
+                    .addComponent(lblFiles)
+                    .addComponent(lblAnnotation)
+                    .addComponent(cmbArgCompType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAdd))
+                .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
                     .addComponent(jScrollPane3)
                     .addComponent(jScrollPane2))
                 .addContainerGap())
@@ -237,7 +268,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         String aboutMsg = """
                           Argument Annotator Tool
                           
-                          Version: 0.2.0
+                          Version: 0.3.0
                           Date: 07/07/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador
                           License: Apache License 2.0
@@ -262,6 +293,13 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         if (!lstFiles.isSelectionEmpty() && !evt.getValueIsAdjusting()) {
             String currFile = lstFiles.getSelectedValue();
             System.out.println("Selectd file: " + currFile);
+
+            // Query data
+            String result = this.model.getFileContent(currFile, currDirectory);
+
+            // Display report
+            this.textEditor.setText(result);
+            this.textEditor.setCaretPosition(0);
         }
     }//GEN-LAST:event_lstFilesValueChanged
 
@@ -274,26 +312,38 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         jfc.setAcceptAllFileFilterUsed(false);
 
         if (jfc.showOpenDialog(ArgnnotatorForm.this) == JFileChooser.APPROVE_OPTION) {
-            String directory =  jfc.getSelectedFile().toString();
-            System.out.println(directory);
-            
+            currDirectory = jfc.getSelectedFile().toString();
+            System.out.println(currDirectory);
+
             lstFiles.removeAll();
             DefaultListModel listModel = new DefaultListModel();
-            listModel.addAll(IOManager.readFilenamesInFolder(directory));
+            listModel.addAll(IOManager.readFilenamesInFolder(currDirectory));
             lstFiles.setModel(listModel);
-            
+
         } else {
-            System.out.println("No Selection ");
+            System.out.println("No selection");
         }
     }//GEN-LAST:event_mItemImportActionPerformed
 
+    /**
+     *
+     * @param evt
+     */
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_btnAddActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JComboBox<String> cmbArgCompType;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JLabel lblAnnotation;
     private javax.swing.JLabel lblFiles;
     private javax.swing.JLabel lblTableArgComponents;
     private javax.swing.JLabel lblTableArgRelations;
