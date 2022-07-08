@@ -37,7 +37,6 @@
         <Menu class="javax.swing.JMenu" name="menuHelp">
           <Properties>
             <Property name="text" type="java.lang.String" value="Help"/>
-            <Property name="actionCommand" type="java.lang.String" value="Help"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="mItemAbout">
@@ -86,12 +85,20 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="jScrollPane1" min="-2" pref="120" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" pref="392" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="jScrollPane1" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
                   <Component id="lblFiles" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="lblAnnotation" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="cmbArgCompType" min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnAdd" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="jScrollPane2" pref="392" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -115,11 +122,14 @@
                   <Component id="lblTableArgComponents" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblTableArgRelations" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblFiles" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblAnnotation" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cmbArgCompType" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnAdd" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane1" max="32767" attributes="0"/>
-                  <Component id="jScrollPane4" pref="536" max="32767" attributes="0"/>
+                  <Component id="jScrollPane4" pref="532" max="32767" attributes="0"/>
                   <Component id="jScrollPane3" max="32767" attributes="0"/>
                   <Component id="jScrollPane2" max="32767" attributes="0"/>
               </Group>
@@ -160,6 +170,11 @@
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
         <Component class="javax.swing.JEditorPane" name="textEditor">
+          <Properties>
+            <Property name="contentType" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="HTML_CONTENT_TYPE" type="code"/>
+            </Property>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -218,6 +233,33 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Files"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblAnnotation">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Annotation:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cmbArgCompType">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="3">
+            <StringItem index="0" value="Major claim"/>
+            <StringItem index="1" value="Claim"/>
+            <StringItem index="2" value="Premise"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnAdd">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Add"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

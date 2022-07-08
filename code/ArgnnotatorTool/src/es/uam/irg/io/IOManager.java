@@ -46,24 +46,6 @@ public class IOManager {
     private static final String LEXICON_FILEPATH = "Resources/data/argument_lexicon_{}.csv";
 
     /**
-     * 
-     * @param directory
-     * @return 
-     */
-    public static List<String> readFilenamesInFolder(String directory) {
-        List<String> fileNames = new ArrayList<>();
-        File folder = new File(directory);
-
-        for (File file : folder.listFiles()) {
-            if (file.isFile()) {
-                fileNames.add(file.getName());
-            }
-        }
-
-        return fileNames;
-    }
-
-    /**
      *
      * @param filepath
      * @return
@@ -88,6 +70,34 @@ public class IOManager {
         }
 
         return annotators;
+    }
+
+    /**
+     *
+     * @param filepath
+     * @return
+     */
+    public static String readFile(String filepath) {
+        Path filePath = Path.of(filepath);
+        return readFile(filePath);
+    }
+
+    /**
+     *
+     * @param directory
+     * @return
+     */
+    public static List<String> readFilenamesInFolder(String directory) {
+        List<String> fileNames = new ArrayList<>();
+        File folder = new File(directory);
+
+        for (File file : folder.listFiles()) {
+            if (file.isFile()) {
+                fileNames.add(file.getName());
+            }
+        }
+
+        return fileNames;
     }
 
     /**
@@ -204,8 +214,10 @@ public class IOManager {
         String content = "";
         try {
             content = Files.readString(filepath, StandardCharsets.US_ASCII);
-        } catch (IOException ex) {
+
+        } catch (OutOfMemoryError | IOException ex) {
             Logger.getLogger(IOManager.class.getName()).log(Level.SEVERE, null, ex);
+            content = "";
         }
         return content;
     }
