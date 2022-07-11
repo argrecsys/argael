@@ -102,15 +102,15 @@
               </Group>
               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane4" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
-                  <Component id="lblTableArgComponents" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblTableArgComponents" min="-2" max="-2" attributes="0"/>
+                  <Component id="jScrollPane4" min="-2" pref="350" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane3" min="-2" pref="350" max="-2" attributes="0"/>
+                  <Component id="jScrollPane3" min="-2" pref="300" max="-2" attributes="0"/>
                   <Component id="lblTableArgRelations" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -188,7 +188,7 @@
         <Component class="javax.swing.JTable" name="tblRelations">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="1">
+              <Table columnCount="4" rowCount="0">
                 <Column editable="false" title="ACU 1" type="java.lang.String"/>
                 <Column editable="false" title="ACU 2" type="java.lang.String"/>
                 <Column editable="false" title="Rel Type" type="java.lang.String"/>
@@ -209,7 +209,7 @@
         <Component class="javax.swing.JTable" name="tblArgComponents">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="3" rowCount="1">
+              <Table columnCount="3" rowCount="0">
                 <Column editable="false" title="Id" type="java.lang.Integer"/>
                 <Column editable="false" title="Text" type="java.lang.String"/>
                 <Column editable="false" title="Type" type="java.lang.String"/>
@@ -221,7 +221,7 @@
     </Container>
     <Component class="javax.swing.JLabel" name="lblTableArgComponents">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Argument Component Units"/>
+        <Property name="text" type="java.lang.String" value="Argument Component Units (ACUs)"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblTableArgRelations">

@@ -21,6 +21,7 @@ import es.uam.irg.io.IOManager;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -41,7 +42,19 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     public ArgnnotatorForm() {
         initComponents();
         this.model = new DataModel(DECIMAL_FORMAT, DATE_FORMAT);
+        this.setTablesLookAndFeel();
         this.setVisible(true);
+    }
+
+    /**
+     *
+     * @param propText
+     * @param propType
+     */
+    private void addProposition(String propText, String propType) {
+        int propId = this.tblArgComponents.getRowCount() + 1;
+        DefaultTableModel model = (DefaultTableModel) this.tblArgComponents.getModel();
+        model.addRow(new Object[]{propId, propText, propType});
     }
 
     /**
@@ -107,7 +120,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
 
         tblRelations.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null}
+
             },
             new String [] {
                 "ACU 1", "ACU 2", "Rel Type", "Intent"
@@ -132,7 +145,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
 
         tblArgComponents.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null}
+
             },
             new String [] {
                 "Id", "Text", "Type"
@@ -155,7 +168,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(tblArgComponents);
 
-        lblTableArgComponents.setText("Argument Component Units");
+        lblTableArgComponents.setText("Argument Component Units (ACUs)");
 
         lblTableArgRelations.setText("Argument Relations");
 
@@ -231,11 +244,11 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTableArgComponents))
+                    .addComponent(lblTableArgComponents)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTableArgRelations))
                 .addContainerGap())
         );
@@ -331,7 +344,9 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
      */
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-
+        String propText = this.textEditor.getSelectedText();
+        String propType = this.cmbArgCompType.getSelectedItem().toString();
+        addProposition(propText, propType);
     }//GEN-LAST:event_btnAddActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -358,4 +373,19 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     private javax.swing.JTable tblRelations;
     private javax.swing.JEditorPane textEditor;
     // End of variables declaration//GEN-END:variables
+
+    private void setTablesLookAndFeel() {
+
+        // Table 1: Argument Component Units
+        tblArgComponents.getColumnModel().getColumn(0).setPreferredWidth(40);
+        tblArgComponents.getColumnModel().getColumn(1).setPreferredWidth(210);
+        tblArgComponents.getColumnModel().getColumn(2).setPreferredWidth(100);
+
+        // Table 2: Argument Component Units
+        tblRelations.getColumnModel().getColumn(0).setPreferredWidth(50);
+        tblRelations.getColumnModel().getColumn(1).setPreferredWidth(50);
+        tblRelations.getColumnModel().getColumn(2).setPreferredWidth(110);
+        tblRelations.getColumnModel().getColumn(3).setPreferredWidth(90);
+    }
+
 }

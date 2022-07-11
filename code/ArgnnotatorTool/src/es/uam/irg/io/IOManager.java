@@ -213,7 +213,7 @@ public class IOManager {
     private static String readFile(Path filepath) {
         String content = "";
         try {
-            content = Files.readString(filepath, StandardCharsets.US_ASCII);
+            content = Files.readString(filepath);
 
         } catch (OutOfMemoryError | IOException ex) {
             Logger.getLogger(IOManager.class.getName()).log(Level.SEVERE, null, ex);
