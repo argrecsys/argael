@@ -117,6 +117,19 @@ public class FunctionUtils {
      * @param filename
      * @return
      */
+    public static String getFileExtension(String filename) {
+        int index = filename.lastIndexOf(".");
+        if (index == -1) {
+            return "";
+        }
+        return filename.substring(index + 1);
+    }
+
+    /**
+     *
+     * @param filename
+     * @return
+     */
     public static String getFilenameWithoutExt(String filename) {
         int index = filename.lastIndexOf(".");
         if (index == -1) {
