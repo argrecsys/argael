@@ -25,14 +25,15 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 // import org.yaml.snakeyaml.Yaml;
@@ -90,10 +91,19 @@ public class IOManager {
     public static List<String> readFilenamesInFolder(String directory) {
         List<String> fileNames = new ArrayList<>();
         File folder = new File(directory);
+        String fileName;
+        String fileExt;
+        Set<String> extList = new HashSet<>();
+        extList.add("txt");
+        extList.add("jsonl");
 
         for (File file : folder.listFiles()) {
             if (file.isFile()) {
-                fileNames.add(file.getName());
+                fileName = file.getName();
+                fileExt = FunctionUtils.getFileExtension(fileName);
+                if (extList.contains(fileExt)) {
+                    fileNames.add(fileName);
+                }
             }
         }
 
@@ -213,7 +223,7 @@ public class IOManager {
     private static String readFile(Path filepath) {
         String content = "";
         try {
-            content = Files.readString(filepath, StandardCharsets.US_ASCII);
+            content = Files.readString(filepath);
 
         } catch (OutOfMemoryError | IOException ex) {
             Logger.getLogger(IOManager.class.getName()).log(Level.SEVERE, null, ex);

@@ -19,6 +19,7 @@ package es.uam.irg.gui;
 
 import es.uam.irg.io.IOManager;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,9 +27,12 @@ import java.util.Map;
  */
 public class DataModel {
 
+    private static final String LANG = "es";
+
     private final String dateFormat;
     private final String decimalFormat;
     private final Map<String, String> files;
+    private Map<String, List<String>> taxonomy;
 
     /**
      *
@@ -39,6 +43,8 @@ public class DataModel {
         this.decimalFormat = decimalFormat;
         this.dateFormat = dateFormat;
         this.files = new HashMap<>();
+
+        loadRelationTaxonomy();
     }
 
     /**
@@ -58,6 +64,24 @@ public class DataModel {
         }
 
         return content;
+    }
+
+    /**
+     * 
+     */
+    private void loadRelationTaxonomy() {
+        this.taxonomy = IOManager.readRelationTaxonomy(LANG);
+
+        System.out.println(">> Taxonomy:");
+        for (String category : taxonomy.keySet()) {
+            System.out.println(" - " + category);
+            List<String> subCategories = taxonomy.get(category);
+            java.util.Collections.sort(subCategories);
+            subCategories.forEach(subCategory -> {
+                System.out.println("\t" + subCategory);
+            });
+        }
+
     }
 
 }
