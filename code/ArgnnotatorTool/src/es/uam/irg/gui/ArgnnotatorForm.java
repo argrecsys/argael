@@ -98,8 +98,9 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         menuAnnotator = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Argument Annotator Tool");
-        setMinimumSize(new java.awt.Dimension(800, 400));
+        setTitle("Argument Annotator Tool v0.5");
+        setMinimumSize(new java.awt.Dimension(1060, 500));
+        setPreferredSize(new java.awt.Dimension(1300, 650));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
