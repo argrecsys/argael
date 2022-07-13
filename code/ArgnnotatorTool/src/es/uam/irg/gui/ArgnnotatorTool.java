@@ -49,10 +49,13 @@ public class ArgnnotatorTool {
         }
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            FunctionUtils.printWithDatestamp(">> ARG-IR BEGINS");
-            new ArgnnotatorForm();
-            FunctionUtils.printWithDatestamp(">> ARG-IR ENDS");
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                FunctionUtils.printWithDatestamp(">> ARG-TOOL BEGINS");
+                new ArgnnotatorForm();
+                FunctionUtils.printWithDatestamp(">> ARG-TOOL ENDS");
+            }
         });
     }
     

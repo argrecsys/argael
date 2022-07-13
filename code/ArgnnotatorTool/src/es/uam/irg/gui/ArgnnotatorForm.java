@@ -17,7 +17,6 @@
  */
 package es.uam.irg.gui;
 
-import es.uam.irg.io.IOManager;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -37,7 +36,9 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
 
     // GUI constants
     public static final String HTML_CONTENT_TYPE = "text/html";
+    private static final int PROPOSITION_MIN_SIZE = 3;
     private static final boolean NO_USER_CONFIRMATION = true;
+    private static final boolean FILE_NAMES_WITH_EXT = false;
 
     // GUI variables
     private String currDirectory;
@@ -69,23 +70,23 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrollPane1 = new javax.swing.JScrollPane();
         lstFiles = new javax.swing.JList<>();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        scrollPane2 = new javax.swing.JScrollPane();
         textEditor = new javax.swing.JEditorPane();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tblArgRelations = new javax.swing.JTable();
-        jScrollPane4 = new javax.swing.JScrollPane();
+        scrollPane3 = new javax.swing.JScrollPane();
         tblArgComponents = new javax.swing.JTable();
-        lblAddRelation = new javax.swing.JLabel();
-        lblDeleteRelation = new javax.swing.JLabel();
+        scrollPane4 = new javax.swing.JScrollPane();
+        tblArgRelations = new javax.swing.JTable();
         lblFileList = new javax.swing.JLabel();
         lblAnnotation = new javax.swing.JLabel();
+        lblAddRelation = new javax.swing.JLabel();
+        lblDeleteRelation = new javax.swing.JLabel();
         cmbArgCompType = new javax.swing.JComboBox<>();
         btnAddArgument = new javax.swing.JButton();
         cmbCategory = new javax.swing.JComboBox<>();
-        btnAddRelation = new javax.swing.JButton();
         cmbIntent = new javax.swing.JComboBox<>();
+        btnAddRelation = new javax.swing.JButton();
         btnDeleteRelation = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
@@ -113,36 +114,10 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
                 lstFilesValueChanged(evt);
             }
         });
-        jScrollPane1.setViewportView(lstFiles);
+        scrollPane1.setViewportView(lstFiles);
 
         textEditor.setContentType(HTML_CONTENT_TYPE);
-        jScrollPane2.setViewportView(textEditor);
-
-        tblArgRelations.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ACU 1", "ACU 2", "Rel Type", "Intent"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tblArgRelations.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane3.setViewportView(tblArgRelations);
+        scrollPane2.setViewportView(textEditor);
 
         tblArgComponents.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -173,15 +148,41 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
                 tblArgComponentsMouseClicked(evt);
             }
         });
-        jScrollPane4.setViewportView(tblArgComponents);
+        scrollPane3.setViewportView(tblArgComponents);
 
-        lblAddRelation.setText("Add relation:");
+        tblArgRelations.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        lblDeleteRelation.setText("Delete relation:");
+            },
+            new String [] {
+                "ACU 1", "ACU 2", "Rel Type", "Intent"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblArgRelations.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        scrollPane4.setViewportView(tblArgRelations);
 
         lblFileList.setText("File list:");
 
         lblAnnotation.setText("Annotation:");
+
+        lblAddRelation.setText("Add relation:");
+
+        lblDeleteRelation.setText("Delete relation:");
 
         cmbArgCompType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Major claim", "Claim", "Premise" }));
 
@@ -194,14 +195,14 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
 
         cmbCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
 
+        cmbIntent.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "support", "attack" }));
+
         btnAddRelation.setText("Add");
         btnAddRelation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddRelationActionPerformed(evt);
             }
         });
-
-        cmbIntent.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "support", "attack" }));
 
         btnDeleteRelation.setText("Delete");
         btnDeleteRelation.addActionListener(new java.awt.event.ActionListener() {
@@ -258,7 +259,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(scrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblFileList))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,7 +270,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAddArgument)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE))
+                    .addComponent(scrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -280,10 +281,10 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
                         .addComponent(cmbIntent, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAddRelation))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(scrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(scrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblDeleteRelation)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -307,10 +308,10 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
                     .addComponent(btnDeleteRelation))
                 .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3)
-                    .addComponent(jScrollPane2))
+                    .addComponent(scrollPane1)
+                    .addComponent(scrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
+                    .addComponent(scrollPane4)
+                    .addComponent(scrollPane2))
                 .addContainerGap())
         );
 
@@ -323,7 +324,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         String aboutMsg = """
                           Argument Annotator Tool
                           
-                          Version: 0.5.0
+                          Version: 0.5.2
                           Date: 07/13/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador
                           License: Apache License 2.0
@@ -347,6 +348,9 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!lstFiles.isSelectionEmpty() && !evt.getValueIsAdjusting()) {
             String currFile = lstFiles.getSelectedValue();
+            if (!FILE_NAMES_WITH_EXT) {
+                currFile = currFile + ".jsonl";
+            }
             System.out.println("Selectd file: " + currFile);
 
             // Query data
@@ -372,17 +376,21 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
 
             lstFiles.removeAll();
             DefaultListModel listModel = new DefaultListModel();
-            listModel.addAll(IOManager.readFilenamesInFolder(currDirectory));
+            listModel.addAll(model.readFilenamesInFolder(currDirectory, FILE_NAMES_WITH_EXT));
             lstFiles.setModel(listModel);
-
         }
     }//GEN-LAST:event_mItemImportActionPerformed
 
     private void btnAddArgumentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddArgumentActionPerformed
         // TODO add your handling code here:
         String propText = this.textEditor.getSelectedText();
-        String propType = this.cmbArgCompType.getSelectedItem().toString();
-        addProposition(propText, propType);
+
+        if (propText.length() > PROPOSITION_MIN_SIZE) {
+            String propType = this.cmbArgCompType.getSelectedItem().toString();
+            int propId = this.tblArgComponents.getRowCount() + 1;
+            DefaultTableModel tblModel = (DefaultTableModel) this.tblArgComponents.getModel();
+            tblModel.addRow(new Object[]{propId, propText, propType});
+        }
     }//GEN-LAST:event_btnAddArgumentActionPerformed
 
     private void btnAddRelationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRelationActionPerformed
@@ -435,10 +443,6 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbArgCompType;
     private javax.swing.JComboBox<String> cmbCategory;
     private javax.swing.JComboBox<String> cmbIntent;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel lblAddRelation;
     private javax.swing.JLabel lblAnnotation;
     private javax.swing.JLabel lblDeleteRelation;
@@ -453,21 +457,14 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenu menuHelp;
     private javax.swing.JPopupMenu.Separator menuHorzSeparator;
+    private javax.swing.JScrollPane scrollPane1;
+    private javax.swing.JScrollPane scrollPane2;
+    private javax.swing.JScrollPane scrollPane3;
+    private javax.swing.JScrollPane scrollPane4;
     private javax.swing.JTable tblArgComponents;
     private javax.swing.JTable tblArgRelations;
     private javax.swing.JEditorPane textEditor;
     // End of variables declaration//GEN-END:variables
-
-    /**
-     *
-     * @param propText
-     * @param propType
-     */
-    private void addProposition(String propText, String propType) {
-        int propId = this.tblArgComponents.getRowCount() + 1;
-        DefaultTableModel tblModel = (DefaultTableModel) this.tblArgComponents.getModel();
-        tblModel.addRow(new Object[]{propId, propText, propType});
-    }
 
     /**
      * Closes winform.
