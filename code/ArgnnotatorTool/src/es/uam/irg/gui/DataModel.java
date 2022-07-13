@@ -37,7 +37,7 @@ public class DataModel {
     private Map<String, List<String>> taxonomy;
 
     /**
-     *
+     * Constructor.
      */
     public DataModel() {
         this.files = new HashMap<>();
@@ -90,6 +90,16 @@ public class DataModel {
         });
 
         return subCategories;
+    }
+
+    /**
+     *
+     * @param currDirectory
+     * @param withExt
+     * @return
+     */
+    public List<String> readFilenamesInFolder(String currDirectory, boolean withExt) {
+        return IOManager.readFilenamesInFolder(currDirectory, withExt);
     }
 
     /**

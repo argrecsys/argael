@@ -86,9 +86,10 @@ public class IOManager {
     /**
      *
      * @param directory
+     * @param withExt
      * @return
      */
-    public static List<String> readFilenamesInFolder(String directory) {
+    public static List<String> readFilenamesInFolder(String directory, boolean withExt) {
         List<String> fileNames = new ArrayList<>();
         File folder = new File(directory);
         String fileName;
@@ -102,7 +103,11 @@ public class IOManager {
                 fileName = file.getName();
                 fileExt = FunctionUtils.getFileExtension(fileName);
                 if (extList.contains(fileExt)) {
-                    fileNames.add(fileName);
+                    if (withExt) {
+                        fileNames.add(fileName);
+                    } else {
+                        fileNames.add(FunctionUtils.getFilenameWithoutExt(fileName));
+                    }
                 }
             }
         }
