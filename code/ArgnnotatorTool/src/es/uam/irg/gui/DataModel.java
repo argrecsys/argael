@@ -18,6 +18,7 @@
 package es.uam.irg.gui;
 
 import es.uam.irg.io.IOManager;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,24 +28,29 @@ import java.util.Map;
  */
 public class DataModel {
 
+    private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private static final String DECIMAL_FORMAT = "0.000";
     private static final String LANG = "es";
+    private static final String USERS_FILEPATH = "Resources/config/annotators.txt";
 
-    private final String dateFormat;
-    private final String decimalFormat;
     private final Map<String, String> files;
     private Map<String, List<String>> taxonomy;
 
     /**
      *
-     * @param decimalFormat
-     * @param dateFormat
      */
-    public DataModel(String decimalFormat, String dateFormat) {
-        this.decimalFormat = decimalFormat;
-        this.dateFormat = dateFormat;
+    public DataModel() {
         this.files = new HashMap<>();
+        this.loadRelationTaxonomy();
+    }
 
-        loadRelationTaxonomy();
+    /**
+     *
+     * @return
+     */
+    public String[] getAnnotatorList() {
+        List<String> annotators = IOManager.readAnnotators(USERS_FILEPATH);
+        return annotators.toArray(new String[0]);
     }
 
     /**
@@ -67,7 +73,27 @@ public class DataModel {
     }
 
     /**
-     * 
+     *
+     * @param defaultValue
+     * @return
+     */
+    public List<String> getSubCategories(boolean defaultValue) {
+        List<String> subCategories = new ArrayList<>();
+
+        if (defaultValue) {
+            subCategories.add("-");
+        }
+        taxonomy.values().forEach(valueList -> {
+            valueList.forEach(value -> {
+                subCategories.add(value.toLowerCase());
+            });
+        });
+
+        return subCategories;
+    }
+
+    /**
+     *
      */
     private void loadRelationTaxonomy() {
         this.taxonomy = IOManager.readRelationTaxonomy(LANG);
