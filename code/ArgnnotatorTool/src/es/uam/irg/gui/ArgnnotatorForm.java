@@ -40,6 +40,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     public static final String DECIMAL_FORMAT = "0.000";
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private static final String USERS_FILEPATH = "Resources/config/annotators.txt";
+    private static final boolean NO_USER_CONFIRMATION = true;
 
     // GUI variables
     private String currDirectory;
@@ -160,6 +161,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblArgRelations.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane3.setViewportView(tblArgRelations);
 
         tblArgComponents.setModel(new javax.swing.table.DefaultTableModel(
@@ -341,8 +343,8 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         String aboutMsg = """
                           Argument Annotator Tool
                           
-                          Version: 0.4.0
-                          Date: 07/11/2022
+                          Version: 0.4.5
+                          Date: 07/13/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador
                           License: Apache License 2.0
                           Web site: https://argrecsys.github.io/arg-nnotator-tool 
@@ -429,7 +431,13 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
 
     private void btnDeleteRelationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteRelationActionPerformed
         // TODO add your handling code here:
-
+        if (tblArgRelations.getRowCount() > 0
+                && (NO_USER_CONFIRMATION || JOptionPane.showConfirmDialog(this, "Do you want to remove this relationship?", "Confirmation Dialog", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION)) {
+            int row = tblArgRelations.getSelectedRow();
+            if (row >= 0) {
+                ((DefaultTableModel) tblArgRelations.getModel()).removeRow(row);
+            }
+        }
     }//GEN-LAST:event_btnDeleteRelationActionPerformed
 
     private void tblArgComponentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgComponentsMouseClicked

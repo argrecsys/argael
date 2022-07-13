@@ -216,6 +216,7 @@
                 <Column editable="false" title="Intent" type="java.lang.String"/>
               </Table>
             </Property>
+            <Property name="selectionMode" type="int" value="0"/>
           </Properties>
         </Component>
       </SubComponents>
