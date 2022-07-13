@@ -21,6 +21,7 @@ import es.uam.irg.io.IOManager;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -30,55 +31,33 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
- *
- * @author Usuario
+ * Main GUI class.
  */
 public class ArgnnotatorForm extends javax.swing.JFrame {
 
     // GUI constants
     public static final String HTML_CONTENT_TYPE = "text/html";
-    public static final String DECIMAL_FORMAT = "0.000";
-    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    private static final String USERS_FILEPATH = "Resources/config/annotators.txt";
     private static final boolean NO_USER_CONFIRMATION = true;
 
     // GUI variables
     private String currDirectory;
     private final DataModel model;
     private Queue<Integer> acuSelected;
-    private final String userName;
 
     /**
      * Creates new form ArgnnotatorForm
      */
     public ArgnnotatorForm() {
         initComponents();
-        this.model = new DataModel(DECIMAL_FORMAT, DATE_FORMAT);
-        this.setTablesLookAndFeel();
+
+        this.currDirectory = "";
+        this.model = new DataModel();
         this.acuSelected = new PriorityQueue<>();
+
+        this.setTablesLookAndFeel();
+        this.setComboBoxes();
         this.setVisible(true);
-        this.userName = getAnnotatorName();
-        this.menuAnnotator.setText("| Annotator: " + userName);
-    }
-
-    /**
-     *
-     * @param propText
-     * @param propType
-     */
-    private void addProposition(String propText, String propType) {
-        int propId = this.tblArgComponents.getRowCount() + 1;
-        DefaultTableModel tblModel = (DefaultTableModel) this.tblArgComponents.getModel();
-        tblModel.addRow(new Object[]{propId, propText, propType});
-    }
-
-    /**
-     * Closes winform.
-     */
-    private void closeForm() {
-        this.setVisible(false);
-        this.dispose();
-        System.exit(0);
+        this.setAnnotatorName();
     }
 
     /**
@@ -295,9 +274,9 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblAddRelation)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbIntent, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbIntent, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAddRelation))
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -343,7 +322,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         String aboutMsg = """
                           Argument Annotator Tool
                           
-                          Version: 0.4.5
+                          Version: 0.5.0
                           Date: 07/13/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador
                           License: Apache License 2.0
@@ -398,10 +377,6 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mItemImportActionPerformed
 
-    /**
-     *
-     * @param evt
-     */
     private void btnAddArgumentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddArgumentActionPerformed
         // TODO add your handling code here:
         String propText = this.textEditor.getSelectedText();
@@ -482,6 +457,37 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     private javax.swing.JEditorPane textEditor;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     *
+     * @param propText
+     * @param propType
+     */
+    private void addProposition(String propText, String propType) {
+        int propId = this.tblArgComponents.getRowCount() + 1;
+        DefaultTableModel tblModel = (DefaultTableModel) this.tblArgComponents.getModel();
+        tblModel.addRow(new Object[]{propId, propText, propType});
+    }
+
+    /**
+     * Closes winform.
+     */
+    private void closeForm() {
+        this.setVisible(false);
+        this.dispose();
+        System.exit(0);
+    }
+
+    /**
+     *
+     */
+    private void setComboBoxes() {
+        List<String> subCategories = model.getSubCategories(true);
+        cmbCategory.setModel(new DefaultComboBoxModel<>(subCategories.toArray(new String[0])));
+    }
+
+    /**
+     *
+     */
     private void setTablesLookAndFeel() {
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -507,26 +513,17 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
 
     /**
      *
-     * @return
      */
-    private String getAnnotatorName() {
+    private void setAnnotatorName() {
         String userName = "admin";
-        String[] annotators = getAnnotatorList();
+        String[] annotators = model.getAnnotatorList();
         String result = (String) JOptionPane.showInputDialog(this, "Please, enter annotator name:", "Annotator Name", JOptionPane.PLAIN_MESSAGE, null, annotators, "");
 
         if (result != null && result.length() > 0) {
             userName = result;
         }
 
-        return userName;
+        this.menuAnnotator.setText("| Annotator: " + userName);
     }
 
-    /**
-     *
-     * @return
-     */
-    private String[] getAnnotatorList() {
-        List<String> annotators = IOManager.readAnnotators(USERS_FILEPATH);
-        return annotators.toArray(new String[0]);
-    }
 }
