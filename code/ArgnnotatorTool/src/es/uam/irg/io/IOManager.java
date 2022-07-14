@@ -30,13 +30,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-// import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.Yaml;
 
 /**
  * Input-output manager class.
@@ -86,28 +84,21 @@ public class IOManager {
     /**
      *
      * @param directory
-     * @param withExt
+     * @param fileExt
      * @return
      */
-    public static List<String> readFilenamesInFolder(String directory, boolean withExt) {
+    public static List<String> readFilenamesInFolder(String directory, String fileExt) {
         List<String> fileNames = new ArrayList<>();
         File folder = new File(directory);
-        String fileName;
-        String fileExt;
-        Set<String> extList = new HashSet<>();
-        extList.add("txt");
-        extList.add("jsonl");
+        String currName;
+        String currExt;
 
         for (File file : folder.listFiles()) {
             if (file.isFile()) {
-                fileName = file.getName();
-                fileExt = FunctionUtils.getFileExtension(fileName);
-                if (extList.contains(fileExt)) {
-                    if (withExt) {
-                        fileNames.add(fileName);
-                    } else {
-                        fileNames.add(FunctionUtils.getFilenameWithoutExt(fileName));
-                    }
+                currName = file.getName();
+                currExt = FunctionUtils.getFileExtension(currName);
+                if (currExt.equals(fileExt)) {
+                    fileNames.add(FunctionUtils.getFilenameWithoutExt(currName));
                 }
             }
         }
@@ -199,8 +190,8 @@ public class IOManager {
             // Check if the specified file exists or not
             if (yamlFile.exists()) {
                 InputStream inputStream = new FileInputStream(yamlFile);
-                // Yaml yaml = new Yaml();
-                // data = (Map<String, Object>) yaml.load(inputStream);
+                Yaml yaml = new Yaml();
+                data = (Map<String, Object>) yaml.load(inputStream);
             }
 
         } catch (IOException ex) {

@@ -1,9 +1,15 @@
 # Argnnotator tool
-![version](https://img.shields.io/badge/version-0.5.2-blue)
-![last-update](https://img.shields.io/badge/last_update-7/13/2022-orange)
+![version](https://img.shields.io/badge/version-0.6.0-blue)
+![last-update](https://img.shields.io/badge/last_update-7/14/2022-orange)
 ![license](https://img.shields.io/badge/license-Apache_2.0-brightgreen)
 
 Tool for the annotation of arguments in a massive and simple way.
+
+## Dependencies
+The implemented solution depends on or make use of the following libraries:
+- JDK 16
+- Snake YAML 1.9
+- JSON Java 20210307
 
 ## Authors
 Created on Jun 29, 2022  
