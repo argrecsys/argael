@@ -17,7 +17,6 @@
  */
 package es.uam.irg.utils;
 
-import es.uam.irg.io.IOManager;
 import java.awt.Color;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -39,12 +38,6 @@ import javax.swing.SwingUtilities;
  * Class with a set of static utility functions.
  */
 public class FunctionUtils {
-
-    // Class constants
-    public static final String MONGO_DB = "MONGO_DB";
-    public static final String MYSQL_DB = "MYSQL_DB";
-    private static final String MDB_SETUP_FILEPATH = "Resources/config/mdb_setup.yaml";
-    private static final String MSQL_SETUP_FILEPATH = "Resources/config/msql_setup.yaml";
 
     // Class variables
     private static DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -93,23 +86,6 @@ public class FunctionUtils {
     public static List<String> createListFromText(String array) {
         array = array.replace("[", "").replace("]", "");
         return new ArrayList<>(Arrays.asList(array.split(",")));
-    }
-
-    /**
-     *
-     * @param dbType
-     * @return
-     */
-    public static Map<String, Object> getDatabaseConfiguration(String dbType) {
-        Map<String, Object> setup = null;
-
-        if (dbType.equals(MYSQL_DB)) {
-            setup = IOManager.readYamlFile(MSQL_SETUP_FILEPATH);
-        } else if (dbType.equals(MONGO_DB)) {
-            setup = IOManager.readYamlFile(MDB_SETUP_FILEPATH);
-        }
-
-        return setup;
     }
 
     /**

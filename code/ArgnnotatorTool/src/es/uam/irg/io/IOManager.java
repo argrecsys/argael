@@ -30,13 +30,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-// import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.Yaml;
 
 /**
  * Input-output manager class.
@@ -192,8 +190,8 @@ public class IOManager {
             // Check if the specified file exists or not
             if (yamlFile.exists()) {
                 InputStream inputStream = new FileInputStream(yamlFile);
-                // Yaml yaml = new Yaml();
-                // data = (Map<String, Object>) yaml.load(inputStream);
+                Yaml yaml = new Yaml();
+                data = (Map<String, Object>) yaml.load(inputStream);
             }
 
         } catch (IOException ex) {

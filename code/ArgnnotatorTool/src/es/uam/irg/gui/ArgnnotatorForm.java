@@ -330,6 +330,8 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        getAccessibleContext().setAccessibleName("Argument Annotator Tool v0.6");
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -339,7 +341,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         String aboutMsg = """
                           Argument Annotator Tool
                           
-                          Version: 0.5.4
+                          Version: 0.6.0
                           Date: 07/14/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador
                           License: Apache License 2.0
@@ -366,7 +368,8 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
             System.out.println("Selectd file: " + currFile);
 
             // Query data
-            String result = this.model.getFileContent(currFile, currDirectory);
+            String filepath = currDirectory + "\\" + currFile;
+            String result = this.model.getFileReport(filepath, fileExtension);
 
             // Display report
             this.textEditor.setText(result);
@@ -500,7 +503,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
             currDirectory = jfc.getSelectedFile().toString();
             List<String> files = model.readFilenamesInFolder(currDirectory, fileExtension);
             System.out.println(String.format("Directory: '%s' and number of uploaded files: %d", currDirectory, files.size()));
-            
+
             lstFiles.removeAll();
             if (files.size() > 0) {
                 DefaultListModel listModel = new DefaultListModel();

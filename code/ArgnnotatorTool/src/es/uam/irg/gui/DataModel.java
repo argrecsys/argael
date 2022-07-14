@@ -18,6 +18,7 @@
 package es.uam.irg.gui;
 
 import es.uam.irg.io.IOManager;
+import es.uam.irg.utils.StringUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +35,7 @@ public class DataModel {
     private static final String USERS_FILEPATH = "Resources/config/annotators.txt";
 
     private final Map<String, String> files;
+    private final ReportFormatter formatter;
     private Map<String, List<String>> taxonomy;
 
     /**
@@ -41,6 +43,7 @@ public class DataModel {
      */
     public DataModel() {
         this.files = new HashMap<>();
+        this.formatter = new ReportFormatter(DECIMAL_FORMAT, DATE_FORMAT);
         this.loadRelationTaxonomy();
     }
 
@@ -55,18 +58,22 @@ public class DataModel {
 
     /**
      *
-     * @param fileName
-     * @param directory
+     * @param filePath
+     * @param fileType
      * @return
      */
-    public String getFileContent(String fileName, String directory) {
+    public String getFileReport(String filePath, String fileType) {
         String content = "";
-        if (files.containsKey(fileName)) {
-            content = files.get(fileName);
-        } else {
-            String filepath = directory + "\\" + fileName;
-            content = IOManager.readFile(filepath);
-            files.put(fileName, content);
+        String fileName = StringUtils.getLastToken(filePath, "\\\\");
+
+        if (!fileName.equals("")) {
+            if (files.containsKey(fileName)) {
+                content = files.get(fileName);
+            } else {
+                content = IOManager.readFile(filePath);
+                content = formatter.getPrettyReport(content, fileType);
+                files.put(fileName, content);
+            }
         }
 
         return content;
