@@ -17,8 +17,11 @@
  */
 package es.uam.irg.gui;
 
+import es.uam.irg.io.IOManager;
+import es.uam.irg.utils.FunctionUtils;
 import java.awt.Color;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import org.json.JSONObject;
@@ -47,6 +50,7 @@ public class ReportFormatter {
     public ReportFormatter(String decimalFormat, String dateFormat) {
         this.df = new DecimalFormat(decimalFormat);
         this.dtf = DateTimeFormatter.ofPattern(dateFormat);
+        loadReports();
     }
 
     /**
@@ -56,25 +60,62 @@ public class ReportFormatter {
      * @return
      */
     public String getPrettyReport(String content, String reportType) {
-        StringBuilder report = new StringBuilder();
+        String result = "";
+        StringBuilder body = new StringBuilder();
         reportType = reportType.toUpperCase();
+        long start, finish;
+        int timeElapsed;
+        String[] components = content.split("\n");
+        int nRows = components.length;
+        System.out.println(nRows);
 
+        // 1. Create user report from JSONL source
+        start = System.nanoTime();
         if (reportType.equals("JSONL")) {
-            String[] components = content.split("\n");
+            String baseReport = reports.get("PROPOSAL_INFO");
 
-            if (components != null && components.length > 0) {
-                System.out.println(components.length);
-                for (String comp : components) {
-                    JSONObject json = new JSONObject(comp);
-                    report.append(json.toString());
-                }
+            for (int i = 0; i < nRows; i++) {
+                JSONObject json = new JSONObject(components[i]);
+                String report = baseReport.replace("$IX$", "" + (i + 1));
+                // report = report.replace("$CODE$", json.getString("proposal_id"));
+                report = report.replace("$SUMMARY$", json.getString("text"));
+                body.append(report);
             }
 
         } else if (reportType.equals("TXT")) {
-            report.append(content);
+            body.append(content);
         }
+        finish = System.nanoTime();
+        timeElapsed = (int) ((finish - start) / 1000000);
 
-        return report.toString();
+        // Update final report
+        result = getProposalsReport(body.toString(), nRows, timeElapsed);
+        FunctionUtils.printWithDatestamp(">> The results report has been created");
+
+        return result;
+    }
+
+    /**
+     *
+     * @param toString
+     * @param nRows
+     * @param timeElapsed
+     * @return
+     */
+    private String getProposalsReport(String body, int nReports, int timeElapsed) {
+        String result = reports.get("PROPOSAL_LIST");
+        result = result.replace("$N_REPORTS$", "" + nReports);
+        result = result.replace("$TIME_ELAPSED$", "" + timeElapsed);
+        result = result.replace("$CURRENT_TIME$", dtf.format(LocalDateTime.now()));
+        result = result.replace("$CONTENT$", body);
+        return result;
+    }
+
+    /**
+     * Loads all available reports into memory from disk.
+     */
+    private void loadReports() {
+        reports = IOManager.readHtmlReports(REPORTS_PATH);
     }
 
 }
