@@ -9,18 +9,29 @@
             <Property name="text" type="java.lang.String" value="File"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="mItemImport">
+            <MenuItem class="javax.swing.JMenuItem" name="mItemImportJsonl">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Import files"/>
+                <Property name="text" type="java.lang.String" value="Import from Jsonl"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mItemImportActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mItemImportJsonlActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mItemImportText">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Import from Text"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mItemImportTextActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mItemExport">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Export files"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mItemExportActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="menuHorzSeparator">
             </MenuItem>
@@ -106,7 +117,7 @@
                       <Component id="btnAddArgument" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="scrollPane2" pref="392" max="32767" attributes="0"/>
+                  <Component id="scrollPane2" pref="480" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -153,7 +164,7 @@
               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="scrollPane1" max="32767" attributes="0"/>
-                  <Component id="scrollPane3" pref="532" max="32767" attributes="0"/>
+                  <Component id="scrollPane3" pref="581" max="32767" attributes="0"/>
                   <Component id="scrollPane4" max="32767" attributes="0"/>
                   <Component id="scrollPane2" max="32767" attributes="0"/>
               </Group>

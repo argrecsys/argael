@@ -95,11 +95,11 @@ public class DataModel {
     /**
      *
      * @param currDirectory
-     * @param withExt
+     * @param fileExt
      * @return
      */
-    public List<String> readFilenamesInFolder(String currDirectory, boolean withExt) {
-        return IOManager.readFilenamesInFolder(currDirectory, withExt);
+    public List<String> readFilenamesInFolder(String currDirectory, String fileExt) {
+        return IOManager.readFilenamesInFolder(currDirectory, fileExt);
     }
 
     /**

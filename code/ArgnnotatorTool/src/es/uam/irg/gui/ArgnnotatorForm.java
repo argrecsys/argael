@@ -38,12 +38,12 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     public static final String HTML_CONTENT_TYPE = "text/html";
     private static final int PROPOSITION_MIN_SIZE = 3;
     private static final boolean NO_USER_CONFIRMATION = true;
-    private static final boolean FILE_NAMES_WITH_EXT = false;
 
     // GUI variables
     private String currDirectory;
     private final DataModel model;
-    private Queue<Integer> acuSelected;
+    private final Queue<Integer> acuSelected;
+    private String fileExtension;
 
     /**
      * Creates new form ArgnnotatorForm
@@ -54,6 +54,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         this.currDirectory = "";
         this.model = new DataModel();
         this.acuSelected = new PriorityQueue<>();
+        this.fileExtension = "";
 
         this.setTablesLookAndFeel();
         this.setComboBoxes();
@@ -90,7 +91,8 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         btnDeleteRelation = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
-        mItemImport = new javax.swing.JMenuItem();
+        mItemImportJsonl = new javax.swing.JMenuItem();
+        mItemImportText = new javax.swing.JMenuItem();
         mItemExport = new javax.swing.JMenuItem();
         menuHorzSeparator = new javax.swing.JPopupMenu.Separator();
         mItemClose = new javax.swing.JMenuItem();
@@ -213,15 +215,28 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
 
         menuFile.setText("File");
 
-        mItemImport.setText("Import files");
-        mItemImport.addActionListener(new java.awt.event.ActionListener() {
+        mItemImportJsonl.setText("Import from Jsonl");
+        mItemImportJsonl.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItemImportActionPerformed(evt);
+                mItemImportJsonlActionPerformed(evt);
             }
         });
-        menuFile.add(mItemImport);
+        menuFile.add(mItemImportJsonl);
+
+        mItemImportText.setText("Import from Text");
+        mItemImportText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItemImportTextActionPerformed(evt);
+            }
+        });
+        menuFile.add(mItemImportText);
 
         mItemExport.setText("Export files");
+        mItemExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItemExportActionPerformed(evt);
+            }
+        });
         menuFile.add(mItemExport);
         menuFile.add(menuHorzSeparator);
 
@@ -270,7 +285,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAddArgument)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(scrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE))
+                    .addComponent(scrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -309,7 +324,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
                 .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(scrollPane1)
-                    .addComponent(scrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
+                    .addComponent(scrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
                     .addComponent(scrollPane4)
                     .addComponent(scrollPane2))
                 .addContainerGap())
@@ -324,8 +339,8 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         String aboutMsg = """
                           Argument Annotator Tool
                           
-                          Version: 0.5.2
-                          Date: 07/13/2022
+                          Version: 0.5.4
+                          Date: 07/14/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador
                           License: Apache License 2.0
                           Web site: https://argrecsys.github.io/arg-nnotator-tool 
@@ -347,10 +362,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     private void lstFilesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstFilesValueChanged
         // TODO add your handling code here:
         if (!lstFiles.isSelectionEmpty() && !evt.getValueIsAdjusting()) {
-            String currFile = lstFiles.getSelectedValue();
-            if (!FILE_NAMES_WITH_EXT) {
-                currFile = currFile + ".jsonl";
-            }
+            String currFile = lstFiles.getSelectedValue() + "." + fileExtension;
             System.out.println("Selectd file: " + currFile);
 
             // Query data
@@ -361,25 +373,6 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
             this.textEditor.setCaretPosition(0);
         }
     }//GEN-LAST:event_lstFilesValueChanged
-
-    private void mItemImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemImportActionPerformed
-        // TODO add your handling code here:
-        JFileChooser jfc = new JFileChooser();
-        jfc.setCurrentDirectory(new java.io.File("."));
-        jfc.setDialogTitle("Select folder");
-        jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        jfc.setAcceptAllFileFilterUsed(false);
-
-        if (jfc.showOpenDialog(ArgnnotatorForm.this) == JFileChooser.APPROVE_OPTION) {
-            currDirectory = jfc.getSelectedFile().toString();
-            System.out.println(currDirectory);
-
-            lstFiles.removeAll();
-            DefaultListModel listModel = new DefaultListModel();
-            listModel.addAll(model.readFilenamesInFolder(currDirectory, FILE_NAMES_WITH_EXT));
-            lstFiles.setModel(listModel);
-        }
-    }//GEN-LAST:event_mItemImportActionPerformed
 
     private void btnAddArgumentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddArgumentActionPerformed
         // TODO add your handling code here:
@@ -436,6 +429,22 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tblArgComponentsMouseClicked
 
+    private void mItemImportJsonlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemImportJsonlActionPerformed
+        // TODO add your handling code here:
+        this.fileExtension = "jsonl";
+        importFilesFromDirectory();
+    }//GEN-LAST:event_mItemImportJsonlActionPerformed
+
+    private void mItemImportTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemImportTextActionPerformed
+        // TODO add your handling code here:
+        this.fileExtension = "txt";
+        importFilesFromDirectory();
+    }//GEN-LAST:event_mItemImportTextActionPerformed
+
+    private void mItemExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemExportActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mItemExportActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddArgument;
     private javax.swing.JButton btnAddRelation;
@@ -451,7 +460,8 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem mItemAbout;
     private javax.swing.JMenuItem mItemClose;
     private javax.swing.JMenuItem mItemExport;
-    private javax.swing.JMenuItem mItemImport;
+    private javax.swing.JMenuItem mItemImportJsonl;
+    private javax.swing.JMenuItem mItemImportText;
     private javax.swing.JMenu menuAnnotator;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuFile;
@@ -473,6 +483,31 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         this.setVisible(false);
         this.dispose();
         System.exit(0);
+    }
+
+    /**
+     *
+     * @param fileExt
+     */
+    private void importFilesFromDirectory() {
+        JFileChooser jfc = new JFileChooser();
+        jfc.setCurrentDirectory(new java.io.File("."));
+        jfc.setDialogTitle("Select folder");
+        jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        jfc.setAcceptAllFileFilterUsed(false);
+
+        if (jfc.showOpenDialog(ArgnnotatorForm.this) == JFileChooser.APPROVE_OPTION) {
+            currDirectory = jfc.getSelectedFile().toString();
+            List<String> files = model.readFilenamesInFolder(currDirectory, fileExtension);
+            System.out.println(String.format("Directory: '%s' and number of uploaded files: %d", currDirectory, files.size()));
+            
+            lstFiles.removeAll();
+            if (files.size() > 0) {
+                DefaultListModel listModel = new DefaultListModel();
+                listModel.addAll(files);
+                lstFiles.setModel(listModel);
+            }
+        }
     }
 
     /**

@@ -86,28 +86,21 @@ public class IOManager {
     /**
      *
      * @param directory
-     * @param withExt
+     * @param fileExt
      * @return
      */
-    public static List<String> readFilenamesInFolder(String directory, boolean withExt) {
+    public static List<String> readFilenamesInFolder(String directory, String fileExt) {
         List<String> fileNames = new ArrayList<>();
         File folder = new File(directory);
-        String fileName;
-        String fileExt;
-        Set<String> extList = new HashSet<>();
-        extList.add("txt");
-        extList.add("jsonl");
+        String currName;
+        String currExt;
 
         for (File file : folder.listFiles()) {
             if (file.isFile()) {
-                fileName = file.getName();
-                fileExt = FunctionUtils.getFileExtension(fileName);
-                if (extList.contains(fileExt)) {
-                    if (withExt) {
-                        fileNames.add(fileName);
-                    } else {
-                        fileNames.add(FunctionUtils.getFilenameWithoutExt(fileName));
-                    }
+                currName = file.getName();
+                currExt = FunctionUtils.getFileExtension(currName);
+                if (currExt.equals(fileExt)) {
+                    fileNames.add(FunctionUtils.getFilenameWithoutExt(currName));
                 }
             }
         }
