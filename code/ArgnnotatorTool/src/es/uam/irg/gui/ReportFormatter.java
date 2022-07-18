@@ -19,11 +19,13 @@ package es.uam.irg.gui;
 
 import es.uam.irg.io.IOManager;
 import es.uam.irg.utils.FunctionUtils;
+import es.uam.irg.utils.StringUtils;
 import java.awt.Color;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -56,13 +58,13 @@ public class ReportFormatter {
     /**
      *
      * @param content
-     * @param reportType
+     * @param format
      * @return
      */
-    public String getPrettyReport(String content, String reportType) {
+    public String getPrettyReport(String content, String format) {
         String result = "";
         StringBuilder body = new StringBuilder();
-        reportType = reportType.toUpperCase();
+        format = format.toUpperCase();
         long start, finish;
         int timeElapsed;
         String[] components = content.split("\n");
@@ -71,18 +73,48 @@ public class ReportFormatter {
 
         // 1. Create user report from JSONL source
         start = System.nanoTime();
-        if (reportType.equals("JSONL")) {
-            String baseReport = reports.get("PROPOSAL_INFO");
+        if (format.equals("JSONL")) {
+            String report = reports.get("PROPOSAL_INFO");
+            String comment = reports.get("COMMENT_INFO");
+            String tagType;
+            String textValue;
+            StringBuilder commentList = new StringBuilder();
 
+            // Create report
             for (int i = 0; i < nRows; i++) {
                 JSONObject json = new JSONObject(components[i]);
-                String report = baseReport.replace("$IX$", "" + (i + 1));
-                // report = report.replace("$CODE$", json.getString("proposal_id"));
-                report = report.replace("$SUMMARY$", json.getString("text"));
-                body.append(report);
+                textValue = json.getString("text");
+
+                if (jsonContainsKey(json, "proposal_id")) {
+                    tagType = json.getString("info");
+
+                    switch (tagType) {
+                        case "title":
+                            report = report.replace("$CODE$", json.getString("proposal_id"));
+                            report = report.replace("$TITLE$", textValue);
+                            break;
+                        case "summary":
+                            report = report.replace("$SUMMARY$", textValue);
+                            break;
+                        case "text":
+                            report = report.replace("$TEXT$", textValue);
+                            break;
+                        default:
+                            break;
+                    }
+
+                } else {
+                    
+                    if (!StringUtils.isEmpty(textValue)) {
+                        commentList.append(comment.replace("$TEXT$", textValue));
+                    }
+                }
             }
 
-        } else if (reportType.equals("TXT")) {
+            report = report.replace("$COMMENTS$", commentList.toString());
+            body.append(report);
+
+        } else if (format.equals("TXT")) {
             body.append(content);
         }
         finish = System.nanoTime();
@@ -90,6 +122,7 @@ public class ReportFormatter {
 
         // Update final report
         result = getProposalsReport(body.toString(), nRows, timeElapsed);
+
         FunctionUtils.printWithDatestamp(">> The results report has been created");
 
         return result;
@@ -108,6 +141,23 @@ public class ReportFormatter {
         result = result.replace("$TIME_ELAPSED$", "" + timeElapsed);
         result = result.replace("$CURRENT_TIME$", dtf.format(LocalDateTime.now()));
         result = result.replace("$CONTENT$", body);
+        return result;
+    }
+
+    /**
+     *
+     * @param json
+     * @param id
+     * @return
+     */
+    private boolean jsonContainsKey(JSONObject json, String id) {
+        boolean result = false;
+        try {
+            json.getString(id);
+            result = true;
+        } catch (JSONException ex) {
+
+        }
         return result;
     }
 

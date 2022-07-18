@@ -341,8 +341,8 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         String aboutMsg = """
                           Argument Annotator Tool
                           
-                          Version: 0.6.0
-                          Date: 07/14/2022
+                          Version: 0.7.0
+                          Date: 07/18/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador
                           License: Apache License 2.0
                           Web site: https://argrecsys.github.io/arg-nnotator-tool 
