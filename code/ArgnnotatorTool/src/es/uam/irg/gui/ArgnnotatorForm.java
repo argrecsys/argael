@@ -17,8 +17,8 @@
  */
 package es.uam.irg.gui;
 
+import java.util.LinkedList;
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.Queue;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -53,7 +53,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
 
         this.currDirectory = "";
         this.model = new DataModel();
-        this.acuSelected = new PriorityQueue<>();
+        this.acuSelected = new LinkedList<>();
         this.fileExtension = "";
 
         this.setTablesLookAndFeel();
@@ -341,7 +341,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         String aboutMsg = """
                           Argument Annotator Tool
                           
-                          Version: 0.7.0
+                          Version: 0.7.1
                           Date: 07/18/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador
                           License: Apache License 2.0
@@ -503,9 +503,9 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
 
     /**
      * Display report.
-     * 
+     *
      * @param report
-     * @param caretPosition 
+     * @param caretPosition
      */
     private void displayReport(String report, int caretPosition) {
         this.textEditor.setText(report);
@@ -561,15 +561,15 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     }
 
     /**
-     * 
-     * @param report 
+     *
+     * @param report
      */
     private void setSelectedReport(String report) {
         String currFile = lstFiles.getSelectedValue() + "." + fileExtension;
         String filepath = currDirectory + "\\" + currFile;
         this.model.setFileReport(report, filepath);
     }
-    
+
     /**
      *
      */
