@@ -101,7 +101,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         menuAnnotator = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Argument Annotator Tool v0.5");
+        setTitle("Argument Annotator Tool v0.7");
         setMinimumSize(new java.awt.Dimension(1060, 500));
         setPreferredSize(new java.awt.Dimension(1300, 650));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -330,7 +330,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        getAccessibleContext().setAccessibleName("Argument Annotator Tool v0.6");
+        getAccessibleContext().setAccessibleName("Argument Annotator Tool v0.7");
 
         pack();
         setLocationRelativeTo(null);
@@ -341,8 +341,8 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         String aboutMsg = """
                           Argument Annotator Tool
                           
-                          Version: 0.6.0
-                          Date: 07/14/2022
+                          Version: 0.7.0
+                          Date: 07/18/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador
                           License: Apache License 2.0
                           Web site: https://argrecsys.github.io/arg-nnotator-tool 
@@ -364,16 +364,10 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     private void lstFilesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstFilesValueChanged
         // TODO add your handling code here:
         if (!lstFiles.isSelectionEmpty() && !evt.getValueIsAdjusting()) {
-            String currFile = lstFiles.getSelectedValue() + "." + fileExtension;
-            System.out.println("Selectd file: " + currFile);
-
-            // Query data
-            String filepath = currDirectory + "\\" + currFile;
-            String result = this.model.getFileReport(filepath, fileExtension);
 
             // Display report
-            this.textEditor.setText(result);
-            this.textEditor.setCaretPosition(0);
+            String report = getSelectedReport(true);
+            displayReport(report, 0);
         }
     }//GEN-LAST:event_lstFilesValueChanged
 
@@ -382,10 +376,29 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         String propText = this.textEditor.getSelectedText();
 
         if (propText.length() > PROPOSITION_MIN_SIZE) {
+
+            // Step 1: add component
             String propType = this.cmbArgCompType.getSelectedItem().toString();
             int propId = this.tblArgComponents.getRowCount() + 1;
             DefaultTableModel tblModel = (DefaultTableModel) this.tblArgComponents.getModel();
             tblModel.addRow(new Object[]{propId, propText, propType});
+
+            // Step 2: highlight component
+            String compType = cmbArgCompType.getSelectedItem().toString().toLowerCase();
+            String hlComp;
+
+            if (compType.contains("claim")) {
+                hlComp = model.getFormatter().highlightClaim(propText);
+            } else {
+                hlComp = model.getFormatter().highlightPremise(propText);
+            }
+
+            // Update report
+            int caretPosition = this.textEditor.getCaretPosition();
+            String report = getSelectedReport(false);
+            report = report.replace(propText, hlComp);
+            displayReport(report, caretPosition);
+            setSelectedReport(report);
         }
     }//GEN-LAST:event_btnAddArgumentActionPerformed
 
@@ -489,6 +502,32 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     }
 
     /**
+     * Display report.
+     * 
+     * @param report
+     * @param caretPosition 
+     */
+    private void displayReport(String report, int caretPosition) {
+        this.textEditor.setText(report);
+        this.textEditor.setCaretPosition(caretPosition);
+    }
+
+    /**
+     *
+     * @param verbose
+     * @return
+     */
+    private String getSelectedReport(boolean verbose) {
+        String currFile = lstFiles.getSelectedValue() + "." + fileExtension;
+        if (verbose) {
+            System.out.println("Selectd file: " + currFile);
+        }
+        String filepath = currDirectory + "\\" + currFile;
+        String report = this.model.getFileReport(filepath, fileExtension);
+        return report;
+    }
+
+    /**
      *
      * @param fileExt
      */
@@ -521,6 +560,16 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         cmbCategory.setModel(new DefaultComboBoxModel<>(subCategories.toArray(new String[0])));
     }
 
+    /**
+     * 
+     * @param report 
+     */
+    private void setSelectedReport(String report) {
+        String currFile = lstFiles.getSelectedValue() + "." + fileExtension;
+        String filepath = currDirectory + "\\" + currFile;
+        this.model.setFileReport(report, filepath);
+    }
+    
     /**
      *
      */
