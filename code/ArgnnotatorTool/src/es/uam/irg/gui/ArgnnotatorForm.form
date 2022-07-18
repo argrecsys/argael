@@ -70,7 +70,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="Argument Annotator Tool v0.5"/>
+    <Property name="title" type="java.lang.String" value="Argument Annotator Tool v0.7"/>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[1060, 500]"/>
     </Property>
@@ -79,7 +79,7 @@
     </Property>
   </Properties>
   <AccessibilityProperties>
-    <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Argument Annotator Tool v0.6"/>
+    <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Argument Annotator Tool v0.7"/>
   </AccessibilityProperties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="menuBar"/>

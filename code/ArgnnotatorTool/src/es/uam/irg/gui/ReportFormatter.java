@@ -104,7 +104,7 @@ public class ReportFormatter {
                     }
 
                 } else {
-                    
+
                     if (!StringUtils.isEmpty(textValue)) {
                         commentList.append(comment.replace("$TEXT$", textValue));
                     }
@@ -126,6 +126,33 @@ public class ReportFormatter {
         FunctionUtils.printWithDatestamp(">> The results report has been created");
 
         return result;
+    }
+
+    /**
+     *
+     * @param claim
+     * @return
+     */
+    public String highlightClaim(String claim) {
+        return "<span style='padding:3px; background-color: #C7DEFA;'>" + claim + "</span>";
+    }
+
+    /**
+     *
+     * @param linker
+     * @return
+     */
+    public String highlightLinker(String linker) {
+        return "<span style='padding:3px; background-color: #ABD2AC; font-style: italic;'>(" + linker + ")</span>";
+    }
+
+    /**
+     *
+     * @param premise
+     * @return
+     */
+    public String highlightPremise(String premise) {
+        return "<span style='padding:3px; background-color: #DED7FB;'>" + premise + "</span>";
     }
 
     /**

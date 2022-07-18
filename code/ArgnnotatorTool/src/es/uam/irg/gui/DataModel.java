@@ -81,6 +81,14 @@ public class DataModel {
 
     /**
      *
+     * @return
+     */
+    public ReportFormatter getFormatter() {
+        return this.formatter;
+    }
+
+    /**
+     *
      * @param defaultValue
      * @return
      */
@@ -107,6 +115,19 @@ public class DataModel {
      */
     public List<String> readFilenamesInFolder(String currDirectory, String fileExt) {
         return IOManager.readFilenamesInFolder(currDirectory, fileExt);
+    }
+
+    /**
+     *
+     * @param content
+     * @param filePath
+     */
+    public void setFileReport(String content, String filePath) {
+        String fileName = StringUtils.getLastToken(filePath, "\\\\");
+
+        if (!fileName.equals("")) {
+            files.put(fileName, content);
+        }
     }
 
     /**
