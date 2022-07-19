@@ -45,6 +45,18 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="menuAnnotation">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Annotation"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="mItemAnnoSave">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Save"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
         <Menu class="javax.swing.JMenu" name="menuHelp">
           <Properties>
             <Property name="text" type="java.lang.String" value="Help"/>
@@ -78,9 +90,6 @@
       <Dimension value="[1300, 650]"/>
     </Property>
   </Properties>
-  <AccessibilityProperties>
-    <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Argument Annotator Tool v0.7"/>
-  </AccessibilityProperties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="menuBar"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -134,15 +143,19 @@
                       <Component id="btnAddRelation" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="scrollPane3" min="-2" pref="350" max="-2" attributes="0"/>
+                  <Component id="lblNumberArguments" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="scrollPane4" min="-2" pref="300" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Component id="lblDeleteRelation" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblDelete" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="btnDeleteComponent" min="-2" pref="62" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnDeleteRelation" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="lblNumberRelations" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -154,7 +167,7 @@
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblAddRelation" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblDeleteRelation" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblDelete" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblFileList" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblAnnotation" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cmbArgCompType" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -163,13 +176,23 @@
                   <Component id="btnAddRelation" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cmbIntent" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnDeleteRelation" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnDeleteComponent" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="scrollPane1" max="32767" attributes="0"/>
-                  <Component id="scrollPane3" pref="581" max="32767" attributes="0"/>
-                  <Component id="scrollPane4" max="32767" attributes="0"/>
                   <Component id="scrollPane2" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="scrollPane3" pref="561" max="32767" attributes="0"/>
+                          <Component id="scrollPane4" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblNumberRelations" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblNumberArguments" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
@@ -227,7 +250,7 @@
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="3" rowCount="0">
-                <Column editable="false" title="Id" type="java.lang.Integer"/>
+                <Column editable="false" title="ACU Id" type="java.lang.Integer"/>
                 <Column editable="false" title="Text" type="java.lang.String"/>
                 <Column editable="false" title="Type" type="java.lang.String"/>
               </Table>
@@ -253,7 +276,7 @@
               <Table columnCount="4" rowCount="0">
                 <Column editable="false" title="ACU 1" type="java.lang.String"/>
                 <Column editable="false" title="ACU 2" type="java.lang.String"/>
-                <Column editable="false" title="Rel Type" type="java.lang.String"/>
+                <Column editable="false" title="Relation Type" type="java.lang.String"/>
                 <Column editable="false" title="Intent" type="java.lang.String"/>
               </Table>
             </Property>
@@ -270,16 +293,6 @@
     <Component class="javax.swing.JLabel" name="lblAnnotation">
       <Properties>
         <Property name="text" type="java.lang.String" value="Annotation:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblAddRelation">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Add relation:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblDeleteRelation">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Delete relation:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="cmbArgCompType">
@@ -303,6 +316,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddArgumentActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblAddRelation">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Add relation:"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="cmbCategory">
       <Properties>
@@ -338,13 +356,36 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddRelationActionPerformed"/>
       </Events>
     </Component>
+    <Component class="javax.swing.JLabel" name="lblDelete">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Delete:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnDeleteComponent">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="ACU"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteComponentActionPerformed"/>
+      </Events>
+    </Component>
     <Component class="javax.swing.JButton" name="btnDeleteRelation">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Delete"/>
+        <Property name="text" type="java.lang.String" value="Relation"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteRelationActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblNumberArguments">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Number of argument component units (ACU): 0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblNumberRelations">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Number of relations: 0"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

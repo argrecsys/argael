@@ -1,6 +1,6 @@
 # Argnnotator Tool
 
-Tool for the annotation of arguments in a massive and simple way.
+Tool for the annotation and evaluation of arguments in a massive and simple way.
 
 ## Authors
 Created on Jun 29, 2022  
