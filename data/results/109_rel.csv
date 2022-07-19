@@ -1,0 +1,5 @@
+acu_id1,acu_id2,rel_type,rel_intent,annotator,timespam
+1,3,addition,support,andres.segura,2022/07/19 23:17:35
+2,4,addition,support,andres.segura,2022/07/19 23:17:35
+2,5,addition,attack,andres.segura,2022/07/19 23:17:35
+5,6,addition,attack,andres.segura,2022/07/19 23:17:35

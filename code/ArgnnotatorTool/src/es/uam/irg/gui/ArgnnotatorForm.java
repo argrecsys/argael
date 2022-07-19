@@ -17,6 +17,12 @@
  */
 package es.uam.irg.gui;
 
+import es.uam.irg.io.IOManager;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -38,12 +44,14 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     public static final String HTML_CONTENT_TYPE = "text/html";
     private static final int PROPOSITION_MIN_SIZE = 3;
     private static final boolean NO_USER_CONFIRMATION = true;
+    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     // GUI variables
     private String currDirectory;
     private final DataModel model;
     private final Queue<Integer> acuSelected;
     private String fileExtension;
+    private String userName;
 
     /**
      * Creates new form ArgnnotatorForm
@@ -106,9 +114,8 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         menuAnnotator = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Argument Annotator Tool v0.7");
+        setTitle("Argument Annotator Tool v0.8");
         setMinimumSize(new java.awt.Dimension(1060, 500));
-        setPreferredSize(new java.awt.Dimension(1300, 650));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -269,6 +276,11 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         menuAnnotation.setText("Annotation");
 
         mItemAnnoSave.setText("Save");
+        mItemAnnoSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItemAnnoSaveActionPerformed(evt);
+            }
+        });
         menuAnnotation.add(mItemAnnoSave);
 
         menuBar.add(menuAnnotation);
@@ -327,7 +339,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblDelete)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnDeleteComponent, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDeleteComponent, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDeleteRelation))
                     .addComponent(lblNumberRelations))
@@ -373,7 +385,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         String aboutMsg = """
                           Argument Annotator Tool
                           
-                          Version: 0.7.5
+                          Version: 0.8.0
                           Date: 07/19/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador
                           License: Apache License 2.0
@@ -396,6 +408,13 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     private void lstFilesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstFilesValueChanged
         // TODO add your handling code here:
         if (!lstFiles.isSelectionEmpty() && !evt.getValueIsAdjusting()) {
+
+            // Clear previous annotations
+            acuSelected.clear();
+            ((DefaultTableModel) tblArgComponents.getModel()).setRowCount(0);
+            lblNumberArguments.setText("Number of argument component units: 0");
+            ((DefaultTableModel) tblArgRelations.getModel()).setRowCount(0);
+            lblNumberRelations.setText("Number of relations: 0");
 
             // Display report
             String report = getSelectedReport(true);
@@ -509,6 +528,11 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDeleteComponentActionPerformed
 
+    private void mItemAnnoSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemAnnoSaveActionPerformed
+        // TODO add your handling code here:
+        saveResultFiles();
+    }//GEN-LAST:event_mItemAnnoSaveActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddArgument;
     private javax.swing.JButton btnAddRelation;
@@ -608,6 +632,59 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     /**
      *
      */
+    private void saveResultFiles() {
+
+        if (!lstFiles.isSelectionEmpty()) {
+            String fileName = lstFiles.getSelectedValue();
+            List<String> header;
+            List<String[]> argCompUnits = new ArrayList<>();
+            List<String[]> relationList = new ArrayList<>();
+
+            // Loop through the rows
+            TableModel tblAcuModel = tblArgComponents.getModel();
+            for (int i = 0; i < tblAcuModel.getRowCount(); i++) {
+                String acuId = tblAcuModel.getValueAt(i, 0).toString();
+                String acuText = "\"" + tblAcuModel.getValueAt(i, 1).toString() + "\"";
+                String acuType = tblAcuModel.getValueAt(i, 2).toString();
+                String dateStamp = dateFormat.format(new Date());
+                argCompUnits.add(new String[]{acuId, acuText, acuType, userName, dateStamp});
+            }
+
+            // Loop through the rows
+            TableModel tblRelModel = tblArgRelations.getModel();
+            for (int i = 0; i < tblRelModel.getRowCount(); i++) {
+                String acuId1 = tblRelModel.getValueAt(i, 0).toString();
+                String acuId2 = tblRelModel.getValueAt(i, 1).toString();
+                String relType = tblRelModel.getValueAt(i, 2).toString();
+                String relIntent = tblRelModel.getValueAt(i, 3).toString();
+                String dateStamp = dateFormat.format(new Date());
+                relationList.add(new String[]{acuId1, acuId2, relType, relIntent, userName, dateStamp});
+            }
+
+            header = new ArrayList<>(Arrays.asList("acu_id", "acu_text", "acu_type", "annotator", "timespam"));
+            saveResults(fileName, "auc", header, argCompUnits);
+
+            header = new ArrayList<>(Arrays.asList("acu_id1", "acu_id2", "rel_type", "rel_intent", "annotator", "timespam"));
+            saveResults(fileName, "rel", header, relationList);
+        }
+
+    }
+
+    /**
+     *
+     * @param fileName
+     * @param fileType
+     * @param data
+     * @return
+     */
+    private boolean saveResults(String fileName, String fileType, List<String> header, List<String[]> data) {
+        String filepath = currDirectory + "\\..\\results\\" + fileName + "_" + fileType + ".csv";
+        return IOManager.saveCsvData(filepath, header, data);
+    }
+
+    /**
+     *
+     */
     private void setComboBoxes() {
         List<String> subCategories = model.getSubCategories(true);
         cmbCategory.setModel(new DefaultComboBoxModel<>(subCategories.toArray(new String[0])));
@@ -653,12 +730,13 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
      *
      */
     private void setAnnotatorName() {
-        String userName = "admin";
         String[] annotators = model.getAnnotatorList();
         String result = (String) JOptionPane.showInputDialog(this, "Please, enter annotator name:", "Annotator Name", JOptionPane.PLAIN_MESSAGE, null, annotators, "");
 
         if (result != null && result.length() > 0) {
             userName = result;
+        } else {
+            userName = "admin";
         }
 
         this.menuAnnotator.setText("| Annotator: " + userName);

@@ -22,9 +22,11 @@ import es.uam.irg.utils.StringUtils;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -199,6 +201,49 @@ public class IOManager {
         }
 
         return data;
+    }
+
+    /**
+     *
+     * @param filepath
+     * @param header
+     * @param data
+     * @return
+     */
+    public static boolean saveCsvData(String filepath, List<String> header, List<String[]> data) {
+        boolean result = false;
+
+        try ( PrintWriter writer = new PrintWriter(filepath)) {
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < header.size(); i++) {
+                sb.append(header.get(i));
+                if (i == header.size() - 1) {
+                    sb.append("\n");
+                } else {
+                    sb.append(",");
+                }
+            }
+
+            for (String[] row : data) {
+                for (int i = 0; i < row.length; i++) {
+                    sb.append(row[i]);
+                    if (i == row.length - 1) {
+                        sb.append("\n");
+                    } else {
+                        sb.append(",");
+                    }
+                }
+            }
+
+            writer.write(sb.toString());
+            result = true;
+
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return result;
     }
 
     /**
