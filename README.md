@@ -1,9 +1,9 @@
 # Argnnotator tool
-![version](https://img.shields.io/badge/version-0.7.1-blue)
-![last-update](https://img.shields.io/badge/last_update-7/18/2022-orange)
+![version](https://img.shields.io/badge/version-0.8.0-blue)
+![last-update](https://img.shields.io/badge/last_update-7/19/2022-orange)
 ![license](https://img.shields.io/badge/license-Apache_2.0-brightgreen)
 
-Tool for the annotation of arguments in a massive and simple way.
+Tool for the annotation and evaluation of arguments in a massive and simple way.
 
 ## Dependencies
 The implemented solution depends on or make use of the following libraries:
