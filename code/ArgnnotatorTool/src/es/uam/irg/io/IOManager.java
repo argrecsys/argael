@@ -19,11 +19,9 @@ package es.uam.irg.io;
 
 import es.uam.irg.utils.FunctionUtils;
 import es.uam.irg.utils.StringUtils;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -31,6 +29,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,20 +53,14 @@ public class IOManager {
     public static List<String> readAnnotators(String filepath) {
         List<String> annotators = new ArrayList<>();
 
-        try {
-            File txtFile = new File(filepath);
+        // Get the file
+        Path filePath = Path.of(filepath);
+        String content = readFile(filePath);
 
-            if (txtFile.exists() && txtFile.isFile()) {
-                try ( BufferedReader reader = new BufferedReader(new FileReader(txtFile))) {
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        annotators.add(line.trim());
-                    }
-                }
-            }
-
-        } catch (IOException ex) {
-            Logger.getLogger(IOManager.class.getName()).log(Level.SEVERE, null, ex);
+        // Check if the specified file exists or not
+        if (!StringUtils.isEmpty(content)) {
+            String[] rows = content.split("\n");
+            annotators = new ArrayList<>(Arrays.asList(rows));
         }
 
         return annotators;
@@ -78,9 +71,23 @@ public class IOManager {
      * @param filepath
      * @return
      */
-    public static String readFile(String filepath) {
+    public static List<String[]> readCsvFile(String filepath) {
+        List<String[]> csvFile = new ArrayList<>();
+
         Path filePath = Path.of(filepath);
-        return readFile(filePath);
+        String content = readFile(filePath);
+
+        // Check if the specified file exists or not
+        if (!StringUtils.isEmpty(content)) {
+            String[] rows = content.split("\n");
+
+            for (int i = 1; i < rows.length; i++) {
+                String[] data = rows[i].split(",");
+                csvFile.add(data);
+            }
+        }
+
+        return csvFile;
     }
 
     /**
@@ -140,41 +147,44 @@ public class IOManager {
         Map<String, List<String>> taxonomy = new HashMap<>();
         String taxonomyFilepath = LEXICON_FILEPATH.replace("{}", lang);
 
-        try {
-            // Get the file
-            File csvFile = new File(taxonomyFilepath);
+        // Get the file
+        Path filePath = Path.of(taxonomyFilepath);
+        String content = readFile(filePath);
 
-            // Check if the specified file exists or not
-            if (csvFile.exists()) {
-                try ( BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
-                    String row;
-                    String category;
-                    String subCategory;
+        // Check if the specified file exists or not
+        if (!StringUtils.isEmpty(content)) {
+            String[] rows = content.split("\n");
+            String category;
+            String subCategory;
 
-                    reader.readLine();
-                    while ((row = reader.readLine()) != null) {
-                        String[] data = row.split(",");
+            for (int i = 1; i < rows.length; i++) {
+                String[] data = rows[i].split(",");
 
-                        if (data.length == 6) {
-                            category = StringUtils.toTitleCase(data[2]);
-                            subCategory = StringUtils.toTitleCase(data[3]);
+                if (data.length == 6) {
+                    category = StringUtils.toTitleCase(data[2]);
+                    subCategory = StringUtils.toTitleCase(data[3]);
 
-                            if (!taxonomy.containsKey(category)) {
-                                taxonomy.put(category, new ArrayList<>());
-                            }
-                            if (!taxonomy.get(category).contains(subCategory)) {
-                                taxonomy.get(category).add(subCategory);
-                            }
-                        }
+                    if (!taxonomy.containsKey(category)) {
+                        taxonomy.put(category, new ArrayList<>());
+                    }
+                    if (!taxonomy.get(category).contains(subCategory)) {
+                        taxonomy.get(category).add(subCategory);
                     }
                 }
             }
-
-        } catch (IOException ex) {
-            Logger.getLogger(IOManager.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return taxonomy;
+    }
+
+    /**
+     *
+     * @param filepath
+     * @return
+     */
+    public static String readTextFile(String filepath) {
+        Path filePath = Path.of(filepath);
+        return readFile(filePath);
     }
 
     /**
@@ -225,7 +235,7 @@ public class IOManager {
                 }
             }
 
-            for (String[] row : data) {
+            data.forEach(row -> {
                 for (int i = 0; i < row.length; i++) {
                     sb.append(row[i]);
                     if (i == row.length - 1) {
@@ -234,7 +244,7 @@ public class IOManager {
                         sb.append(",");
                     }
                 }
-            }
+            });
 
             writer.write(sb.toString());
             result = true;
@@ -264,7 +274,9 @@ public class IOManager {
     private static String readFile(Path filepath) {
         String content = "";
         try {
-            content = Files.readString(filepath);
+            if (filepath.toFile().exists()) {
+                content = Files.readString(filepath);
+            }
 
         } catch (OutOfMemoryError | IOException ex) {
             Logger.getLogger(IOManager.class.getName()).log(Level.SEVERE, null, ex);

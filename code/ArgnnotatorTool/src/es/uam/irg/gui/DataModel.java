@@ -70,7 +70,7 @@ public class DataModel {
             if (files.containsKey(fileName)) {
                 content = files.get(fileName);
             } else {
-                content = IOManager.readFile(filePath);
+                content = IOManager.readTextFile(filePath);
                 content = formatter.getPrettyReport(content, fileType);
                 files.put(fileName, content);
             }

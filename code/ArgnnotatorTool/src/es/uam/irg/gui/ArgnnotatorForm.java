@@ -43,7 +43,6 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     // GUI constants
     public static final String HTML_CONTENT_TYPE = "text/html";
     private static final int PROPOSITION_MIN_SIZE = 3;
-    private static final boolean NO_USER_CONFIRMATION = true;
     private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     // GUI variables
@@ -385,8 +384,8 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         String aboutMsg = """
                           Argument Annotator Tool
                           
-                          Version: 0.8.0
-                          Date: 07/19/2022
+                          Version: 0.8.2
+                          Date: 07/20/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador
                           License: Apache License 2.0
                           Web site: https://argrecsys.github.io/arg-nnotator-tool 
@@ -430,7 +429,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
 
             // Step 1: add component
             String propType = this.cmbArgCompType.getSelectedItem().toString();
-            int propId = this.tblArgComponents.getRowCount() + 1;
+            int propId = getNextPropositionId();
             DefaultTableModel tblModel = (DefaultTableModel) this.tblArgComponents.getModel();
             tblModel.addRow(new Object[]{propId, propText, propType});
 
@@ -478,9 +477,9 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
 
     private void btnDeleteRelationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteRelationActionPerformed
         // TODO add your handling code here:
-        if (tblArgRelations.getRowCount() > 0
-                && (NO_USER_CONFIRMATION || JOptionPane.showConfirmDialog(this, "Do you want to remove this relationship?", "Confirmation Dialog", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION)) {
+        if (tblArgRelations.getRowCount() > 0) {
             int row = tblArgRelations.getSelectedRow();
+
             if (row >= 0) {
                 ((DefaultTableModel) tblArgRelations.getModel()).removeRow(row);
                 lblNumberRelations.setText("Number of relations: " + tblArgRelations.getRowCount());
@@ -518,12 +517,18 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
 
     private void btnDeleteComponentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteComponentActionPerformed
         // TODO add your handling code here:
-        if (tblArgComponents.getRowCount() > 0
-                && (NO_USER_CONFIRMATION || JOptionPane.showConfirmDialog(this, "Do you want to remove this argument component?", "Confirmation Dialog", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION)) {
+        if (tblArgComponents.getRowCount() > 0) {
             int row = tblArgComponents.getSelectedRow();
+
             if (row >= 0) {
-                ((DefaultTableModel) tblArgComponents.getModel()).removeRow(row);
-                lblNumberArguments.setText("Number of arguments: " + tblArgComponents.getRowCount());
+                DefaultTableModel tblModel = ((DefaultTableModel) tblArgComponents.getModel());
+                int acuId = (int) tblModel.getValueAt(row, 0);
+                if (!isAcuInRelation(acuId)) {
+                    tblModel.removeRow(row);
+                    lblNumberArguments.setText("Number of arguments: " + tblArgComponents.getRowCount());
+                } else {
+                    JOptionPane.showMessageDialog(this, "This ACU cannot be eliminated, because it is part of an argumentative relation", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
     }//GEN-LAST:event_btnDeleteComponentActionPerformed
@@ -570,6 +575,21 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     /**
+     *
+     * @param acuId
+     * @return
+     */
+    private boolean isAcuInRelation(int acuId) {
+        DefaultTableModel tblModel = ((DefaultTableModel) tblArgRelations.getModel());
+        for (int i = 0; i < tblModel.getRowCount(); i++) {
+            if ((acuId == (int) tblModel.getValueAt(i, 0)) || (acuId == (int) tblModel.getValueAt(i, 1))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Closes winform.
      */
     private void closeForm() {
@@ -587,6 +607,19 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     private void displayReport(String report, int caretPosition) {
         this.textEditor.setText(report);
         this.textEditor.setCaretPosition(caretPosition);
+    }
+
+    /**
+     *
+     * @return
+     */
+    private int getNextPropositionId() {
+        int propNextId = 1;
+        int nRows = this.tblArgComponents.getRowCount();
+        if (nRows > 0) {
+            propNextId = Integer.parseInt(this.tblArgComponents.getModel().getValueAt(nRows - 1, 0).toString()) + 1;
+        }
+        return propNextId;
     }
 
     /**
