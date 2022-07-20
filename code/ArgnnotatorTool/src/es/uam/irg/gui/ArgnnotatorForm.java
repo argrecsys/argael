@@ -18,6 +18,8 @@
 package es.uam.irg.gui;
 
 import es.uam.irg.io.IOManager;
+import es.uam.irg.utils.FileUtils;
+import es.uam.irg.utils.FunctionUtils;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,7 +27,10 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
@@ -384,7 +389,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         String aboutMsg = """
                           Argument Annotator Tool
                           
-                          Version: 0.8.2
+                          Version: 0.8.4
                           Date: 07/20/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador
                           License: Apache License 2.0
@@ -407,15 +412,13 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     private void lstFilesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstFilesValueChanged
         // TODO add your handling code here:
         if (!lstFiles.isSelectionEmpty() && !evt.getValueIsAdjusting()) {
-
-            // Clear previous annotations
             acuSelected.clear();
-            ((DefaultTableModel) tblArgComponents.getModel()).setRowCount(0);
-            lblNumberArguments.setText("Number of argument component units: 0");
-            ((DefaultTableModel) tblArgRelations.getModel()).setRowCount(0);
-            lblNumberRelations.setText("Number of relations: 0");
 
-            // Display report
+            // Display result data
+            Map<String, List<String[]>> data = getSavedData();
+            displayResultData(data);
+
+            // Display HTML report
             String report = getSelectedReport(true);
             displayReport(report, 0);
         }
@@ -599,6 +602,43 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     }
 
     /**
+     *
+     * @param data
+     */
+    private void displayResultData(Map<String, List<String[]>> data) {
+        List<String[]> argCompUnits = data.get("acu");
+        List<String[]> relationList = data.get("rel");
+
+        // Update arguments table
+        lblNumberArguments.setText("Number of argument component units: " + (argCompUnits.size() - 1));
+        DefaultTableModel acuModel = (DefaultTableModel) tblArgComponents.getModel();
+        acuModel.setRowCount(0);
+        for (int i = 1; i < argCompUnits.size(); i++) {
+            String[] rowData = argCompUnits.get(i);
+            rowData[1] = rowData[1].substring(1, rowData[1].length() - 1);
+            try {
+                acuModel.addRow(FunctionUtils.getSubArray(rowData, 0, 3));
+            } catch (Exception ex) {
+                Logger.getLogger(ArgnnotatorForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        // Update relations table
+        lblNumberRelations.setText("Number of relations: " + (relationList.size() - 1));
+        DefaultTableModel relModel = (DefaultTableModel) tblArgRelations.getModel();
+        relModel.setRowCount(0);
+        for (int i = 1; i < relationList.size(); i++) {
+            String[] rowData = relationList.get(i);
+            try {
+                relModel.addRow(FunctionUtils.getSubArray(rowData, 0, 4));
+            } catch (Exception ex) {
+                Logger.getLogger(ArgnnotatorForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }
+
+    /**
      * Display report.
      *
      * @param report
@@ -620,6 +660,16 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
             propNextId = Integer.parseInt(this.tblArgComponents.getModel().getValueAt(nRows - 1, 0).toString()) + 1;
         }
         return propNextId;
+    }
+
+    /**
+     *
+     * @return
+     */
+    private Map<String, List<String[]>> getSavedData() {
+        String directory = currDirectory + "\\..\\results\\";
+        String currFile = lstFiles.getSelectedValue();
+        return IOManager.readAnnotationData(directory, currFile);
     }
 
     /**
@@ -695,7 +745,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
             }
 
             header = new ArrayList<>(Arrays.asList("acu_id", "acu_text", "acu_type", "annotator", "timespam"));
-            saveResults(fileName, "auc", header, argCompUnits);
+            saveResults(fileName, "acu", header, argCompUnits);
 
             header = new ArrayList<>(Arrays.asList("acu_id1", "acu_id2", "rel_type", "rel_intent", "annotator", "timespam"));
             saveResults(fileName, "rel", header, relationList);
@@ -712,7 +762,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
      */
     private boolean saveResults(String fileName, String fileType, List<String> header, List<String[]> data) {
         String filepath = currDirectory + "\\..\\results\\" + fileName + "_" + fileType + ".csv";
-        return IOManager.saveCsvData(filepath, header, data);
+        return FileUtils.saveCsvFile(filepath, header, data);
     }
 
     /**

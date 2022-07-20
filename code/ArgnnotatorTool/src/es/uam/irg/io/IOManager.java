@@ -17,15 +17,9 @@
  */
 package es.uam.irg.io;
 
-import es.uam.irg.utils.FunctionUtils;
+import es.uam.irg.utils.FileUtils;
 import es.uam.irg.utils.StringUtils;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -33,9 +27,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.yaml.snakeyaml.Yaml;
 
 /**
  * Input-output manager class.
@@ -47,6 +38,23 @@ public class IOManager {
 
     /**
      *
+     * @param directory
+     * @param currFile
+     * @return
+     */
+    public static Map<String, List<String[]>> readAnnotationData(String directory, String currFile) {
+        Map<String, List<String[]>> data = new HashMap<>();
+        String acuFile = directory + currFile + "_acu.csv";
+        String relFile = directory + currFile + "_rel.csv";
+        List<String[]> acuData = FileUtils.readCsvFile(acuFile);
+        List<String[]> relData = FileUtils.readCsvFile(relFile);
+        data.put("acu", acuData);
+        data.put("rel", relData);
+        return data;
+    }
+
+    /**
+     *
      * @param filepath
      * @return
      */
@@ -54,8 +62,7 @@ public class IOManager {
         List<String> annotators = new ArrayList<>();
 
         // Get the file
-        Path filePath = Path.of(filepath);
-        String content = readFile(filePath);
+        String content = FileUtils.readFile(filepath);
 
         // Check if the specified file exists or not
         if (!StringUtils.isEmpty(content)) {
@@ -64,55 +71,6 @@ public class IOManager {
         }
 
         return annotators;
-    }
-
-    /**
-     *
-     * @param filepath
-     * @return
-     */
-    public static List<String[]> readCsvFile(String filepath) {
-        List<String[]> csvFile = new ArrayList<>();
-
-        Path filePath = Path.of(filepath);
-        String content = readFile(filePath);
-
-        // Check if the specified file exists or not
-        if (!StringUtils.isEmpty(content)) {
-            String[] rows = content.split("\n");
-
-            for (int i = 1; i < rows.length; i++) {
-                String[] data = rows[i].split(",");
-                csvFile.add(data);
-            }
-        }
-
-        return csvFile;
-    }
-
-    /**
-     *
-     * @param directory
-     * @param fileExt
-     * @return
-     */
-    public static List<String> readFilenamesInFolder(String directory, String fileExt) {
-        List<String> fileNames = new ArrayList<>();
-        File folder = new File(directory);
-        String currName;
-        String currExt;
-
-        for (File file : folder.listFiles()) {
-            if (file.isFile()) {
-                currName = file.getName();
-                currExt = FunctionUtils.getFileExtension(currName);
-                if (currExt.equals(fileExt)) {
-                    fileNames.add(FunctionUtils.getFilenameWithoutExt(currName));
-                }
-            }
-        }
-
-        return fileNames;
     }
 
     /**
@@ -129,7 +87,7 @@ public class IOManager {
                 if (fileEntry.isFile()) {
                     Path filepath = Paths.get(fileEntry.getPath());
                     String filename = getFileName(fileEntry.getName());
-                    String content = readFile(filepath);
+                    String content = FileUtils.readFile(filepath);
                     reports.put(filename, content);
                 }
             }
@@ -148,8 +106,7 @@ public class IOManager {
         String taxonomyFilepath = LEXICON_FILEPATH.replace("{}", lang);
 
         // Get the file
-        Path filePath = Path.of(taxonomyFilepath);
-        String content = readFile(filePath);
+        String content = FileUtils.readFile(taxonomyFilepath);
 
         // Check if the specified file exists or not
         if (!StringUtils.isEmpty(content)) {
@@ -183,77 +140,7 @@ public class IOManager {
      * @return
      */
     public static String readTextFile(String filepath) {
-        Path filePath = Path.of(filepath);
-        return readFile(filePath);
-    }
-
-    /**
-     *
-     * @param filepath
-     * @return
-     */
-    public static Map<String, Object> readYamlFile(String filepath) {
-        Map<String, Object> data = null;
-
-        try {
-            // Get the file
-            File yamlFile = new File(filepath);
-
-            // Check if the specified file exists or not
-            if (yamlFile.exists()) {
-                InputStream inputStream = new FileInputStream(yamlFile);
-                Yaml yaml = new Yaml();
-                data = (Map<String, Object>) yaml.load(inputStream);
-            }
-
-        } catch (IOException ex) {
-            Logger.getLogger(IOManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return data;
-    }
-
-    /**
-     *
-     * @param filepath
-     * @param header
-     * @param data
-     * @return
-     */
-    public static boolean saveCsvData(String filepath, List<String> header, List<String[]> data) {
-        boolean result = false;
-
-        try ( PrintWriter writer = new PrintWriter(filepath)) {
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = 0; i < header.size(); i++) {
-                sb.append(header.get(i));
-                if (i == header.size() - 1) {
-                    sb.append("\n");
-                } else {
-                    sb.append(",");
-                }
-            }
-
-            data.forEach(row -> {
-                for (int i = 0; i < row.length; i++) {
-                    sb.append(row[i]);
-                    if (i == row.length - 1) {
-                        sb.append("\n");
-                    } else {
-                        sb.append(",");
-                    }
-                }
-            });
-
-            writer.write(sb.toString());
-            result = true;
-
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return result;
+        return FileUtils.readFile(filepath);
     }
 
     /**
@@ -262,27 +149,8 @@ public class IOManager {
      * @return
      */
     private static String getFileName(String filename) {
-        filename = FunctionUtils.getFilenameWithoutExt(filename);
+        filename = FileUtils.getFilenameWithoutExt(filename);
         return filename.replace("-", "_").toUpperCase();
-    }
-
-    /**
-     *
-     * @param filepath
-     * @return
-     */
-    private static String readFile(Path filepath) {
-        String content = "";
-        try {
-            if (filepath.toFile().exists()) {
-                content = Files.readString(filepath);
-            }
-
-        } catch (OutOfMemoryError | IOException ex) {
-            Logger.getLogger(IOManager.class.getName()).log(Level.SEVERE, null, ex);
-            content = "";
-        }
-        return content;
     }
 
 }

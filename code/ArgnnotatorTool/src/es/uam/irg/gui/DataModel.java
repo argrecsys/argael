@@ -18,6 +18,7 @@
 package es.uam.irg.gui;
 
 import es.uam.irg.io.IOManager;
+import es.uam.irg.utils.FileUtils;
 import es.uam.irg.utils.StringUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -114,7 +115,7 @@ public class DataModel {
      * @return
      */
     public List<String> readFilenamesInFolder(String currDirectory, String fileExt) {
-        return IOManager.readFilenamesInFolder(currDirectory, fileExt);
+        return FileUtils.readFilenamesInFolder(currDirectory, fileExt);
     }
 
     /**
