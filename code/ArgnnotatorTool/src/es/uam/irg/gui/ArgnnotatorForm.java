@@ -389,7 +389,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         String aboutMsg = """
                           Argument Annotator Tool
                           
-                          Version: 0.8.4
+                          Version: 0.8.5
                           Date: 07/20/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador
                           License: Apache License 2.0
@@ -615,7 +615,6 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         acuModel.setRowCount(0);
         for (int i = 1; i < argCompUnits.size(); i++) {
             String[] rowData = argCompUnits.get(i);
-            rowData[1] = rowData[1].substring(1, rowData[1].length() - 1);
             try {
                 acuModel.addRow(FunctionUtils.getSubArray(rowData, 0, 3));
             } catch (Exception ex) {
@@ -727,7 +726,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
             TableModel tblAcuModel = tblArgComponents.getModel();
             for (int i = 0; i < tblAcuModel.getRowCount(); i++) {
                 String acuId = tblAcuModel.getValueAt(i, 0).toString();
-                String acuText = "\"" + tblAcuModel.getValueAt(i, 1).toString() + "\"";
+                String acuText = tblAcuModel.getValueAt(i, 1).toString();
                 String acuType = tblAcuModel.getValueAt(i, 2).toString();
                 String dateStamp = dateFormat.format(new Date());
                 argCompUnits.add(new String[]{acuId, acuText, acuType, userName, dateStamp});
@@ -760,9 +759,12 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
      * @param data
      * @return
      */
-    private boolean saveResults(String fileName, String fileType, List<String> header, List<String[]> data) {
+    private boolean saveResults(String fileName, String fileType, List<String> header, List<String[]> rows) {
         String filepath = currDirectory + "\\..\\results\\" + fileName + "_" + fileType + ".csv";
-        return FileUtils.saveCsvFile(filepath, header, data);
+        List<String[]> data = new ArrayList<>();
+        data.add(header.toArray(new String[header.size()]));
+        data.addAll(rows);
+        return FileUtils.saveCsvFile(filepath, data);
     }
 
     /**
@@ -817,7 +819,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         String result = (String) JOptionPane.showInputDialog(this, "Please, enter annotator name:", "Annotator Name", JOptionPane.PLAIN_MESSAGE, null, annotators, "");
 
         if (result != null && result.length() > 0) {
-            userName = result;
+            userName = result.replace("\n", "");
         } else {
             userName = "admin";
         }

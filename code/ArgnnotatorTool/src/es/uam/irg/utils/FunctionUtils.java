@@ -107,10 +107,8 @@ public class FunctionUtils {
      * @param msg
      */
     public static void printWithDatestamp(String msg) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                System.out.println(msg + " - " + dateFormat.format(new Date()));
-            }
+        SwingUtilities.invokeLater(() -> {
+            System.out.println(msg + " - " + dateFormat.format(new Date()));
         });
     }
 

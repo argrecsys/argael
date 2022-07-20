@@ -17,12 +17,15 @@
  */
 package es.uam.irg.utils;
 
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -32,8 +35,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.yaml.snakeyaml.Yaml;
-import com.opencsv.CSVReader;
-import java.io.FileReader;
 
 /**
  *
@@ -74,14 +75,20 @@ public class FileUtils {
      */
     public static List<String[]> readCsvFile(String filepath) {
         List<String[]> csvFile = new ArrayList<>();
+        File file = new File(filepath);
 
-        try ( CSVReader reader = new CSVReader(new FileReader(filepath))) {
-            csvFile = reader.readAll();
+        if (file.exists()) {
+            try {
+                FileReader inputFile = new FileReader(file);
+                try ( CSVReader reader = new CSVReader(inputFile)) {
+                    csvFile = reader.readAll();
+                }
 
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(FileUtils.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(FileUtils.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(FileUtils.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FileUtils.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         return csvFile;
@@ -150,11 +157,11 @@ public class FileUtils {
 
         try {
             // Get the file
-            File yamlFile = new File(filepath);
+            File file = new File(filepath);
 
             // Check if the specified file exists or not
-            if (yamlFile.exists()) {
-                InputStream inputStream = new FileInputStream(yamlFile);
+            if (file.exists()) {
+                InputStream inputStream = new FileInputStream(file);
                 Yaml yaml = new Yaml();
                 data = (Map<String, Object>) yaml.load(inputStream);
             }
@@ -169,40 +176,19 @@ public class FileUtils {
     /**
      *
      * @param filepath
-     * @param header
      * @param data
      * @return
      */
-    public static boolean saveCsvFile(String filepath, List<String> header, List<String[]> data) {
+    public static boolean saveCsvFile(String filepath, List<String[]> data) {
         boolean result = false;
 
-        try ( PrintWriter writer = new PrintWriter(filepath)) {
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = 0; i < header.size(); i++) {
-                sb.append(header.get(i));
-                if (i == header.size() - 1) {
-                    sb.append("\n");
-                } else {
-                    sb.append(",");
-                }
-            }
-
-            data.forEach(row -> {
-                for (int i = 0; i < row.length; i++) {
-                    sb.append(row[i]);
-                    if (i == row.length - 1) {
-                        sb.append("\n");
-                    } else {
-                        sb.append(",");
-                    }
-                }
-            });
-
-            writer.write(sb.toString());
+        try ( CSVWriter writer = new CSVWriter(new FileWriter(filepath))) {
+            writer.writeAll(data);
             result = true;
 
         } catch (FileNotFoundException ex) {
+            Logger.getLogger(FileUtils.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(FileUtils.class.getName()).log(Level.SEVERE, null, ex);
         }
 
