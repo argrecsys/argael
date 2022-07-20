@@ -18,9 +18,6 @@
 package es.uam.irg.utils;
 
 import java.awt.Color;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,8 +27,6 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 
 /**
@@ -40,7 +35,7 @@ import javax.swing.SwingUtilities;
 public class FunctionUtils {
 
     // Class variables
-    private static DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     /**
      *
@@ -80,42 +75,6 @@ public class FunctionUtils {
 
     /**
      *
-     * @param array
-     * @return
-     */
-    public static List<String> createListFromText(String array) {
-        array = array.replace("[", "").replace("]", "");
-        return new ArrayList<>(Arrays.asList(array.split(",")));
-    }
-
-    /**
-     *
-     * @param filename
-     * @return
-     */
-    public static String getFileExtension(String filename) {
-        int index = filename.lastIndexOf(".");
-        if (index == -1) {
-            return "";
-        }
-        return filename.substring(index + 1);
-    }
-
-    /**
-     *
-     * @param filename
-     * @return
-     */
-    public static String getFilenameWithoutExt(String filename) {
-        int index = filename.lastIndexOf(".");
-        if (index == -1) {
-            return filename;
-        }
-        return filename.substring(0, index);
-    }
-
-    /**
-     *
      * @param <T>
      * @param array
      * @param startIx
@@ -135,13 +94,21 @@ public class FunctionUtils {
 
     /**
      *
+     * @param array
+     * @return
+     */
+    public static List<String> listFromText(String array) {
+        array = array.replace("[", "").replace("]", "");
+        return new ArrayList<>(Arrays.asList(array.split(",")));
+    }
+
+    /**
+     *
      * @param msg
      */
     public static void printWithDatestamp(String msg) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                System.out.println(msg + " - " + dateFormat.format(new Date()));
-            }
+        SwingUtilities.invokeLater(() -> {
+            System.out.println(msg + " - " + dateFormat.format(new Date()));
         });
     }
 
@@ -177,25 +144,6 @@ public class FunctionUtils {
                 .forEachOrdered(x -> reverseSortedMap.put(x.getKey(), x.getValue()));
 
         return reverseSortedMap;
-    }
-
-    /**
-     *
-     * @param filepath
-     * @param content
-     * @return
-     */
-    public static boolean writeStringToFile(String filepath, String content) {
-        boolean result = false;
-        try {
-            if (!filepath.isEmpty() && !content.isEmpty()) {
-                Files.write(Paths.get(filepath), content.getBytes());
-                result = true;
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(FunctionUtils.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return result;
     }
 
 }
