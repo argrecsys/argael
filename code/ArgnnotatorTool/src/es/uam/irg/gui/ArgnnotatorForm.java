@@ -770,7 +770,11 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         List<String[]> data = new ArrayList<>();
         data.add(header.toArray(new String[header.size()]));
         data.addAll(rows);
-        return FileUtils.saveCsvFile(filepath, data);
+        boolean result = FileUtils.saveCsvFile(filepath, data);
+        if (result) {
+            System.out.println("Data saved correctly.");
+        }
+        return result;
     }
 
     /**
@@ -815,7 +819,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         String result = (String) JOptionPane.showInputDialog(this, "Please, enter annotator name:", "Annotator Name", JOptionPane.PLAIN_MESSAGE, null, annotators, "");
 
         if (result != null && result.length() > 0) {
-            userName = result.replace("\n", "");
+            userName = result.replace("\r", "");
         } else {
             userName = "admin";
         }
