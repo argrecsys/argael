@@ -394,7 +394,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         String aboutMsg = """
                           Argument Annotator Tool
                           
-                          Version: 0.9.2
+                          Version: 0.9.4
                           Date: 07/21/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
@@ -462,24 +462,28 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     private void btnAddRelationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRelationActionPerformed
         // TODO add your handling code here:
         if (acuSelected.size() == 2) {
-            System.out.println(acuSelected);
             Integer[] selected = new Integer[2];
             selected = acuSelected.toArray(selected);
 
             TableModel acuModel = tblArgComponents.getModel();
             int acuId1 = Integer.parseInt(acuModel.getValueAt(selected[0], 0).toString());
             int acuId2 = Integer.parseInt(acuModel.getValueAt(selected[1], 0).toString());
-            String category = cmbCategory.getSelectedItem().toString();
-            String intent = cmbIntent.getSelectedItem().toString();
 
-            DefaultTableModel relModel = (DefaultTableModel) tblArgRelations.getModel();
-            relModel.addRow(new Object[]{acuId1, acuId2, category, intent});
-            lblNumberRelations.setText("Number of relations: " + tblArgRelations.getRowCount());
+            if (cmbCategory.getSelectedIndex() > 0 && cmbIntent.getSelectedIndex() > 0) {
+                String category = cmbCategory.getSelectedItem().toString();
+                String intent = cmbIntent.getSelectedItem().toString();
 
-            tblArgComponents.clearSelection();
-            tblArgRelations.clearSelection();
-            acuSelected.clear();
-            isDirty = true;
+                DefaultTableModel relModel = (DefaultTableModel) tblArgRelations.getModel();
+                relModel.addRow(new Object[]{acuId1, acuId2, category, intent});
+                lblNumberRelations.setText("Number of relations: " + tblArgRelations.getRowCount());
+
+                tblArgComponents.clearSelection();
+                tblArgRelations.clearSelection();
+                acuSelected.clear();
+                isDirty = true;
+            } else {
+                JOptionPane.showMessageDialog(this, "You must select the category and main intent of the relation.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnAddRelationActionPerformed
 
