@@ -28,6 +28,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.SwingUtilities;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Class with a set of static utility functions.
@@ -90,6 +92,23 @@ public class FunctionUtils {
         }
 
         return newArray;
+    }
+
+    /**
+     *
+     * @param json
+     * @param id
+     * @return
+     */
+    public static boolean jsonContainsKey(JSONObject json, String id) {
+        boolean result = false;
+        try {
+            json.getString(id);
+            result = true;
+        } catch (JSONException ex) {
+
+        }
+        return result;
     }
 
     /**

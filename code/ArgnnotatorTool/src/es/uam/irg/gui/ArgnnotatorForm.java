@@ -20,6 +20,7 @@ package es.uam.irg.gui;
 import es.uam.irg.io.IOManager;
 import es.uam.irg.utils.FileUtils;
 import es.uam.irg.utils.FunctionUtils;
+import es.uam.irg.utils.StringUtils;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,12 +47,14 @@ import javax.swing.table.TableModel;
 public class ArgnnotatorForm extends javax.swing.JFrame {
 
     // GUI constants
-    public static final String HTML_CONTENT_TYPE = "text/html";
+    private static final String HTML_CONTENT_TYPE = "text/html";
     private static final int PROPOSITION_MIN_SIZE = 3;
     private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     // GUI variables
     private String currDirectory;
+    private String currEntity;
+    private boolean isDirty;
     private final DataModel model;
     private final Queue<Integer> acuSelected;
     private String fileExtension;
@@ -64,6 +67,8 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         initComponents();
 
         this.currDirectory = "";
+        this.currEntity = "";
+        this.isDirty = false;
         this.model = new DataModel();
         this.acuSelected = new LinkedList<>();
         this.fileExtension = "";
@@ -118,7 +123,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         menuAnnotator = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Argument Annotator Tool v0.8");
+        setTitle("Argument Annotator Tool v0.9");
         setMinimumSize(new java.awt.Dimension(1060, 500));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -389,9 +394,9 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         String aboutMsg = """
                           Argument Annotator Tool
                           
-                          Version: 0.8.5
-                          Date: 07/20/2022
-                          Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador
+                          Version: 0.9.4
+                          Date: 07/21/2022
+                          Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
                           Web site: https://argrecsys.github.io/arg-nnotator-tool 
                           """;
@@ -412,15 +417,26 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     private void lstFilesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstFilesValueChanged
         // TODO add your handling code here:
         if (!lstFiles.isSelectionEmpty() && !evt.getValueIsAdjusting()) {
+            if (isDirty) {
+                String msg = "There are unsaved changes made to the file: " + currEntity + ".\nDo you want to save the changes?";
+                int result = JOptionPane.showConfirmDialog(this, msg, "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (result == JOptionPane.YES_OPTION) {
+                    saveResultFiles(currEntity);
+                }
+            }
+
+            // Get current entity (file, proposal, etc.)
             acuSelected.clear();
+            currEntity = lstFiles.getSelectedValue();
+            System.out.println(">> Selectd file: " + currEntity);
 
             // Display result data
             Map<String, List<String[]>> data = getSavedData();
             displayResultData(data);
 
             // Display HTML report
-            String report = getSelectedReport(true);
-            displayReport(report, 0);
+            updateHtmlReport();
+            isDirty = false;
         }
     }//GEN-LAST:event_lstFilesValueChanged
 
@@ -430,29 +446,16 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
 
         if (propText != null && propText.length() > PROPOSITION_MIN_SIZE) {
 
-            // Step 1: add component
-            String propType = this.cmbArgCompType.getSelectedItem().toString();
+            // Add new argument component
             int propId = getNextPropositionId();
+            String propType = this.cmbArgCompType.getSelectedItem().toString();
             DefaultTableModel tblModel = (DefaultTableModel) this.tblArgComponents.getModel();
             tblModel.addRow(new Object[]{propId, propText, propType});
+            lblNumberArguments.setText("Number of argument component units: " + tblModel.getRowCount());
 
-            // Step 2: highlight component
-            String compType = cmbArgCompType.getSelectedItem().toString().toLowerCase();
-            String hlComp;
-
-            if (compType.contains("claim")) {
-                hlComp = model.getFormatter().highlightClaim(propText);
-            } else {
-                hlComp = model.getFormatter().highlightPremise(propText);
-            }
-
-            // Step 3: Update GUI
-            int caretPosition = this.textEditor.getCaretPosition();
-            String report = getSelectedReport(false);
-            report = report.replace(propText, hlComp);
-            displayReport(report, caretPosition);
-            setSelectedReport(report);
-            lblNumberArguments.setText("Number of argument component units: " + tblArgComponents.getRowCount());
+            // Display HTML report
+            updateHtmlReport();
+            isDirty = true;
         }
     }//GEN-LAST:event_btnAddArgumentActionPerformed
 
@@ -462,19 +465,25 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
             Integer[] selected = new Integer[2];
             selected = acuSelected.toArray(selected);
 
-            TableModel tblAcuModel = tblArgComponents.getModel();
-            int acuId1 = (int) tblAcuModel.getValueAt(selected[0], 0);
-            int acuId2 = (int) tblAcuModel.getValueAt(selected[1], 0);
-            String category = cmbCategory.getSelectedItem().toString();
-            String intent = cmbIntent.getSelectedItem().toString();
+            TableModel acuModel = tblArgComponents.getModel();
+            int acuId1 = Integer.parseInt(acuModel.getValueAt(selected[0], 0).toString());
+            int acuId2 = Integer.parseInt(acuModel.getValueAt(selected[1], 0).toString());
 
-            DefaultTableModel tblAcrModel = (DefaultTableModel) tblArgRelations.getModel();
-            tblAcrModel.addRow(new Object[]{acuId1, acuId2, category, intent});
+            if (cmbCategory.getSelectedIndex() > 0 && cmbIntent.getSelectedIndex() > 0) {
+                String category = cmbCategory.getSelectedItem().toString();
+                String intent = cmbIntent.getSelectedItem().toString();
 
-            tblArgComponents.clearSelection();
-            tblArgRelations.clearSelection();
-            acuSelected.clear();
-            lblNumberRelations.setText("Number of relations: " + tblArgRelations.getRowCount());
+                DefaultTableModel relModel = (DefaultTableModel) tblArgRelations.getModel();
+                relModel.addRow(new Object[]{acuId1, acuId2, category, intent});
+                lblNumberRelations.setText("Number of relations: " + tblArgRelations.getRowCount());
+
+                tblArgComponents.clearSelection();
+                tblArgRelations.clearSelection();
+                acuSelected.clear();
+                isDirty = true;
+            } else {
+                JOptionPane.showMessageDialog(this, "You must select the category and main intent of the relation.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnAddRelationActionPerformed
 
@@ -486,6 +495,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
             if (row >= 0) {
                 ((DefaultTableModel) tblArgRelations.getModel()).removeRow(row);
                 lblNumberRelations.setText("Number of relations: " + tblArgRelations.getRowCount());
+                isDirty = true;
             }
         }
     }//GEN-LAST:event_btnDeleteRelationActionPerformed
@@ -524,11 +534,19 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
             int row = tblArgComponents.getSelectedRow();
 
             if (row >= 0) {
-                DefaultTableModel tblModel = ((DefaultTableModel) tblArgComponents.getModel());
-                int acuId = (int) tblModel.getValueAt(row, 0);
+                DefaultTableModel acuModel = (DefaultTableModel) tblArgComponents.getModel();
+                int acuId = Integer.parseInt(acuModel.getValueAt(row, 0).toString());
+
                 if (!isAcuInRelation(acuId)) {
-                    tblModel.removeRow(row);
-                    lblNumberArguments.setText("Number of arguments: " + tblArgComponents.getRowCount());
+
+                    // Remove argument component
+                    acuModel.removeRow(row);
+                    lblNumberArguments.setText("Number of arguments: " + acuModel.getRowCount());
+
+                    // Display HTML report
+                    updateHtmlReport();
+                    isDirty = true;
+
                 } else {
                     JOptionPane.showMessageDialog(this, "This ACU cannot be eliminated, because it is part of an argumentative relation", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -538,7 +556,10 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
 
     private void mItemAnnoSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemAnnoSaveActionPerformed
         // TODO add your handling code here:
-        saveResultFiles();
+        if (!StringUtils.isEmpty(currEntity)) {
+            saveResultFiles(currEntity);
+            isDirty = false;
+        }
     }//GEN-LAST:event_mItemAnnoSaveActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -583,9 +604,10 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
      * @return
      */
     private boolean isAcuInRelation(int acuId) {
-        DefaultTableModel tblModel = ((DefaultTableModel) tblArgRelations.getModel());
-        for (int i = 0; i < tblModel.getRowCount(); i++) {
-            if ((acuId == (int) tblModel.getValueAt(i, 0)) || (acuId == (int) tblModel.getValueAt(i, 1))) {
+        TableModel relModel = tblArgRelations.getModel();
+        for (int i = 0; i < relModel.getRowCount(); i++) {
+            if ((acuId == Integer.parseInt(relModel.getValueAt(i, 0).toString()))
+                    || (acuId == Integer.parseInt(relModel.getValueAt(i, 1).toString()))) {
                 return true;
             }
         }
@@ -638,17 +660,6 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     }
 
     /**
-     * Display report.
-     *
-     * @param report
-     * @param caretPosition
-     */
-    private void displayReport(String report, int caretPosition) {
-        this.textEditor.setText(report);
-        this.textEditor.setCaretPosition(caretPosition);
-    }
-
-    /**
      *
      * @return
      */
@@ -667,21 +678,16 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
      */
     private Map<String, List<String[]>> getSavedData() {
         String directory = currDirectory + "\\..\\results\\";
-        String currFile = lstFiles.getSelectedValue();
+        String currFile = currEntity;
         return IOManager.readAnnotationData(directory, currFile);
     }
 
     /**
      *
-     * @param verbose
      * @return
      */
-    private String getSelectedReport(boolean verbose) {
-        String currFile = lstFiles.getSelectedValue() + "." + fileExtension;
-        if (verbose) {
-            System.out.println("Selectd file: " + currFile);
-        }
-        String filepath = currDirectory + "\\" + currFile;
+    private String getSelectedReport() {
+        String filepath = currDirectory + "\\" + currEntity + "." + fileExtension;
         String report = this.model.getFileReport(filepath, fileExtension);
         return report;
     }
@@ -700,7 +706,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         if (jfc.showOpenDialog(ArgnnotatorForm.this) == JFileChooser.APPROVE_OPTION) {
             currDirectory = jfc.getSelectedFile().toString();
             List<String> files = model.readFilenamesInFolder(currDirectory, fileExtension);
-            System.out.println(String.format("Directory: '%s' and number of uploaded files: %d", currDirectory, files.size()));
+            System.out.println(String.format(">> Directory: '%s' and number of uploaded files: %d", currDirectory, files.size()));
 
             lstFiles.removeAll();
             if (files.size() > 0) {
@@ -713,32 +719,32 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
 
     /**
      *
+     * @param fileName
      */
-    private void saveResultFiles() {
+    private void saveResultFiles(String fileName) {
 
         if (!lstFiles.isSelectionEmpty()) {
-            String fileName = lstFiles.getSelectedValue();
             List<String> header;
             List<String[]> argCompUnits = new ArrayList<>();
             List<String[]> relationList = new ArrayList<>();
 
             // Loop through the rows
-            TableModel tblAcuModel = tblArgComponents.getModel();
-            for (int i = 0; i < tblAcuModel.getRowCount(); i++) {
-                String acuId = tblAcuModel.getValueAt(i, 0).toString();
-                String acuText = tblAcuModel.getValueAt(i, 1).toString();
-                String acuType = tblAcuModel.getValueAt(i, 2).toString();
+            TableModel acuModel = tblArgComponents.getModel();
+            for (int i = 0; i < acuModel.getRowCount(); i++) {
+                String acuId = acuModel.getValueAt(i, 0).toString();
+                String acuText = acuModel.getValueAt(i, 1).toString();
+                String acuType = acuModel.getValueAt(i, 2).toString();
                 String dateStamp = dateFormat.format(new Date());
                 argCompUnits.add(new String[]{acuId, acuText, acuType, userName, dateStamp});
             }
 
             // Loop through the rows
-            TableModel tblRelModel = tblArgRelations.getModel();
-            for (int i = 0; i < tblRelModel.getRowCount(); i++) {
-                String acuId1 = tblRelModel.getValueAt(i, 0).toString();
-                String acuId2 = tblRelModel.getValueAt(i, 1).toString();
-                String relType = tblRelModel.getValueAt(i, 2).toString();
-                String relIntent = tblRelModel.getValueAt(i, 3).toString();
+            TableModel relModel = tblArgRelations.getModel();
+            for (int i = 0; i < relModel.getRowCount(); i++) {
+                String acuId1 = relModel.getValueAt(i, 0).toString();
+                String acuId2 = relModel.getValueAt(i, 1).toString();
+                String relType = relModel.getValueAt(i, 2).toString();
+                String relIntent = relModel.getValueAt(i, 3).toString();
                 String dateStamp = dateFormat.format(new Date());
                 relationList.add(new String[]{acuId1, acuId2, relType, relIntent, userName, dateStamp});
             }
@@ -773,16 +779,6 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     private void setComboBoxes() {
         List<String> subCategories = model.getSubCategories(true);
         cmbCategory.setModel(new DefaultComboBoxModel<>(subCategories.toArray(new String[0])));
-    }
-
-    /**
-     *
-     * @param report
-     */
-    private void setSelectedReport(String report) {
-        String currFile = lstFiles.getSelectedValue() + "." + fileExtension;
-        String filepath = currDirectory + "\\" + currFile;
-        this.model.setFileReport(report, filepath);
     }
 
     /**
@@ -825,6 +821,42 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         }
 
         this.menuAnnotator.setText("| Annotator: " + userName);
+    }
+
+    /**
+     * Display and update html report.
+     */
+    private void updateHtmlReport() {
+        String report = getSelectedReport();
+        int caretPosition = this.textEditor.getCaretPosition();
+
+        // Update report
+        TableModel acuModel = tblArgComponents.getModel();
+        String hlText;
+        String acuText;
+        String acuType;
+
+        for (int i = 0; i < acuModel.getRowCount(); i++) {
+            acuText = acuModel.getValueAt(i, 1).toString();
+            acuType = acuModel.getValueAt(i, 2).toString();
+
+            switch (acuType.toLowerCase()) {
+                case "major claim":
+                    hlText = model.getFormatter().highlightMajorClaim(acuText);
+                    break;
+                case "claim":
+                    hlText = model.getFormatter().highlightClaim(acuText);
+                    break;
+                default:
+                    hlText = model.getFormatter().highlightPremise(acuText);
+                    break;
+            }
+            report = report.replace(acuText, hlText);
+        }
+
+        // Display report
+        this.textEditor.setText(report);
+        this.textEditor.setCaretPosition(caretPosition);
     }
 
 }

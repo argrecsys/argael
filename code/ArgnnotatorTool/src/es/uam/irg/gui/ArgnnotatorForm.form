@@ -85,7 +85,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="Argument Annotator Tool v0.8"/>
+    <Property name="title" type="java.lang.String" value="Argument Annotator Tool v0.9"/>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[1060, 500]"/>
     </Property>
