@@ -118,7 +118,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         menuAnnotator = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Argument Annotator Tool v0.8");
+        setTitle("Argument Annotator Tool v0.9");
         setMinimumSize(new java.awt.Dimension(1060, 500));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -389,8 +389,8 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         String aboutMsg = """
                           Argument Annotator Tool
                           
-                          Version: 0.8.5
-                          Date: 07/20/2022
+                          Version: 0.9.0
+                          Date: 07/21/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador
                           License: Apache License 2.0
                           Web site: https://argrecsys.github.io/arg-nnotator-tool 
@@ -412,6 +412,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     private void lstFilesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstFilesValueChanged
         // TODO add your handling code here:
         if (!lstFiles.isSelectionEmpty() && !evt.getValueIsAdjusting()) {
+            System.out.println("Selectd file: " + lstFiles.getSelectedValue());
             acuSelected.clear();
 
             // Display result data
@@ -419,8 +420,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
             displayResultData(data);
 
             // Display HTML report
-            String report = getSelectedReport(true);
-            displayReport(report, 0);
+            updateHtmlReport();
         }
     }//GEN-LAST:event_lstFilesValueChanged
 
@@ -430,29 +430,15 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
 
         if (propText != null && propText.length() > PROPOSITION_MIN_SIZE) {
 
-            // Step 1: add component
-            String propType = this.cmbArgCompType.getSelectedItem().toString();
+            // Add new argument component
             int propId = getNextPropositionId();
+            String propType = this.cmbArgCompType.getSelectedItem().toString();
             DefaultTableModel tblModel = (DefaultTableModel) this.tblArgComponents.getModel();
             tblModel.addRow(new Object[]{propId, propText, propType});
+            lblNumberArguments.setText("Number of argument component units: " + tblModel.getRowCount());
 
-            // Step 2: highlight component
-            String compType = cmbArgCompType.getSelectedItem().toString().toLowerCase();
-            String hlComp;
-
-            if (compType.contains("claim")) {
-                hlComp = model.getFormatter().highlightClaim(propText);
-            } else {
-                hlComp = model.getFormatter().highlightPremise(propText);
-            }
-
-            // Step 3: Update GUI
-            int caretPosition = this.textEditor.getCaretPosition();
-            String report = getSelectedReport(false);
-            report = report.replace(propText, hlComp);
-            displayReport(report, caretPosition);
-            setSelectedReport(report);
-            lblNumberArguments.setText("Number of argument component units: " + tblArgComponents.getRowCount());
+            // Display HTML report
+            updateHtmlReport();
         }
     }//GEN-LAST:event_btnAddArgumentActionPerformed
 
@@ -527,8 +513,14 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
                 DefaultTableModel tblModel = ((DefaultTableModel) tblArgComponents.getModel());
                 int acuId = (int) tblModel.getValueAt(row, 0);
                 if (!isAcuInRelation(acuId)) {
+
+                    // Remove argument component
                     tblModel.removeRow(row);
-                    lblNumberArguments.setText("Number of arguments: " + tblArgComponents.getRowCount());
+                    lblNumberArguments.setText("Number of arguments: " + tblModel.getRowCount());
+
+                    // Display HTML report
+                    updateHtmlReport();
+
                 } else {
                     JOptionPane.showMessageDialog(this, "This ACU cannot be eliminated, because it is part of an argumentative relation", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -638,17 +630,6 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     }
 
     /**
-     * Display report.
-     *
-     * @param report
-     * @param caretPosition
-     */
-    private void displayReport(String report, int caretPosition) {
-        this.textEditor.setText(report);
-        this.textEditor.setCaretPosition(caretPosition);
-    }
-
-    /**
      *
      * @return
      */
@@ -672,15 +653,11 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     }
 
     /**
-     *
-     * @param verbose
-     * @return
+     * 
+     * @return 
      */
-    private String getSelectedReport(boolean verbose) {
+    private String getSelectedReport() {
         String currFile = lstFiles.getSelectedValue() + "." + fileExtension;
-        if (verbose) {
-            System.out.println("Selectd file: " + currFile);
-        }
         String filepath = currDirectory + "\\" + currFile;
         String report = this.model.getFileReport(filepath, fileExtension);
         return report;
@@ -777,16 +754,6 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
 
     /**
      *
-     * @param report
-     */
-    private void setSelectedReport(String report) {
-        String currFile = lstFiles.getSelectedValue() + "." + fileExtension;
-        String filepath = currDirectory + "\\" + currFile;
-        this.model.setFileReport(report, filepath);
-    }
-
-    /**
-     *
      */
     private void setTablesLookAndFeel() {
 
@@ -825,6 +792,40 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         }
 
         this.menuAnnotator.setText("| Annotator: " + userName);
+    }
+
+    /**
+     * Display and update html report.
+     */
+    private void updateHtmlReport() {
+        String report = getSelectedReport();
+        int caretPosition = this.textEditor.getCaretPosition();
+
+        // Update report
+        DefaultTableModel acuModel = (DefaultTableModel) tblArgComponents.getModel();
+        String hlText;
+        String acuText;
+        String acuType;
+
+        for (int i = 0; i < acuModel.getRowCount(); i++) {
+            acuText = acuModel.getValueAt(i, 1).toString();
+            acuType = acuModel.getValueAt(i, 2).toString();
+
+            if (acuType.toLowerCase().equals("major claim")) {
+                hlText = model.getFormatter().highlightMajorClaim(acuText);
+
+            } else if (acuType.toLowerCase().equals("claim")) {
+                hlText = model.getFormatter().highlightClaim(acuText);
+
+            } else {
+                hlText = model.getFormatter().highlightPremise(acuText);
+            }
+            report = report.replace(acuText, hlText);
+        }
+
+        // Display report
+        this.textEditor.setText(report);
+        this.textEditor.setCaretPosition(caretPosition);
     }
 
 }

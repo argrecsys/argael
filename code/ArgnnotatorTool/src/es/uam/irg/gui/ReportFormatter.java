@@ -25,7 +25,6 @@ import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -85,7 +84,7 @@ public class ReportFormatter {
                 JSONObject json = new JSONObject(components[i]);
                 textValue = json.getString("text");
 
-                if (jsonContainsKey(json, "proposal_id")) {
+                if (FunctionUtils.jsonContainsKey(json, "proposal_id")) {
                     tagType = json.getString("info");
 
                     switch (tagType) {
@@ -139,11 +138,11 @@ public class ReportFormatter {
 
     /**
      *
-     * @param linker
+     * @param majorClaim
      * @return
      */
-    public String highlightLinker(String linker) {
-        return "<span style='padding:3px; background-color: #ABD2AC; font-style: italic;'>(" + linker + ")</span>";
+    public String highlightMajorClaim(String majorClaim) {
+        return "<span style='padding:3px; background-color: #ABD2AC;'>" + majorClaim + "</span>";
     }
 
     /**
@@ -168,23 +167,6 @@ public class ReportFormatter {
         result = result.replace("$TIME_ELAPSED$", "" + timeElapsed);
         result = result.replace("$CURRENT_TIME$", dtf.format(LocalDateTime.now()));
         result = result.replace("$CONTENT$", body);
-        return result;
-    }
-
-    /**
-     *
-     * @param json
-     * @param id
-     * @return
-     */
-    private boolean jsonContainsKey(JSONObject json, String id) {
-        boolean result = false;
-        try {
-            json.getString(id);
-            result = true;
-        } catch (JSONException ex) {
-
-        }
         return result;
     }
 
