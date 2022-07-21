@@ -96,6 +96,8 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         tblArgComponents = new javax.swing.JTable();
         scrollPane4 = new javax.swing.JScrollPane();
         tblArgRelations = new javax.swing.JTable();
+        scrollPane5 = new javax.swing.JScrollPane();
+        relationPreview = new javax.swing.JEditorPane();
         lblFileList = new javax.swing.JLabel();
         lblAnnotation = new javax.swing.JLabel();
         cmbArgCompType = new javax.swing.JComboBox<>();
@@ -109,6 +111,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         btnDeleteRelation = new javax.swing.JButton();
         lblNumberArguments = new javax.swing.JLabel();
         lblNumberRelations = new javax.swing.JLabel();
+        lblRelationPreview = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         mItemImportJsonl = new javax.swing.JMenuItem();
@@ -197,7 +200,17 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
             }
         });
         tblArgRelations.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblArgRelations.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblArgRelationsMouseClicked(evt);
+            }
+        });
         scrollPane4.setViewportView(tblArgRelations);
+
+        scrollPane5.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        relationPreview.setContentType(HTML_CONTENT_TYPE);
+        scrollPane5.setViewportView(relationPreview);
 
         lblFileList.setText("File list:");
 
@@ -244,6 +257,8 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         lblNumberArguments.setText("Number of argument component units (ACU): 0");
 
         lblNumberRelations.setText("Number of relations: 0");
+
+        lblRelationPreview.setText("Relation preview:");
 
         menuFile.setText("File");
 
@@ -330,28 +345,33 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
                         .addComponent(btnAddArgument)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(scrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE))
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblAddRelation)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbIntent, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAddRelation))
-                    .addComponent(scrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNumberArguments))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblDelete)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnDeleteComponent, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDeleteRelation))
-                    .addComponent(lblNumberRelations))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lblAddRelation)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(cmbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(cmbIntent, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnAddRelation))
+                                .addComponent(scrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblNumberArguments))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(scrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lblDelete)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(btnDeleteComponent, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnDeleteRelation))
+                                .addComponent(lblNumberRelations)))
+                        .addComponent(lblRelationPreview))
+                    .addComponent(scrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 664, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -373,15 +393,19 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
                 .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(scrollPane1)
-                    .addComponent(scrollPane2)
+                    .addComponent(scrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 582, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(scrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE)
+                            .addComponent(scrollPane3)
                             .addComponent(scrollPane4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNumberRelations)
-                            .addComponent(lblNumberArguments))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNumberArguments)
+                            .addComponent(lblNumberRelations))
+                        .addGap(18, 18, 18)
+                        .addComponent(lblRelationPreview)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(scrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -394,7 +418,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         String aboutMsg = """
                           Argument Annotator Tool
                           
-                          Version: 0.9.4
+                          Version: 0.9.6
                           Date: 07/21/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
@@ -562,6 +586,34 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mItemAnnoSaveActionPerformed
 
+    private void tblArgRelationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgRelationsMouseClicked
+        // TODO add your handling code here:
+        int row = tblArgRelations.rowAtPoint(evt.getPoint());
+
+        if (row >= 0) {
+            // Collect relation data
+            String text = "";
+            TableModel acuModel = tblArgComponents.getModel();
+            TableModel relModel = tblArgRelations.getModel();
+            int acuId1 = Integer.parseInt(relModel.getValueAt(row, 0).toString());
+            int acuId2 = Integer.parseInt(relModel.getValueAt(row, 1).toString());
+            String category = relModel.getValueAt(row, 2).toString();
+            String intent = relModel.getValueAt(row, 3).toString();
+            int acuIndex1 = getAcuIndexFromTable(acuModel, acuId1, 0);
+            int acuIndex2 = getAcuIndexFromTable(acuModel, acuId2, 0);
+
+            // Show relation
+            if (acuIndex1 >= 0 && acuIndex2 >= 0) {
+                String acuText1 = acuModel.getValueAt(acuIndex1, 1).toString();
+                String acuType1 = acuModel.getValueAt(acuIndex1, 2).toString();
+                String acuText2 = acuModel.getValueAt(acuIndex2, 1).toString();
+                String acuType2 = acuModel.getValueAt(acuIndex2, 2).toString();
+                text = String.format("[<b>%s</b>: %s] \u2190 [<b>%s</b>: %s] (<b>Relation</b>: \"%s\" and \"%s\")", acuType1, acuText1, acuType2, acuText2, category, intent);
+            }
+            relationPreview.setText(text);
+        }
+    }//GEN-LAST:event_tblArgRelationsMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddArgument;
     private javax.swing.JButton btnAddRelation;
@@ -576,6 +628,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     private javax.swing.JLabel lblFileList;
     private javax.swing.JLabel lblNumberArguments;
     private javax.swing.JLabel lblNumberRelations;
+    private javax.swing.JLabel lblRelationPreview;
     private javax.swing.JList<String> lstFiles;
     private javax.swing.JMenuItem mItemAbout;
     private javax.swing.JMenuItem mItemAnnoSave;
@@ -589,27 +642,26 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenu menuHelp;
     private javax.swing.JPopupMenu.Separator menuHorzSeparator;
+    private javax.swing.JEditorPane relationPreview;
     private javax.swing.JScrollPane scrollPane1;
     private javax.swing.JScrollPane scrollPane2;
     private javax.swing.JScrollPane scrollPane3;
     private javax.swing.JScrollPane scrollPane4;
+    private javax.swing.JScrollPane scrollPane5;
     private javax.swing.JTable tblArgComponents;
     private javax.swing.JTable tblArgRelations;
     private javax.swing.JEditorPane textEditor;
     // End of variables declaration//GEN-END:variables
 
     /**
-     *
+     * 
      * @param acuId
-     * @return
+     * @return 
      */
     private boolean isAcuInRelation(int acuId) {
         TableModel relModel = tblArgRelations.getModel();
-        for (int i = 0; i < relModel.getRowCount(); i++) {
-            if ((acuId == Integer.parseInt(relModel.getValueAt(i, 0).toString()))
-                    || (acuId == Integer.parseInt(relModel.getValueAt(i, 1).toString()))) {
-                return true;
-            }
+        if (getAcuIndexFromTable(relModel, acuId, 0) >= 0 || getAcuIndexFromTable(relModel, acuId, 1) >= 0) {
+            return true;
         }
         return false;
     }
@@ -657,6 +709,23 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
             }
         }
 
+    }
+
+    /**
+     *
+     * @param model
+     * @param acuId
+     * @param acuIdIx
+     * @return
+     */
+    private int getAcuIndexFromTable(TableModel model, int acuId, int acuIdIx) {
+        int ix = -1;
+        for (int i = 0; i < model.getRowCount() && ix == -1; i++) {
+            if (acuId == Integer.parseInt(model.getValueAt(i, acuIdIx).toString())) {
+                ix = i;
+            }
+        }
+        return ix;
     }
 
     /**

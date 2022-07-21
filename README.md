@@ -1,15 +1,20 @@
 # Argnnotator tool
-![version](https://img.shields.io/badge/version-0.9.4-blue)
+![version](https://img.shields.io/badge/version-0.9.6-blue)
 ![last-update](https://img.shields.io/badge/last_update-7/21/2022-orange)
 ![license](https://img.shields.io/badge/license-Apache_2.0-brightgreen)
 
 Tool for the annotation and evaluation of arguments in a massive and simple way.
 
+## Screenshots
+
+![arg-anno-gui](https://raw.githubusercontent.com/argrecsys/arg-nnotator-tool/main/images/win-form-1.png)
+
 ## Dependencies
 The implemented solution depends on or make use of the following libraries:
 - JDK 16
-- Snake YAML 1.9
 - JSON Java 20210307
+- OpenCSV 4.1
+- Snake YAML 1.9
 
 ## Authors
 Created on Jun 29, 2022  
