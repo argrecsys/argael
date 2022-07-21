@@ -68,7 +68,7 @@ public class ReportFormatter {
         int timeElapsed;
         String[] components = content.split("\n");
         int nRows = components.length;
-        System.out.println(nRows);
+        System.out.println(" - Number of sentences: " + nRows);
 
         // 1. Create user report from JSONL source
         start = System.nanoTime();
@@ -121,8 +121,7 @@ public class ReportFormatter {
 
         // Update final report
         result = getProposalsReport(body.toString(), nRows, timeElapsed);
-
-        FunctionUtils.printWithDatestamp(">> The results report has been created");
+        System.out.println(" - The results report has been created");
 
         return result;
     }

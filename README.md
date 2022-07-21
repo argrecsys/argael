@@ -1,5 +1,5 @@
 # Argnnotator tool
-![version](https://img.shields.io/badge/version-0.9.0-blue)
+![version](https://img.shields.io/badge/version-0.9.2-blue)
 ![last-update](https://img.shields.io/badge/last_update-7/21/2022-orange)
 ![license](https://img.shields.io/badge/license-Apache_2.0-brightgreen)
 
