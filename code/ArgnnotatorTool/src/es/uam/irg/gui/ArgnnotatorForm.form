@@ -131,31 +131,39 @@
                   </Group>
                   <Component id="scrollPane2" pref="480" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="lblAddRelation" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="cmbCategory" min="-2" pref="124" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="cmbIntent" min="-2" pref="84" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnAddRelation" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="lblAddRelation" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="cmbCategory" min="-2" pref="124" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="cmbIntent" min="-2" pref="84" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="btnAddRelation" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="scrollPane3" min="-2" pref="350" max="-2" attributes="0"/>
+                              <Component id="lblNumberArguments" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="scrollPane4" min="-2" pref="300" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="lblDelete" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="btnDeleteComponent" min="-2" pref="70" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="btnDeleteRelation" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="lblNumberRelations" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Component id="lblRelationPreview" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="scrollPane3" min="-2" pref="350" max="-2" attributes="0"/>
-                  <Component id="lblNumberArguments" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="scrollPane4" min="-2" pref="300" max="-2" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Component id="lblDelete" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnDeleteComponent" min="-2" pref="70" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnDeleteRelation" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="lblNumberRelations" min="-2" max="-2" attributes="0"/>
+                  <Component id="scrollPane5" min="-2" pref="664" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -181,17 +189,21 @@
               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="scrollPane1" max="32767" attributes="0"/>
-                  <Component id="scrollPane2" max="32767" attributes="0"/>
+                  <Component id="scrollPane2" pref="582" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="scrollPane3" pref="561" max="32767" attributes="0"/>
+                          <Component id="scrollPane3" max="32767" attributes="0"/>
                           <Component id="scrollPane4" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblNumberRelations" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNumberArguments" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblNumberArguments" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblNumberRelations" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="lblRelationPreview" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="scrollPane5" min="-2" pref="83" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -281,6 +293,28 @@
               </Table>
             </Property>
             <Property name="selectionMode" type="int" value="0"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblArgRelationsMouseClicked"/>
+          </Events>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JScrollPane" name="scrollPane5">
+      <Properties>
+        <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JEditorPane" name="relationPreview">
+          <Properties>
+            <Property name="contentType" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="HTML_CONTENT_TYPE" type="code"/>
+            </Property>
           </Properties>
         </Component>
       </SubComponents>
@@ -385,6 +419,11 @@
     <Component class="javax.swing.JLabel" name="lblNumberRelations">
       <Properties>
         <Property name="text" type="java.lang.String" value="Number of relations: 0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblRelationPreview">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Relation preview:"/>
       </Properties>
     </Component>
   </SubComponents>
