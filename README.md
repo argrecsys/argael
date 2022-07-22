@@ -1,6 +1,6 @@
-# Argnnotator tool
-![version](https://img.shields.io/badge/version-0.9.6-blue)
-![last-update](https://img.shields.io/badge/last_update-7/21/2022-orange)
+# Argument Annotation and Evaluation tool
+![version](https://img.shields.io/badge/version-0.9.8-blue)
+![last-update](https://img.shields.io/badge/last_update-7/22/2022-orange)
 ![license](https://img.shields.io/badge/license-Apache_2.0-brightgreen)
 
 Tool for the annotation and evaluation of arguments in a massive and simple way.

@@ -418,8 +418,8 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         String aboutMsg = """
                           Argument Annotator Tool
                           
-                          Version: 0.9.6
-                          Date: 07/21/2022
+                          Version: 0.9.8
+                          Date: 07/22/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
                           Web site: https://argrecsys.github.io/arg-nnotator-tool 
@@ -654,9 +654,9 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     /**
-     * 
+     *
      * @param acuId
-     * @return 
+     * @return
      */
     private boolean isAcuInRelation(int acuId) {
         TableModel relModel = tblArgRelations.getModel();
