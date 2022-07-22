@@ -1,13 +1,13 @@
 # Argument Annotation and Evaluation tool
-![version](https://img.shields.io/badge/version-0.9.8-blue)
+![version](https://img.shields.io/badge/version-0.9.10-blue)
 ![last-update](https://img.shields.io/badge/last_update-7/22/2022-orange)
 ![license](https://img.shields.io/badge/license-Apache_2.0-brightgreen)
 
 Tool for the annotation and evaluation of arguments in a massive and simple way.
 
 ## Screenshots
-
-![arg-anno-gui](https://raw.githubusercontent.com/argrecsys/arg-nnotator-tool/main/images/win-form-1.png)
+- Annotation mode:  
+![arg-anno-gui](https://raw.githubusercontent.com/argrecsys/arg-nnotator-tool/main/images/form-annotation.png)
 
 ## Dependencies
 The implemented solution depends on or make use of the following libraries:
