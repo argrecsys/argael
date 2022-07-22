@@ -1,4 +1,4 @@
-# Argnnotator Tool
+# Argument Annotation and Evaluation tool
 
 Tool for the annotation and evaluation of arguments in a massive and simple way.
 
