@@ -23,7 +23,6 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +66,9 @@ public class IOManager {
         // Check if the specified file exists or not
         if (!StringUtils.isEmpty(content)) {
             String[] rows = content.split("\n");
-            annotators = new ArrayList<>(Arrays.asList(rows));
+            for (String user : rows) {
+                annotators.add(user.replace("\r", ""));
+            }
         }
 
         return annotators;
