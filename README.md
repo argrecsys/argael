@@ -6,7 +6,7 @@
 Tool for the annotation and evaluation of arguments in a massive and simple way.
 
 ## Screenshots
-- Annotation mode:  
+Annotation mode:  
 ![arg-anno-gui](https://raw.githubusercontent.com/argrecsys/arg-nnotator-tool/main/images/form-annotation.png)
 
 ## Dependencies
