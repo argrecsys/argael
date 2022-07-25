@@ -1,0 +1,11 @@
+{
+    "language": "es",
+    "anno_model": {
+        "categories": ["addition", "alternative", "comparison", "concession", "conclusion", "condition", "exemplification", "explanation", "goal", "opposition", "precision", "reason", "restatement", "result", "similarity", "summary"],
+        "components": ["major claim", "claim", "premise"],
+        "intents": ["support", "attack"]
+    },
+    "eval_model": {
+        "quality": ["low", "medium", "high"]
+    }
+}

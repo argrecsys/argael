@@ -556,7 +556,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           Argument Annotator Tool
                           
-                          Version: 0.9.12
+                          Version: 0.9.14
                           Date: 07/25/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
@@ -1070,8 +1070,8 @@ public class ArgaelForm extends javax.swing.JFrame {
      *
      */
     private void setAppUsers() {
-        String[] annotators = model.getAnnotatorList();
-        String result = (String) JOptionPane.showInputDialog(this, "Please, enter annotator name:", "Annotator Name", JOptionPane.PLAIN_MESSAGE, null, annotators, "");
+        String[] users = model.getUserList();
+        String result = (String) JOptionPane.showInputDialog(this, "Please, select the annotator:", "Selection", JOptionPane.PLAIN_MESSAGE, null, users, "");
 
         if (result != null && result.length() > 0) {
             userName = result;
@@ -1080,7 +1080,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         }
 
         this.menuUser.setText("| User: " + userName);
-        this.cmbEvaluators.setModel(new DefaultComboBoxModel(annotators));
+        this.cmbEvaluators.setModel(new DefaultComboBoxModel(users));
         this.cmbEvaluators.setSelectedItem(userName);
     }
 

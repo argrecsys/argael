@@ -54,28 +54,6 @@ public class IOManager {
 
     /**
      *
-     * @param filepath
-     * @return
-     */
-    public static List<String> readAnnotators(String filepath) {
-        List<String> annotators = new ArrayList<>();
-
-        // Get the file
-        String content = FileUtils.readFile(filepath);
-
-        // Check if the specified file exists or not
-        if (!StringUtils.isEmpty(content)) {
-            String[] rows = content.split("\n");
-            for (String user : rows) {
-                annotators.add(user.replace("\r", ""));
-            }
-        }
-
-        return annotators;
-    }
-
-    /**
-     *
      * @param folderPath
      * @return
      */
@@ -142,6 +120,28 @@ public class IOManager {
      */
     public static String readTextFile(String filepath) {
         return FileUtils.readFile(filepath);
+    }
+
+    /**
+     *
+     * @param filepath
+     * @return
+     */
+    public static List<String> readUsers(String filepath) {
+        List<String> users = new ArrayList<>();
+
+        // Get the file
+        String content = FileUtils.readFile(filepath);
+
+        // Check if the specified file exists or not
+        if (!StringUtils.isEmpty(content)) {
+            String[] rows = content.split("\n");
+            for (String user : rows) {
+                users.add(user.replace("\r", ""));
+            }
+        }
+
+        return users;
     }
 
     /**
