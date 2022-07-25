@@ -43,9 +43,9 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
 /**
- * Main GUI class.
+ * Argument annotation and evaluation form class (main GUI class.)
  */
-public class ArgnnotatorForm extends javax.swing.JFrame {
+public class ArgaelForm extends javax.swing.JFrame {
 
     // GUI constants
     private static final String HTML_CONTENT_TYPE = "text/html";
@@ -64,7 +64,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
     /**
      * Creates new form ArgnnotatorForm
      */
-    public ArgnnotatorForm() {
+    public ArgaelForm() {
         initComponents();
 
         this.currDirectory = "";
@@ -137,7 +137,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         menuUser = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Argument Annotator Tool v0.9");
+        setTitle("ARGAEL v0.9");
         setMinimumSize(new java.awt.Dimension(1111, 500));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -290,8 +290,12 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
                     .addComponent(scrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 722, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollPane5)
                     .addGroup(pnlAnnotationLayout.createSequentialGroup()
                         .addGroup(pnlAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNumberArguments)
+                            .addComponent(lblRelationPreview)
+                            .addComponent(scrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(pnlAnnotationLayout.createSequentialGroup()
                                 .addComponent(lblAddRelation)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -299,12 +303,10 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cmbIntent, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnAddRelation))
-                            .addComponent(lblNumberArguments)
-                            .addComponent(lblRelationPreview)
-                            .addComponent(scrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnAddRelation)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnlAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(scrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(pnlAnnotationLayout.createSequentialGroup()
                                 .addGroup(pnlAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(pnlAnnotationLayout.createSequentialGroup()
@@ -314,44 +316,39 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btnDeleteRelation))
                                     .addComponent(lblNumberRelations))
-                                .addGap(0, 124, Short.MAX_VALUE))
-                            .addComponent(scrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                    .addComponent(scrollPane5))
+                                .addGap(0, 124, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         pnlAnnotationLayout.setVerticalGroup(
             pnlAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAnnotationLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(pnlAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAnnotation)
+                    .addComponent(cmbArgCompType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddArgument)
+                    .addComponent(lblAddRelation)
+                    .addComponent(cmbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddRelation)
+                    .addComponent(cmbIntent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDelete)
+                    .addComponent(btnDeleteRelation)
+                    .addComponent(btnDeleteComponent))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlAnnotationLayout.createSequentialGroup()
-                        .addGroup(pnlAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblAnnotation)
-                            .addComponent(cmbArgCompType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAddArgument))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(scrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlAnnotationLayout.createSequentialGroup()
-                        .addGroup(pnlAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblAddRelation)
-                            .addComponent(cmbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAddRelation)
-                            .addComponent(cmbIntent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblDelete)
-                            .addComponent(btnDeleteRelation)
-                            .addComponent(btnDeleteComponent))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(pnlAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(scrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+                            .addComponent(scrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
                             .addComponent(scrollPane4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                         .addGroup(pnlAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNumberArguments)
                             .addComponent(lblNumberRelations))
                         .addGap(16, 16, 16)
                         .addComponent(lblRelationPreview)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(scrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(scrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(scrollPane2))
                 .addContainerGap())
         );
 
@@ -431,12 +428,13 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
                     .addGroup(pnlEvaluationLayout.createSequentialGroup()
                         .addComponent(scrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 902, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(scrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(scrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))
                     .addGroup(pnlEvaluationLayout.createSequentialGroup()
                         .addComponent(lblEvaluator)
                         .addGap(18, 18, 18)
-                        .addComponent(cmbEvaluators, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(cmbEvaluators, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         pnlEvaluationLayout.setVerticalGroup(
             pnlEvaluationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -558,11 +556,11 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         String aboutMsg = """
                           Argument Annotator Tool
                           
-                          Version: 0.9.10
-                          Date: 07/22/2022
+                          Version: 0.9.12
+                          Date: 07/25/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
-                          Web site: https://argrecsys.github.io/arg-nnotator-tool 
+                          Web site: https://argrecsys.github.io/argael/
                           """;
 
         JOptionPane.showMessageDialog(this, aboutMsg, "About", JOptionPane.INFORMATION_MESSAGE);
@@ -855,7 +853,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
             try {
                 acuModel.addRow(FunctionUtils.getSubArray(rowData, 0, 3));
             } catch (Exception ex) {
-                Logger.getLogger(ArgnnotatorForm.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ArgaelForm.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -868,7 +866,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
             try {
                 relModel.addRow(FunctionUtils.getSubArray(rowData, 0, 4));
             } catch (Exception ex) {
-                Logger.getLogger(ArgnnotatorForm.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ArgaelForm.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -935,7 +933,7 @@ public class ArgnnotatorForm extends javax.swing.JFrame {
         jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         jfc.setAcceptAllFileFilterUsed(false);
 
-        if (jfc.showOpenDialog(ArgnnotatorForm.this) == JFileChooser.APPROVE_OPTION) {
+        if (jfc.showOpenDialog(ArgaelForm.this) == JFileChooser.APPROVE_OPTION) {
             currDirectory = jfc.getSelectedFile().toString();
             List<String> files = model.readFilenamesInFolder(currDirectory, fileExtension);
             System.out.println(String.format(">> Directory: '%s' and number of uploaded files: %d", currDirectory, files.size()));
