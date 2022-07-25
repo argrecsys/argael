@@ -1,6 +1,22 @@
 # ARGAEL: ARGument Annotation and Evaluation tooL
 
-Tool for the annotation and evaluation of arguments in a massive and simple way.
+**ARGAEL** is an open source Java desktop application designed to maximize the experience and efficiency of the process of annotating and evaluating arguments in large text corpora.
+
+### Configuration
+The input parameters (<a href="https://github.com/argrecsys/argael/blob/main/code/Argael/Resources/config/params.json">params.json</a> file) of the tool are:
+```json
+{
+    "language": "es",
+    "anno_model": {
+        "categories": ["addition", "alternative", "comparison", "concession", "conclusion", "condition", "exemplification", "explanation", "goal", "opposition", "precision", "reason", "restatement", "result", "similarity", "summary"],
+        "components": ["major claim", "claim", "premise"],
+        "intents": ["support", "attack"]
+    },
+    "eval_model": {
+        "quality": ["low", "medium", "high"]
+    }
+}
+```
 
 ## Authors
 Created on Jun 29, 2022  

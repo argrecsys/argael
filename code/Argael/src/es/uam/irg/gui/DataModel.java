@@ -33,7 +33,7 @@ public class DataModel {
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private static final String DECIMAL_FORMAT = "0.000";
     private static final String LANG = "es";
-    private static final String USERS_FILEPATH = "Resources/config/annotators.txt";
+    private static final String USERS_FILEPATH = "Resources/config/users.txt";
 
     private final Map<String, String> files;
     private final ReportFormatter formatter;
@@ -46,15 +46,6 @@ public class DataModel {
         this.files = new HashMap<>();
         this.formatter = new ReportFormatter(DECIMAL_FORMAT, DATE_FORMAT);
         this.loadRelationTaxonomy();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String[] getAnnotatorList() {
-        List<String> annotators = IOManager.readAnnotators(USERS_FILEPATH);
-        return annotators.toArray(new String[0]);
     }
 
     /**
@@ -106,6 +97,15 @@ public class DataModel {
         });
 
         return subCategories;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String[] getUserList() {
+        List<String> annotators = IOManager.readUsers(USERS_FILEPATH);
+        return annotators.toArray(new String[0]);
     }
 
     /**
