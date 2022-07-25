@@ -1,13 +1,16 @@
-# Argument Annotation and Evaluation tool
-![version](https://img.shields.io/badge/version-0.9.10-blue)
-![last-update](https://img.shields.io/badge/last_update-7/22/2022-orange)
+# ARGAEL: ARGument Annotation and Evaluation tooL
+![version](https://img.shields.io/badge/version-0.9.12-blue)
+![last-update](https://img.shields.io/badge/last_update-7/25/2022-orange)
 ![license](https://img.shields.io/badge/license-Apache_2.0-brightgreen)
 
 Tool for the annotation and evaluation of arguments in a massive and simple way.
 
 ## Screenshots
-Annotation mode:  
-![arg-anno-gui](https://raw.githubusercontent.com/argrecsys/arg-nnotator-tool/main/images/form-annotation.png)
+Annotation view:  
+![argael-annotation](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-annotation-view.png)
+
+Evaluation view:
+![argael-evaluation](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-evaluation-view.png)
 
 ## Dependencies
 The implemented solution depends on or make use of the following libraries:
@@ -23,7 +26,7 @@ Created by:
 - <a href="http://arantxa.ii.uam.es/~cantador/" target="_blank">Iv&aacute;n Cantador</a>
 
 ## License
-This project is licensed under the terms of the <a href="https://github.com/argrecsys/arg-nnotator/blob/main/LICENSE">Apache License 2.0</a>.
+This project is licensed under the terms of the <a href="https://github.com/argrecsys/argael/blob/main/LICENSE">Apache License 2.0</a>.
 
 ## Acknowledgements
 This work was supported by the Spanish Ministry of Science and Innovation (PID2019-108965GB-I00).

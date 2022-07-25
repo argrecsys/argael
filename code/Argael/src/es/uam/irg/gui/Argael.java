@@ -20,10 +20,9 @@ package es.uam.irg.gui;
 import es.uam.irg.utils.FunctionUtils;
 
 /**
- *
- * @author Usuario
+ * Program main class.
  */
-public class ArgnnotatorTool {
+public class Argael {
 
     /**
      * @param args the command line arguments
@@ -32,8 +31,8 @@ public class ArgnnotatorTool {
         // TODO code application logic here
         showWinform();
     }
-    
-        /**
+
+    /**
      * Creates and displays the Argument-IR form.
      */
     private static void showWinform() {
@@ -45,15 +44,15 @@ public class ArgnnotatorTool {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ArgnnotatorForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ArgaelForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             FunctionUtils.printWithDatestamp(">> ARG-TOOL BEGINS");
-            new ArgnnotatorForm();
+            new ArgaelForm();
             FunctionUtils.printWithDatestamp(">> ARG-TOOL ENDS");
         });
     }
-    
+
 }
