@@ -554,10 +554,10 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void mItemAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemAboutActionPerformed
         // TODO add your handling code here:
         String aboutMsg = """
-                          Argument Annotator Tool
+                          ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 0.9.14
-                          Date: 07/25/2022
+                          Version: 0.9.16
+                          Date: 07/26/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
                           Web site: https://argrecsys.github.io/argael/
@@ -842,7 +842,7 @@ public class ArgaelForm extends javax.swing.JFrame {
      */
     private void displayResultData(Map<String, List<String[]>> data) {
         List<String[]> argCompUnits = data.get("acu");
-        List<String[]> relationList = data.get("rel");
+        List<String[]> relationList = data.get("aru");
 
         // Update arguments table
         lblNumberArguments.setText("Number of argument component units: " + (argCompUnits.size() - 1));
@@ -979,11 +979,13 @@ public class ArgaelForm extends javax.swing.JFrame {
                 relationList.add(new String[]{acuId1, acuId2, relType, relIntent, userName, dateStamp});
             }
 
-            header = new ArrayList<>(Arrays.asList("acu_id", "acu_text", "acu_type", "annotator", "timespam"));
+            // Save ACUs results
+            header = new ArrayList<>(Arrays.asList("acu_id", "acu_text", "acu_type", "annotator", "timestamp"));
             saveResults(fileName, "acu", header, argCompUnits);
 
-            header = new ArrayList<>(Arrays.asList("acu_id1", "acu_id2", "rel_type", "rel_intent", "annotator", "timespam"));
-            saveResults(fileName, "rel", header, relationList);
+            // Save ARUs results
+            header = new ArrayList<>(Arrays.asList("acu_id1", "acu_id2", "rel_type", "rel_intent", "annotator", "timestamp"));
+            saveResults(fileName, "aru", header, relationList);
         }
 
     }

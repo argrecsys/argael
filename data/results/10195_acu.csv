@@ -1,4 +1,4 @@
-"acu_id","acu_text","acu_type","annotator","timespam"
+"acu_id","acu_text","acu_type","annotator","timestamp"
 "1","La idea es que nuestros pequeños estén protegidos antes las radiaciones de las antenas de telecomunicaciones, sería sencillo de realizar por un pequeño equipo","Major claim","andres.segura","2022/07/22 18:19:34"
 "2","Nuestros pequeños son más sensibles a la radiación de los repetidores de telefonía","Claim","andres.segura","2022/07/22 18:19:34"
 "3","Las antenas de españa están cartografiadas por el ministerio de Industria y publicadas en esta herramienta","Premise","andres.segura","2022/07/22 18:19:34"
