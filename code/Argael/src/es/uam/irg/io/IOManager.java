@@ -23,9 +23,12 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Input-output manager class.
@@ -43,12 +46,13 @@ public class IOManager {
      */
     public static Map<String, List<String[]>> readAnnotationData(String directory, String currFile) {
         Map<String, List<String[]>> data = new HashMap<>();
-        String acuFile = directory + currFile + "_acu.csv";
-        String relFile = directory + currFile + "_rel.csv";
-        List<String[]> acuData = FileUtils.readCsvFile(acuFile);
-        List<String[]> relData = FileUtils.readCsvFile(relFile);
-        data.put("acu", acuData);
-        data.put("rel", relData);
+        Set<String> fileTypes = new HashSet<>(Arrays.asList(new String[]{"acu", "aru"}));
+
+        fileTypes.forEach(fileType -> {
+            String filePath = directory + currFile + "_" + fileType + ".csv";
+            data.put(fileType, FileUtils.readCsvFile(filePath));
+        });
+
         return data;
     }
 
