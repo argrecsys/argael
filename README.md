@@ -1,15 +1,17 @@
 # ARGAEL: ARGument Annotation and Evaluation tooL
 ![version](https://img.shields.io/badge/version-0.9.16-blue)
-![last-update](https://img.shields.io/badge/last_update-7/26/2022-orange)
+![last-update](https://img.shields.io/badge/last_update-7/27/2022-orange)
 ![license](https://img.shields.io/badge/license-Apache_2.0-brightgreen)
 
 **ARGAEL** is an open source Java desktop application designed to maximize the experience and efficiency of the process of annotating and evaluating arguments in large text corpora.
 
-## Screenshots
+## System
+ARGAEL is mainly composed of 2 views, which offer different functionalities and roles to the users.
+
 **Annotator view**. It allows in 3 simple steps, i) the annotation of argumentative component units (ACUs), ii) the annotation of argumentative relation units (ARUs), and iii) their initial validation.
 ![argael-annotation](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-annotation-view.png)
 
-**Evaluator view**.
+**Evaluator view**. It allows (in a simple, but straightforward way) the manual assessment of the quality of the argument units (components and relations) annotated by other users.
 ![argael-evaluation](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-evaluation-view.png)
 
 ## Dependencies
