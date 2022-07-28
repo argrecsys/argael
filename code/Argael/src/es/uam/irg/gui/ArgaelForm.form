@@ -231,13 +231,13 @@
                                           <Group type="102" attributes="0">
                                               <Component id="lblDelete" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="btnDeleteComponent" min="-2" pref="70" max="-2" attributes="0"/>
+                                              <Component id="btnDeleteACU" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="btnDeleteRelation" min="-2" max="-2" attributes="0"/>
+                                              <Component id="btnDeleteARU" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Component id="lblNumberRelations" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="0" pref="124" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="102" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -259,8 +259,8 @@
                           <Component id="btnAddRelation" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cmbIntent" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblDelete" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnDeleteRelation" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnDeleteComponent" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnDeleteARU" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnDeleteACU" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -269,12 +269,12 @@
                                   <Component id="scrollPane3" pref="492" max="32767" attributes="0"/>
                                   <Component id="scrollPane4" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="13" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="lblNumberArguments" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblNumberRelations" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                              <EmptySpace pref="23" max="32767" attributes="0"/>
                               <Component id="lblRelationPreview" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="scrollPane5" min="-2" pref="95" max="-2" attributes="0"/>
@@ -396,7 +396,7 @@
             </Container>
             <Component class="javax.swing.JLabel" name="lblNumberArguments">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Number of argument component units (ACU): 0"/>
+                <Property name="text" type="java.lang.String" value="Number of argument component units (ACUs): 0"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblDelete">
@@ -404,20 +404,20 @@
                 <Property name="text" type="java.lang.String" value="Delete:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="btnDeleteComponent">
+            <Component class="javax.swing.JButton" name="btnDeleteACU">
               <Properties>
                 <Property name="text" type="java.lang.String" value="ACU"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteComponentActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteACUActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnDeleteRelation">
+            <Component class="javax.swing.JButton" name="btnDeleteARU">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Relation"/>
+                <Property name="text" type="java.lang.String" value="ARU"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteRelationActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteARUActionPerformed"/>
               </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="scrollPane4">
@@ -447,7 +447,7 @@
             </Container>
             <Component class="javax.swing.JLabel" name="lblNumberRelations">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Number of relations: 0"/>
+                <Property name="text" type="java.lang.String" value="Number of argument relation units (ARUs): 0"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblRelationPreview">

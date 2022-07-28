@@ -107,8 +107,8 @@ public class ArgaelForm extends javax.swing.JFrame {
         tblArgComponents = new javax.swing.JTable();
         lblNumberArguments = new javax.swing.JLabel();
         lblDelete = new javax.swing.JLabel();
-        btnDeleteComponent = new javax.swing.JButton();
-        btnDeleteRelation = new javax.swing.JButton();
+        btnDeleteACU = new javax.swing.JButton();
+        btnDeleteARU = new javax.swing.JButton();
         scrollPane4 = new javax.swing.JScrollPane();
         tblArgRelations = new javax.swing.JTable();
         lblNumberRelations = new javax.swing.JLabel();
@@ -215,21 +215,21 @@ public class ArgaelForm extends javax.swing.JFrame {
         });
         scrollPane3.setViewportView(tblArgComponents);
 
-        lblNumberArguments.setText("Number of argument component units (ACU): 0");
+        lblNumberArguments.setText("Number of argument component units (ACUs): 0");
 
         lblDelete.setText("Delete:");
 
-        btnDeleteComponent.setText("ACU");
-        btnDeleteComponent.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteACU.setText("ACU");
+        btnDeleteACU.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteComponentActionPerformed(evt);
+                btnDeleteACUActionPerformed(evt);
             }
         });
 
-        btnDeleteRelation.setText("Relation");
-        btnDeleteRelation.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteARU.setText("ARU");
+        btnDeleteARU.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteRelationActionPerformed(evt);
+                btnDeleteARUActionPerformed(evt);
             }
         });
 
@@ -264,7 +264,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         });
         scrollPane4.setViewportView(tblArgRelations);
 
-        lblNumberRelations.setText("Number of relations: 0");
+        lblNumberRelations.setText("Number of argument relation units (ARUs): 0");
 
         lblRelationPreview.setText("Relation preview");
 
@@ -312,11 +312,11 @@ public class ArgaelForm extends javax.swing.JFrame {
                                     .addGroup(pnlAnnotationLayout.createSequentialGroup()
                                         .addComponent(lblDelete)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btnDeleteComponent, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnDeleteACU)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnDeleteRelation))
+                                        .addComponent(btnDeleteARU))
                                     .addComponent(lblNumberRelations))
-                                .addGap(0, 124, Short.MAX_VALUE)))))
+                                .addGap(0, 102, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         pnlAnnotationLayout.setVerticalGroup(
@@ -332,19 +332,19 @@ public class ArgaelForm extends javax.swing.JFrame {
                     .addComponent(btnAddRelation)
                     .addComponent(cmbIntent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblDelete)
-                    .addComponent(btnDeleteRelation)
-                    .addComponent(btnDeleteComponent))
+                    .addComponent(btnDeleteARU)
+                    .addComponent(btnDeleteACU))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlAnnotationLayout.createSequentialGroup()
                         .addGroup(pnlAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(scrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
                             .addComponent(scrollPane4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNumberArguments)
                             .addComponent(lblNumberRelations))
-                        .addGap(16, 16, 16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                         .addComponent(lblRelationPreview)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(scrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -556,8 +556,8 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 0.9.16
-                          Date: 07/26/2022
+                          Version: 0.9.17
+                          Date: 07/28/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
                           Web site: https://argrecsys.github.io/argael/
@@ -654,21 +654,21 @@ public class ArgaelForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tblArgRelationsMouseClicked
 
-    private void btnDeleteRelationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteRelationActionPerformed
+    private void btnDeleteARUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteARUActionPerformed
         // TODO add your handling code here:
         if (tblArgRelations.getRowCount() > 0) {
             int row = tblArgRelations.getSelectedRow();
 
             if (row >= 0) {
                 ((DefaultTableModel) tblArgRelations.getModel()).removeRow(row);
-                lblNumberRelations.setText("Number of relations: " + tblArgRelations.getRowCount());
+                updateCounterLabels();
                 relationPreview.setText("");
                 isDirty = true;
             }
         }
-    }//GEN-LAST:event_btnDeleteRelationActionPerformed
+    }//GEN-LAST:event_btnDeleteARUActionPerformed
 
-    private void btnDeleteComponentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteComponentActionPerformed
+    private void btnDeleteACUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteACUActionPerformed
         // TODO add your handling code here:
         if (tblArgComponents.getRowCount() > 0) {
             int row = tblArgComponents.getSelectedRow();
@@ -681,10 +681,10 @@ public class ArgaelForm extends javax.swing.JFrame {
 
                     // Remove argument component
                     acuModel.removeRow(row);
-                    lblNumberArguments.setText("Number of arguments: " + acuModel.getRowCount());
 
                     // Display HTML report
                     updateHtmlReport();
+                    updateCounterLabels();
                     isDirty = true;
 
                 } else {
@@ -692,7 +692,7 @@ public class ArgaelForm extends javax.swing.JFrame {
                 }
             }
         }
-    }//GEN-LAST:event_btnDeleteComponentActionPerformed
+    }//GEN-LAST:event_btnDeleteACUActionPerformed
 
     private void tblArgComponentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgComponentsMouseClicked
         // TODO add your handling code here:
@@ -722,7 +722,7 @@ public class ArgaelForm extends javax.swing.JFrame {
 
                 DefaultTableModel relModel = (DefaultTableModel) tblArgRelations.getModel();
                 relModel.addRow(new Object[]{acuId1, acuId2, category, intent});
-                lblNumberRelations.setText("Number of relations: " + tblArgRelations.getRowCount());
+                updateCounterLabels();
 
                 tblArgComponents.clearSelection();
                 tblArgRelations.clearSelection();
@@ -748,7 +748,7 @@ public class ArgaelForm extends javax.swing.JFrame {
                 String propType = this.cmbArgCompType.getSelectedItem().toString();
                 DefaultTableModel tblModel = (DefaultTableModel) this.tblArgComponents.getModel();
                 tblModel.addRow(new Object[]{propId, propText, propType});
-                lblNumberArguments.setText("Number of argument component units: " + tblModel.getRowCount());
+                updateCounterLabels();
 
                 // Display HTML report
                 updateHtmlReport();
@@ -768,8 +768,8 @@ public class ArgaelForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddArgument;
     private javax.swing.JButton btnAddRelation;
-    private javax.swing.JButton btnDeleteComponent;
-    private javax.swing.JButton btnDeleteRelation;
+    private javax.swing.JButton btnDeleteACU;
+    private javax.swing.JButton btnDeleteARU;
     private javax.swing.JComboBox<String> cmbArgCompType;
     private javax.swing.JComboBox<String> cmbCategory;
     private javax.swing.JComboBox<String> cmbEvaluators;
@@ -843,9 +843,9 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void displayResultData(Map<String, List<String[]>> data) {
         List<String[]> argCompUnits = data.get("acu");
         List<String[]> relationList = data.get("aru");
+        int nAC = 0;
 
         // Update arguments table
-        lblNumberArguments.setText("Number of argument component units: " + (argCompUnits.size() - 1));
         DefaultTableModel acuModel = (DefaultTableModel) tblArgComponents.getModel();
         acuModel.setRowCount(0);
         for (int i = 1; i < argCompUnits.size(); i++) {
@@ -858,7 +858,6 @@ public class ArgaelForm extends javax.swing.JFrame {
         }
 
         // Update relations table
-        lblNumberRelations.setText("Number of relations: " + (relationList.size() - 1));
         DefaultTableModel relModel = (DefaultTableModel) tblArgRelations.getModel();
         relModel.setRowCount(0);
         for (int i = 1; i < relationList.size(); i++) {
@@ -870,6 +869,7 @@ public class ArgaelForm extends javax.swing.JFrame {
             }
         }
 
+        updateCounterLabels();
     }
 
     /**
@@ -945,6 +945,14 @@ public class ArgaelForm extends javax.swing.JFrame {
                 lstFiles.setModel(listModel);
             }
         }
+    }
+
+    /**
+     *
+     */
+    private void updateCounterLabels() {
+        lblNumberArguments.setText("Number of argument component units (ACUs): " + tblArgComponents.getRowCount());
+        lblNumberRelations.setText("Number of argument relation units (ARUs): " + tblArgRelations.getRowCount());
     }
 
     /**
