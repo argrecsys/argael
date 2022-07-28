@@ -238,14 +238,14 @@ public class ArgaelForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ACU 1", "ACU 2", "Relation Type", "Intent"
+                "ARU Id", "ACU 1", "ACU 2", "Relation Type", "Intent"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -287,15 +287,11 @@ public class ArgaelForm extends javax.swing.JFrame {
                         .addComponent(cmbArgCompType, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAddArgument))
-                    .addComponent(scrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 722, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(scrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(pnlAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrollPane5)
                     .addGroup(pnlAnnotationLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
                         .addGroup(pnlAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNumberArguments)
-                            .addComponent(lblRelationPreview)
-                            .addComponent(scrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(pnlAnnotationLayout.createSequentialGroup()
                                 .addComponent(lblAddRelation)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -303,7 +299,9 @@ public class ArgaelForm extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cmbIntent, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnAddRelation)))
+                                .addComponent(btnAddRelation))
+                            .addComponent(scrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNumberArguments))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnlAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(scrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -316,7 +314,12 @@ public class ArgaelForm extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btnDeleteARU))
                                     .addComponent(lblNumberRelations))
-                                .addGap(0, 102, Short.MAX_VALUE)))))
+                                .addGap(0, 136, Short.MAX_VALUE))))
+                    .addGroup(pnlAnnotationLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(scrollPane5)
+                            .addComponent(lblRelationPreview))))
                 .addContainerGap())
         );
         pnlAnnotationLayout.setVerticalGroup(
@@ -556,7 +559,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 0.9.17
+                          Version: 0.9.18
                           Date: 07/28/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
@@ -635,10 +638,10 @@ public class ArgaelForm extends javax.swing.JFrame {
             String text = "";
             TableModel acuModel = tblArgComponents.getModel();
             TableModel relModel = tblArgRelations.getModel();
-            int acuId1 = Integer.parseInt(relModel.getValueAt(row, 0).toString());
-            int acuId2 = Integer.parseInt(relModel.getValueAt(row, 1).toString());
-            String category = relModel.getValueAt(row, 2).toString();
-            String intent = relModel.getValueAt(row, 3).toString();
+            int acuId1 = Integer.parseInt(relModel.getValueAt(row, 1).toString());
+            int acuId2 = Integer.parseInt(relModel.getValueAt(row, 2).toString());
+            String category = relModel.getValueAt(row, 3).toString();
+            String intent = relModel.getValueAt(row, 4).toString();
             int acuIndex1 = getAcuIndexFromTable(acuModel, acuId1, 0);
             int acuIndex2 = getAcuIndexFromTable(acuModel, acuId2, 0);
 
@@ -717,11 +720,12 @@ public class ArgaelForm extends javax.swing.JFrame {
             int acuId2 = Integer.parseInt(acuModel.getValueAt(selected[1], 0).toString());
 
             if (cmbCategory.getSelectedIndex() > 0 && cmbIntent.getSelectedIndex() > 0) {
+                int aruId = getNextRelationId();
                 String category = cmbCategory.getSelectedItem().toString();
                 String intent = cmbIntent.getSelectedItem().toString();
 
                 DefaultTableModel relModel = (DefaultTableModel) tblArgRelations.getModel();
-                relModel.addRow(new Object[]{acuId1, acuId2, category, intent});
+                relModel.addRow(new Object[]{aruId, acuId1, acuId2, category, intent});
                 updateCounterLabels();
 
                 tblArgComponents.clearSelection();
@@ -863,7 +867,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         for (int i = 1; i < relationList.size(); i++) {
             String[] rowData = relationList.get(i);
             try {
-                relModel.addRow(FunctionUtils.getSubArray(rowData, 0, 4));
+                relModel.addRow(FunctionUtils.getSubArray(rowData, 0, 5));
             } catch (Exception ex) {
                 Logger.getLogger(ArgaelForm.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -898,6 +902,19 @@ public class ArgaelForm extends javax.swing.JFrame {
         int nRows = this.tblArgComponents.getRowCount();
         if (nRows > 0) {
             propNextId = Integer.parseInt(this.tblArgComponents.getModel().getValueAt(nRows - 1, 0).toString()) + 1;
+        }
+        return propNextId;
+    }
+
+    /**
+     *
+     * @return
+     */
+    private int getNextRelationId() {
+        int propNextId = 1;
+        int nRows = this.tblArgRelations.getRowCount();
+        if (nRows > 0) {
+            propNextId = Integer.parseInt(this.tblArgRelations.getModel().getValueAt(nRows - 1, 0).toString()) + 1;
         }
         return propNextId;
     }
@@ -979,12 +996,13 @@ public class ArgaelForm extends javax.swing.JFrame {
             // Loop through the rows
             TableModel relModel = tblArgRelations.getModel();
             for (int i = 0; i < relModel.getRowCount(); i++) {
-                String acuId1 = relModel.getValueAt(i, 0).toString();
-                String acuId2 = relModel.getValueAt(i, 1).toString();
-                String relType = relModel.getValueAt(i, 2).toString();
-                String relIntent = relModel.getValueAt(i, 3).toString();
+                String aruId = relModel.getValueAt(i, 0).toString();
+                String acuId1 = relModel.getValueAt(i, 1).toString();
+                String acuId2 = relModel.getValueAt(i, 2).toString();
+                String relType = relModel.getValueAt(i, 3).toString();
+                String relIntent = relModel.getValueAt(i, 4).toString();
                 String dateStamp = dateFormat.format(new Date());
-                relationList.add(new String[]{acuId1, acuId2, relType, relIntent, userName, dateStamp});
+                relationList.add(new String[]{aruId, acuId1, acuId2, relType, relIntent, userName, dateStamp});
             }
 
             // Save ACUs results
@@ -992,7 +1010,7 @@ public class ArgaelForm extends javax.swing.JFrame {
             saveResults(fileName, "acu", header, argCompUnits);
 
             // Save ARUs results
-            header = new ArrayList<>(Arrays.asList("acu_id1", "acu_id2", "rel_type", "rel_intent", "annotator", "timestamp"));
+            header = new ArrayList<>(Arrays.asList("aru_id", "acu_id1", "acu_id2", "rel_type", "rel_intent", "annotator", "timestamp"));
             saveResults(fileName, "aru", header, relationList);
         }
 
@@ -1037,7 +1055,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         colModel = tblArgComponents.getColumnModel();
         colModel.getColumn(0).setPreferredWidth(50);
         colModel.getColumn(0).setCellRenderer(centerRenderer);
-        colModel.getColumn(1).setPreferredWidth(222);
+        colModel.getColumn(1).setPreferredWidth(210);
         colModel.getColumn(2).setPreferredWidth(90);
         colModel.getColumn(2).setCellRenderer(centerRenderer);
 
@@ -1047,10 +1065,12 @@ public class ArgaelForm extends javax.swing.JFrame {
         colModel.getColumn(0).setCellRenderer(centerRenderer);
         colModel.getColumn(1).setPreferredWidth(50);
         colModel.getColumn(1).setCellRenderer(centerRenderer);
-        colModel.getColumn(2).setPreferredWidth(126);
+        colModel.getColumn(2).setPreferredWidth(50);
         colModel.getColumn(2).setCellRenderer(centerRenderer);
-        colModel.getColumn(3).setPreferredWidth(90);
+        colModel.getColumn(3).setPreferredWidth(110);
         colModel.getColumn(3).setCellRenderer(centerRenderer);
+        colModel.getColumn(4).setPreferredWidth(90);
+        colModel.getColumn(4).setCellRenderer(centerRenderer);
 
         // Table 3: Evaluation Argument Component Units
         colModel = tblEvaComponents.getColumnModel();
