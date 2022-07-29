@@ -69,11 +69,12 @@ public class FileUtils {
     }
 
     /**
-     *
+     * 
      * @param filepath
-     * @return
+     * @param withHeader
+     * @return 
      */
-    public static List<String[]> readCsvFile(String filepath) {
+    public static List<String[]> readCsvFile(String filepath, boolean withHeader) {
         List<String[]> csvFile = new ArrayList<>();
         File file = new File(filepath);
 
@@ -81,6 +82,9 @@ public class FileUtils {
             try {
                 FileReader inputFile = new FileReader(file);
                 try ( CSVReader reader = new CSVReader(inputFile)) {
+                    if (!withHeader) {
+                        reader.readNext();
+                    }
                     csvFile = reader.readAll();
                 }
 

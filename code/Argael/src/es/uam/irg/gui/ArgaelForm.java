@@ -59,7 +59,7 @@ public class ArgaelForm extends javax.swing.JFrame {
     private String currEntity;
     private boolean isDirty;
     private final DataModel model;
-    private final Queue<Integer> acuSelected;
+    private final Queue<Integer> acSelected;
     private String fileExtension;
     private String userName;
 
@@ -78,7 +78,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         this.currEntity = "";
         this.isDirty = false;
         this.model = new DataModel(components, relCategories, relIntents, qualityMetrics);
-        this.acuSelected = new LinkedList<>();
+        this.acSelected = new LinkedList<>();
         this.fileExtension = "";
 
         this.setTablesLookAndFeel();
@@ -101,12 +101,12 @@ public class ArgaelForm extends javax.swing.JFrame {
         lblFileList = new javax.swing.JLabel();
         tabbedPane = new javax.swing.JTabbedPane();
         pnlAnnotation = new javax.swing.JPanel();
-        lblAnnotation = new javax.swing.JLabel();
+        lblAddArgComp = new javax.swing.JLabel();
         cmbArgCompType = new javax.swing.JComboBox<>();
         btnAddArgument = new javax.swing.JButton();
         scrollPane2 = new javax.swing.JScrollPane();
         textEditor = new javax.swing.JEditorPane();
-        lblAddRelation = new javax.swing.JLabel();
+        lblAddArgRel = new javax.swing.JLabel();
         cmbCategory = new javax.swing.JComboBox<>();
         cmbIntent = new javax.swing.JComboBox<>();
         btnAddRelation = new javax.swing.JButton();
@@ -114,8 +114,8 @@ public class ArgaelForm extends javax.swing.JFrame {
         tblArgComponents = new javax.swing.JTable();
         lblNumberArguments = new javax.swing.JLabel();
         lblDelete = new javax.swing.JLabel();
-        btnDeleteACU = new javax.swing.JButton();
-        btnDeleteARU = new javax.swing.JButton();
+        btnDeleteAC = new javax.swing.JButton();
+        btnDeleteAR = new javax.swing.JButton();
         scrollPane4 = new javax.swing.JScrollPane();
         tblArgRelations = new javax.swing.JTable();
         lblNumberRelations = new javax.swing.JLabel();
@@ -125,14 +125,14 @@ public class ArgaelForm extends javax.swing.JFrame {
         pnlEvaluation = new javax.swing.JPanel();
         lblEvaluator = new javax.swing.JLabel();
         cmbEvaluators = new javax.swing.JComboBox<>();
+        lblNumberArguments1 = new javax.swing.JLabel();
+        lblNumberRelations1 = new javax.swing.JLabel();
         scrollPane6 = new javax.swing.JScrollPane();
         tblEvaComponents = new javax.swing.JTable();
         scrollPane7 = new javax.swing.JScrollPane();
         tblEvaRelations = new javax.swing.JTable();
         scrollPane8 = new javax.swing.JScrollPane();
         txtEvaluationPreview = new javax.swing.JEditorPane();
-        lblNumberArguments1 = new javax.swing.JLabel();
-        lblNumberRelations1 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         mItemImportJsonl = new javax.swing.JMenuItem();
@@ -167,7 +167,7 @@ public class ArgaelForm extends javax.swing.JFrame {
 
         lblFileList.setText("File list:");
 
-        lblAnnotation.setText("Annotate AC:");
+        lblAddArgComp.setText("Annotate AC:");
 
         btnAddArgument.setText("Add");
         btnAddArgument.addActionListener(new java.awt.event.ActionListener() {
@@ -180,7 +180,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         textEditor.setContentType(HTML_CONTENT_TYPE);
         scrollPane2.setViewportView(textEditor);
 
-        lblAddRelation.setText("Add relation:");
+        lblAddArgRel.setText("Annotate AR:");
 
         btnAddRelation.setText("Add");
         btnAddRelation.addActionListener(new java.awt.event.ActionListener() {
@@ -224,17 +224,17 @@ public class ArgaelForm extends javax.swing.JFrame {
 
         lblDelete.setText("Delete:");
 
-        btnDeleteACU.setText("AC");
-        btnDeleteACU.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteAC.setText("AC");
+        btnDeleteAC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteACUActionPerformed(evt);
+                btnDeleteACActionPerformed(evt);
             }
         });
 
-        btnDeleteARU.setText("AR");
-        btnDeleteARU.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteAR.setText("AR");
+        btnDeleteAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteARUActionPerformed(evt);
+                btnDeleteARActionPerformed(evt);
             }
         });
 
@@ -287,7 +287,7 @@ public class ArgaelForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlAnnotationLayout.createSequentialGroup()
-                        .addComponent(lblAnnotation)
+                        .addComponent(lblAddArgComp)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cmbArgCompType, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -298,7 +298,7 @@ public class ArgaelForm extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addGroup(pnlAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlAnnotationLayout.createSequentialGroup()
-                                .addComponent(lblAddRelation)
+                                .addComponent(lblAddArgRel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(cmbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -315,9 +315,9 @@ public class ArgaelForm extends javax.swing.JFrame {
                                     .addGroup(pnlAnnotationLayout.createSequentialGroup()
                                         .addComponent(lblDelete)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btnDeleteACU)
+                                        .addComponent(btnDeleteAC)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnDeleteARU))
+                                        .addComponent(btnDeleteAR))
                                     .addComponent(lblNumberRelations))
                                 .addGap(0, 164, Short.MAX_VALUE))))
                     .addGroup(pnlAnnotationLayout.createSequentialGroup()
@@ -332,16 +332,16 @@ public class ArgaelForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAnnotationLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblAnnotation)
+                    .addComponent(lblAddArgComp)
                     .addComponent(cmbArgCompType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAddArgument)
-                    .addComponent(lblAddRelation)
+                    .addComponent(lblAddArgRel)
                     .addComponent(cmbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAddRelation)
                     .addComponent(cmbIntent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblDelete)
-                    .addComponent(btnDeleteARU)
-                    .addComponent(btnDeleteACU))
+                    .addComponent(btnDeleteAR)
+                    .addComponent(btnDeleteAC))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlAnnotationLayout.createSequentialGroup()
@@ -363,6 +363,10 @@ public class ArgaelForm extends javax.swing.JFrame {
         tabbedPane.addTab("Annotation", pnlAnnotation);
 
         lblEvaluator.setText("Evaluator:");
+
+        lblNumberArguments1.setText("Argument components (ACs)");
+
+        lblNumberRelations1.setText("Argument relations (ARs)");
 
         tblEvaComponents.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -431,10 +435,6 @@ public class ArgaelForm extends javax.swing.JFrame {
         txtEvaluationPreview.setEditable(false);
         txtEvaluationPreview.setContentType(HTML_CONTENT_TYPE);
         scrollPane8.setViewportView(txtEvaluationPreview);
-
-        lblNumberArguments1.setText("Argument components (ACs)");
-
-        lblNumberRelations1.setText("Argument relations (ARs)");
 
         javax.swing.GroupLayout pnlEvaluationLayout = new javax.swing.GroupLayout(pnlEvaluation);
         pnlEvaluation.setLayout(pnlEvaluationLayout);
@@ -592,7 +592,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 0.9.24
+                          Version: 0.9.28
                           Date: 07/29/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
@@ -624,7 +624,7 @@ public class ArgaelForm extends javax.swing.JFrame {
             }
 
             // Get current entity (file, proposal, etc.)
-            acuSelected.clear();
+            acSelected.clear();
             currEntity = lstFiles.getSelectedValue();
             System.out.println(">> Selectd file: " + currEntity);
 
@@ -655,68 +655,71 @@ public class ArgaelForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_mItemExportActionPerformed
 
-    private void btnDeleteARUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteARUActionPerformed
+    private void btnDeleteARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteARActionPerformed
         // TODO add your handling code here:
         if (tblArgRelations.getRowCount() > 0) {
             int row = tblArgRelations.getSelectedRow();
 
             if (row >= 0) {
                 ((DefaultTableModel) tblArgRelations.getModel()).removeRow(row);
+                ((DefaultTableModel) tblEvaRelations.getModel()).removeRow(row);
                 updateCounterLabels();
                 txtAnnotationPreview.setText("");
+                txtEvaluationPreview.setText("");
                 isDirty = true;
             }
         }
-    }//GEN-LAST:event_btnDeleteARUActionPerformed
+    }//GEN-LAST:event_btnDeleteARActionPerformed
 
-    private void btnDeleteACUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteACUActionPerformed
+    private void btnDeleteACActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteACActionPerformed
         // TODO add your handling code here:
         if (tblArgComponents.getRowCount() > 0) {
             int row = tblArgComponents.getSelectedRow();
 
             if (row >= 0) {
-                DefaultTableModel acuModel = (DefaultTableModel) tblArgComponents.getModel();
-                int acuId = Integer.parseInt(acuModel.getValueAt(row, 0).toString());
+                int acId = Integer.parseInt(tblArgComponents.getModel().getValueAt(row, 0).toString());
 
-                if (!isAcuInRelation(acuId)) {
+                if (!isAcInRelation(acId)) {
 
                     // Remove argument component
-                    acuModel.removeRow(row);
+                    ((DefaultTableModel) tblArgComponents.getModel()).removeRow(row);
+                    ((DefaultTableModel) tblEvaComponents.getModel()).removeRow(row);
+                    updateCounterLabels();
 
                     // Display HTML report
                     updateHtmlReport();
-                    updateCounterLabels();
                     isDirty = true;
 
                 } else {
-                    JOptionPane.showMessageDialog(this, "This ACU cannot be eliminated, because it is part of an argumentative relation", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "This AC cannot be eliminated, because it is part of an argumentative relation", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
-    }//GEN-LAST:event_btnDeleteACUActionPerformed
+    }//GEN-LAST:event_btnDeleteACActionPerformed
 
     private void btnAddRelationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRelationActionPerformed
         // TODO add your handling code here:
-        if (acuSelected.size() == 2) {
+        if (acSelected.size() == 2) {
             Integer[] selected = new Integer[2];
-            selected = acuSelected.toArray(selected);
+            selected = acSelected.toArray(selected);
 
-            TableModel acuModel = tblArgComponents.getModel();
-            int acuId1 = Integer.parseInt(acuModel.getValueAt(selected[0], 0).toString());
-            int acuId2 = Integer.parseInt(acuModel.getValueAt(selected[1], 0).toString());
+            TableModel acModel = tblArgComponents.getModel();
+            int acId1 = Integer.parseInt(acModel.getValueAt(selected[0], 0).toString());
+            int acId2 = Integer.parseInt(acModel.getValueAt(selected[1], 0).toString());
 
             if (cmbCategory.getSelectedIndex() > 0 && cmbIntent.getSelectedIndex() > 0) {
-                int aruId = getNextRelationId();
+                int arId = getNextRelationId();
                 String category = cmbCategory.getSelectedItem().toString();
                 String intent = cmbIntent.getSelectedItem().toString();
 
-                DefaultTableModel relModel = (DefaultTableModel) tblArgRelations.getModel();
-                relModel.addRow(new Object[]{aruId, acuId1, acuId2, category, intent});
+                Object[] newRow = new Object[]{arId, acId1, acId2, category, intent};
+                ((DefaultTableModel) this.tblArgRelations.getModel()).addRow(newRow);
+                ((DefaultTableModel) this.tblEvaRelations.getModel()).addRow(newRow);
                 updateCounterLabels();
 
                 tblArgComponents.clearSelection();
                 tblArgRelations.clearSelection();
-                acuSelected.clear();
+                acSelected.clear();
                 isDirty = true;
             } else {
                 JOptionPane.showMessageDialog(this, "You must select the category and main intent of the relation.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -736,8 +739,9 @@ public class ArgaelForm extends javax.swing.JFrame {
 
                 // Add new argument component
                 int propId = getNextPropositionId();
-                DefaultTableModel tblModel = (DefaultTableModel) this.tblArgComponents.getModel();
-                tblModel.addRow(new Object[]{propId, propText, propType});
+                Object[] newRow = new Object[]{propId, propText, propType};
+                ((DefaultTableModel) this.tblArgComponents.getModel()).addRow(newRow);
+                ((DefaultTableModel) this.tblEvaComponents.getModel()).addRow(newRow);
                 updateCounterLabels();
 
                 // Display HTML report
@@ -767,9 +771,9 @@ public class ArgaelForm extends javax.swing.JFrame {
         int row = tblArgComponents.rowAtPoint(evt.getPoint());
 
         if (row >= 0) {
-            acuSelected.add(row);
-            if (acuSelected.size() > 2) {
-                acuSelected.poll();
+            acSelected.add(row);
+            if (acSelected.size() > 2) {
+                acSelected.poll();
             }
         }
     }//GEN-LAST:event_tblArgComponentsMouseClicked
@@ -777,9 +781,9 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void tblArgRelationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgRelationsMouseClicked
         // TODO add your handling code here:
         int row = tblArgRelations.rowAtPoint(evt.getPoint());
-        TableModel acuModel = tblArgComponents.getModel();
+        TableModel acModel = tblArgComponents.getModel();
         TableModel relModel = tblArgRelations.getModel();
-        String relationString = createArgumentRelationString(row, acuModel, relModel);
+        String relationString = createArgumentRelationString(row, acModel, relModel);
         txtAnnotationPreview.setText(relationString);
     }//GEN-LAST:event_tblArgRelationsMouseClicked
 
@@ -799,23 +803,23 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void tblEvaRelationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEvaRelationsMouseClicked
         // TODO add your handling code here:
         int row = tblEvaRelations.rowAtPoint(evt.getPoint());
-        TableModel acuModel = tblEvaComponents.getModel();
-        TableModel relModel = tblEvaRelations.getModel();
-        String relationString = createArgumentRelationString(row, acuModel, relModel);
+        TableModel acModel = tblEvaComponents.getModel();
+        TableModel arModel = tblEvaRelations.getModel();
+        String relationString = createArgumentRelationString(row, acModel, arModel);
         txtEvaluationPreview.setText(relationString);
     }//GEN-LAST:event_tblEvaRelationsMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddArgument;
     private javax.swing.JButton btnAddRelation;
-    private javax.swing.JButton btnDeleteACU;
-    private javax.swing.JButton btnDeleteARU;
+    private javax.swing.JButton btnDeleteAC;
+    private javax.swing.JButton btnDeleteAR;
     private javax.swing.JComboBox<String> cmbArgCompType;
     private javax.swing.JComboBox<String> cmbCategory;
     private javax.swing.JComboBox<String> cmbEvaluators;
     private javax.swing.JComboBox<String> cmbIntent;
-    private javax.swing.JLabel lblAddRelation;
-    private javax.swing.JLabel lblAnnotation;
+    private javax.swing.JLabel lblAddArgComp;
+    private javax.swing.JLabel lblAddArgRel;
     private javax.swing.JLabel lblDelete;
     private javax.swing.JLabel lblEvaluator;
     private javax.swing.JLabel lblFileList;
@@ -861,29 +865,29 @@ public class ArgaelForm extends javax.swing.JFrame {
     /**
      *
      * @param row
-     * @param acuModel
-     * @param relModel
+     * @param acModel
+     * @param arModel
      * @return
      */
-    private String createArgumentRelationString(int row, TableModel acuModel, TableModel relModel) {
+    private String createArgumentRelationString(int row, TableModel acModel, TableModel arModel) {
         // Collect relation data
         String text = "";
 
         if (row >= 0) {
-            int acuId1 = Integer.parseInt(relModel.getValueAt(row, 1).toString());
-            int acuId2 = Integer.parseInt(relModel.getValueAt(row, 2).toString());
-            String category = relModel.getValueAt(row, 3).toString();
-            String intent = relModel.getValueAt(row, 4).toString();
-            int acuIndex1 = getAcuIndexFromTable(acuModel, acuId1, 0);
-            int acuIndex2 = getAcuIndexFromTable(acuModel, acuId2, 0);
+            int acId1 = Integer.parseInt(arModel.getValueAt(row, 1).toString());
+            int acId2 = Integer.parseInt(arModel.getValueAt(row, 2).toString());
+            String category = arModel.getValueAt(row, 3).toString();
+            String intent = arModel.getValueAt(row, 4).toString();
+            int acIndex1 = getAcIndexFromTable(acModel, acId1, 0);
+            int acIndex2 = getAcIndexFromTable(acModel, acId2, 0);
 
             // Show relation
-            if (acuIndex1 >= 0 && acuIndex2 >= 0) {
-                String acuText1 = acuModel.getValueAt(acuIndex1, 1).toString();
-                String acuType1 = acuModel.getValueAt(acuIndex1, 2).toString();
-                String acuText2 = acuModel.getValueAt(acuIndex2, 1).toString();
-                String acuType2 = acuModel.getValueAt(acuIndex2, 2).toString();
-                text = String.format("[<b>%s</b>: %s] \u2190 [<b>%s</b>: %s] (<b>Relation</b>: \"%s\" and \"%s\")", acuType1, acuText1, acuType2, acuText2, category, intent);
+            if (acIndex1 >= 0 && acIndex2 >= 0) {
+                String acText1 = acModel.getValueAt(acIndex1, 1).toString();
+                String acType1 = acModel.getValueAt(acIndex1, 2).toString();
+                String acText2 = acModel.getValueAt(acIndex2, 1).toString();
+                String acType2 = acModel.getValueAt(acIndex2, 2).toString();
+                text = String.format("[<b>%s</b>: %s] \u2190 [<b>%s</b>: %s] (<b>Relation</b>: \"%s\" and \"%s\")", acType1, acText1, acType2, acText2, category, intent);
             }
         }
 
@@ -905,37 +909,50 @@ public class ArgaelForm extends javax.swing.JFrame {
      * @param evaluations
      */
     private void displayAnnotationData(Map<String, List<String[]>> annotations, Map<String, Map<Integer, String>> evaluations) {
-        List<String> fileTypes = IOManager.ARG_FILE_TYPES;
-        List<String[]> acList = annotations.get(fileTypes.get(0));
-        List<String[]> arList = annotations.get(fileTypes.get(1));
+        List<String[]> acList = annotations.get(IOManager.FILE_ARG_COMP);
+        List<String[]> arList = annotations.get(IOManager.FILE_ARG_REL);
+        Map<Integer, String> acEval = evaluations.get(IOManager.FILE_ARG_COMP);
+        Map<Integer, String> arEval = evaluations.get(IOManager.FILE_ARG_REL);
 
         // Update arguments table
-        DefaultTableModel acuModel1 = (DefaultTableModel) tblArgComponents.getModel();
-        DefaultTableModel acuModel2 = (DefaultTableModel) tblEvaComponents.getModel();
-        acuModel1.setRowCount(0);
-        acuModel2.setRowCount(0);
+        DefaultTableModel acModel1 = (DefaultTableModel) tblArgComponents.getModel();
+        DefaultTableModel acModel2 = (DefaultTableModel) tblEvaComponents.getModel();
+        acModel1.setRowCount(0);
+        acModel2.setRowCount(0);
 
-        for (int i = 1; i < acList.size(); i++) {
+        for (int i = 0; i < acList.size(); i++) {
             String[] rowData = acList.get(i);
+            int rowId = Integer.parseInt(rowData[0]);
+
             try {
-                acuModel1.addRow(FunctionUtils.getSubArray(rowData, 0, 3));
-                acuModel2.addRow(FunctionUtils.getSubArray(rowData, 0, 3));
+                acModel1.addRow(FunctionUtils.getSubArray(rowData, 0, 3));
+                acModel2.addRow(FunctionUtils.getSubArray(rowData, 0, 3));
+
+                if (acEval.containsKey(rowId)) {
+                    acModel2.setValueAt(acEval.get(rowId), i, 3);
+                }
             } catch (Exception ex) {
                 Logger.getLogger(ArgaelForm.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
         // Update relations table
-        DefaultTableModel aruModel1 = (DefaultTableModel) tblArgRelations.getModel();
-        DefaultTableModel aruModel2 = (DefaultTableModel) tblEvaRelations.getModel();
-        aruModel1.setRowCount(0);
-        aruModel2.setRowCount(0);
+        DefaultTableModel arModel1 = (DefaultTableModel) tblArgRelations.getModel();
+        DefaultTableModel arModel2 = (DefaultTableModel) tblEvaRelations.getModel();
+        arModel1.setRowCount(0);
+        arModel2.setRowCount(0);
 
-        for (int i = 1; i < arList.size(); i++) {
+        for (int i = 0; i < arList.size(); i++) {
             String[] rowData = arList.get(i);
+            int rowId = Integer.parseInt(rowData[0]);
+
             try {
-                aruModel1.addRow(FunctionUtils.getSubArray(rowData, 0, 5));
-                aruModel2.addRow(FunctionUtils.getSubArray(rowData, 0, 5));
+                arModel1.addRow(FunctionUtils.getSubArray(rowData, 0, 5));
+                arModel2.addRow(FunctionUtils.getSubArray(rowData, 0, 5));
+
+                if (arEval.containsKey(rowId)) {
+                    arModel2.setValueAt(arEval.get(rowId), i, 5);
+                }
             } catch (Exception ex) {
                 Logger.getLogger(ArgaelForm.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -947,14 +964,14 @@ public class ArgaelForm extends javax.swing.JFrame {
     /**
      *
      * @param model
-     * @param acuId
-     * @param acuIdIx
+     * @param acId
+     * @param acIdIx
      * @return
      */
-    private int getAcuIndexFromTable(TableModel model, int acuId, int acuIdIx) {
+    private int getAcIndexFromTable(TableModel model, int acId, int acIdIx) {
         int ix = -1;
         for (int i = 0; i < model.getRowCount() && ix == -1; i++) {
-            if (acuId == Integer.parseInt(model.getValueAt(i, acuIdIx).toString())) {
+            if (acId == Integer.parseInt(model.getValueAt(i, acIdIx).toString())) {
                 ix = i;
             }
         }
@@ -1044,12 +1061,12 @@ public class ArgaelForm extends javax.swing.JFrame {
 
     /**
      *
-     * @param acuId
+     * @param acId
      * @return
      */
-    private boolean isAcuInRelation(int acuId) {
-        TableModel relModel = tblArgRelations.getModel();
-        if (getAcuIndexFromTable(relModel, acuId, 0) >= 0 || getAcuIndexFromTable(relModel, acuId, 1) >= 0) {
+    private boolean isAcInRelation(int acId) {
+        TableModel arModel = tblArgRelations.getModel();
+        if (getAcIndexFromTable(arModel, acId, 1) >= 0 || getAcIndexFromTable(arModel, acId, 2) >= 0) {
             return true;
         }
         return false;
@@ -1059,8 +1076,8 @@ public class ArgaelForm extends javax.swing.JFrame {
      *
      */
     private void updateCounterLabels() {
-        lblNumberArguments.setText("Number of argument component units (ACUs): " + tblArgComponents.getRowCount());
-        lblNumberRelations.setText("Number of argument relation units (ARUs): " + tblArgRelations.getRowCount());
+        lblNumberArguments.setText("Number of argument components (ACs): " + tblArgComponents.getRowCount());
+        lblNumberRelations.setText("Number of argument relations (ARs): " + tblArgRelations.getRowCount());
     }
 
     /**
@@ -1070,40 +1087,40 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void saveAnnotationsToFiles(String fileName) {
 
         if (!lstFiles.isSelectionEmpty()) {
-            String filePath = "anno\\" + fileName;
+            String filePath = "annotations\\" + fileName;
             List<String> header;
-            List<String[]> acuAnnotations = new ArrayList<>();
-            List<String[]> aruAnnotations = new ArrayList<>();
+            List<String[]> acAnnotations = new ArrayList<>();
+            List<String[]> arAnnotations = new ArrayList<>();
 
             // Loop through the rows
-            TableModel acuModel = tblArgComponents.getModel();
-            for (int i = 0; i < acuModel.getRowCount(); i++) {
-                String acuId = acuModel.getValueAt(i, 0).toString();
-                String acuText = acuModel.getValueAt(i, 1).toString();
-                String acuType = acuModel.getValueAt(i, 2).toString();
+            TableModel acModel = tblArgComponents.getModel();
+            for (int i = 0; i < acModel.getRowCount(); i++) {
+                String acId = acModel.getValueAt(i, 0).toString();
+                String acText = acModel.getValueAt(i, 1).toString();
+                String acType = acModel.getValueAt(i, 2).toString();
                 String dateStamp = dateFormat.format(new Date());
-                acuAnnotations.add(new String[]{acuId, acuText, acuType, userName, dateStamp});
+                acAnnotations.add(new String[]{acId, acText, acType, userName, dateStamp});
             }
 
             // Loop through the rows
-            TableModel relModel = tblArgRelations.getModel();
-            for (int i = 0; i < relModel.getRowCount(); i++) {
-                String aruId = relModel.getValueAt(i, 0).toString();
-                String acuId1 = relModel.getValueAt(i, 1).toString();
-                String acuId2 = relModel.getValueAt(i, 2).toString();
-                String relType = relModel.getValueAt(i, 3).toString();
-                String relIntent = relModel.getValueAt(i, 4).toString();
+            TableModel arModel = tblArgRelations.getModel();
+            for (int i = 0; i < arModel.getRowCount(); i++) {
+                String arId = arModel.getValueAt(i, 0).toString();
+                String acId1 = arModel.getValueAt(i, 1).toString();
+                String acId2 = arModel.getValueAt(i, 2).toString();
+                String relType = arModel.getValueAt(i, 3).toString();
+                String relIntent = arModel.getValueAt(i, 4).toString();
                 String dateStamp = dateFormat.format(new Date());
-                aruAnnotations.add(new String[]{aruId, acuId1, acuId2, relType, relIntent, userName, dateStamp});
+                arAnnotations.add(new String[]{arId, acId1, acId2, relType, relIntent, userName, dateStamp});
             }
 
-            // Save ACUs results
-            header = new ArrayList<>(Arrays.asList("acu_id", "acu_text", "acu_type", "annotator", "timestamp"));
-            saveResults(filePath, "acu", header, acuAnnotations);
+            // Save ACs results
+            header = new ArrayList<>(Arrays.asList("ac_id", "ac_text", "ac_type", "annotator", "timestamp"));
+            saveResults(filePath, IOManager.FILE_ARG_COMP, header, acAnnotations);
 
-            // Save ARUs results
-            header = new ArrayList<>(Arrays.asList("aru_id", "acu_id1", "acu_id2", "rel_type", "rel_intent", "annotator", "timestamp"));
-            saveResults(filePath, "aru", header, aruAnnotations);
+            // Save ARs results
+            header = new ArrayList<>(Arrays.asList("ar_id", "ac_id1", "ac_id2", "rel_type", "rel_intent", "annotator", "timestamp"));
+            saveResults(filePath, IOManager.FILE_ARG_REL, header, arAnnotations);
         }
 
     }
@@ -1115,40 +1132,40 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void saveEvaluationsToFiles(String fileName) {
 
         if (!lstFiles.isSelectionEmpty()) {
-            String filePath = "eval\\" + fileName;
+            String filePath = "evaluations\\" + fileName;
             List<String> header;
-            List<String[]> acuEvaluations = new ArrayList<>();
-            List<String[]> aruEvaluations = new ArrayList<>();
+            List<String[]> acEvaluations = new ArrayList<>();
+            List<String[]> arEvaluations = new ArrayList<>();
 
             // Loop through the rows
-            TableModel acuModel = tblEvaComponents.getModel();
-            for (int i = 0; i < acuModel.getRowCount(); i++) {
-                if (acuModel.getValueAt(i, 3) != null) {
-                    String acuId = acuModel.getValueAt(i, 0).toString();
-                    String acuQuality = acuModel.getValueAt(i, 3).toString();
+            TableModel acModel = tblEvaComponents.getModel();
+            for (int i = 0; i < acModel.getRowCount(); i++) {
+                if (acModel.getValueAt(i, 3) != null) {
+                    String acId = acModel.getValueAt(i, 0).toString();
+                    String acQuality = acModel.getValueAt(i, 3).toString();
                     String dateStamp = dateFormat.format(new Date());
-                    acuEvaluations.add(new String[]{acuId, acuQuality, userName, dateStamp});
+                    acEvaluations.add(new String[]{acId, acQuality, userName, dateStamp});
                 }
             }
 
             // Loop through the rows
-            TableModel relModel = tblEvaRelations.getModel();
-            for (int i = 0; i < relModel.getRowCount(); i++) {
-                if (relModel.getValueAt(i, 5) != null) {
-                    String aruId = relModel.getValueAt(i, 0).toString();
-                    String aruQuality = relModel.getValueAt(i, 5).toString();
+            TableModel arModel = tblEvaRelations.getModel();
+            for (int i = 0; i < arModel.getRowCount(); i++) {
+                if (arModel.getValueAt(i, 5) != null) {
+                    String arId = arModel.getValueAt(i, 0).toString();
+                    String arQuality = arModel.getValueAt(i, 5).toString();
                     String dateStamp = dateFormat.format(new Date());
-                    aruEvaluations.add(new String[]{aruId, aruQuality, userName, dateStamp});
+                    arEvaluations.add(new String[]{arId, arQuality, userName, dateStamp});
                 }
             }
 
-            // Save ACUs results
-            header = new ArrayList<>(Arrays.asList("acu_id", "acu_quality", "evaluator", "timestamp"));
-            saveResults(filePath, "acu", header, acuEvaluations);
+            // Save ACs results
+            header = new ArrayList<>(Arrays.asList("ac_id", "ac_quality", "evaluator", "timestamp"));
+            saveResults(filePath, IOManager.FILE_ARG_COMP, header, acEvaluations);
 
-            // Save ARUs results
-            header = new ArrayList<>(Arrays.asList("aru_id", "aru_quality", "evaluator", "timestamp"));
-            saveResults(filePath, "aru", header, aruEvaluations);
+            // Save ARs results
+            header = new ArrayList<>(Arrays.asList("ar_id", "ar_quality", "evaluator", "timestamp"));
+            saveResults(filePath, IOManager.FILE_ARG_REL, header, arEvaluations);
         }
 
     }
@@ -1167,7 +1184,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         data.addAll(rows);
         boolean result = FileUtils.saveCsvFile(filepath, data);
         if (result) {
-            System.out.println("Data saved correctly.");
+            System.out.println(">> Data saved correctly (" + fileType + ").");
         }
         return result;
     }
@@ -1284,27 +1301,27 @@ public class ArgaelForm extends javax.swing.JFrame {
         int caretPosition = this.textEditor.getCaretPosition();
 
         // Update report
-        TableModel acuModel = tblArgComponents.getModel();
+        TableModel acModel = tblArgComponents.getModel();
         String hlText;
-        String acuText;
-        String acuType;
+        String acText;
+        String acType;
 
-        for (int i = 0; i < acuModel.getRowCount(); i++) {
-            acuText = acuModel.getValueAt(i, 1).toString();
-            acuType = acuModel.getValueAt(i, 2).toString();
+        for (int i = 0; i < acModel.getRowCount(); i++) {
+            acText = acModel.getValueAt(i, 1).toString();
+            acType = acModel.getValueAt(i, 2).toString();
 
-            switch (acuType.toLowerCase()) {
+            switch (acType.toLowerCase()) {
                 case "major claim":
-                    hlText = model.getFormatter().highlightMajorClaim(acuText);
+                    hlText = model.getFormatter().highlightMajorClaim(acText);
                     break;
                 case "claim":
-                    hlText = model.getFormatter().highlightClaim(acuText);
+                    hlText = model.getFormatter().highlightClaim(acText);
                     break;
                 default:
-                    hlText = model.getFormatter().highlightPremise(acuText);
+                    hlText = model.getFormatter().highlightPremise(acText);
                     break;
             }
-            report = report.replace(acuText, hlText);
+            report = report.replace(acText, hlText);
         }
 
         // Display report

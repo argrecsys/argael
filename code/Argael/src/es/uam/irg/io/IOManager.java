@@ -18,13 +18,11 @@
 package es.uam.irg.io;
 
 import es.uam.irg.utils.FileUtils;
-import es.uam.irg.utils.FunctionUtils;
 import es.uam.irg.utils.StringUtils;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +33,8 @@ import java.util.Map;
 public class IOManager {
 
     // Class constants
-    public static final List<String> ARG_FILE_TYPES = Arrays.asList(new String[]{"arg_comp", "arg_rel"});
+    public static final String FILE_ARG_COMP = "arg_comp";
+    public static final String FILE_ARG_REL = "arg_rel";
 
     /**
      *
@@ -45,12 +44,13 @@ public class IOManager {
      */
     public static Map<String, List<String[]>> readAnnotationData(String directory, String currFile) {
         Map<String, List<String[]>> annotations = new HashMap<>();
+        String[] argFileTypes = new String[]{FILE_ARG_COMP, FILE_ARG_REL};
 
-        ARG_FILE_TYPES.forEach(fileType -> {
+        for (String fileType : argFileTypes) {
             String filePath = directory + currFile + "_" + fileType + ".csv";
-            List<String[]> data = FileUtils.readCsvFile(filePath);
+            List<String[]> data = FileUtils.readCsvFile(filePath, false);
             annotations.put(fileType, data);
-        });
+        }
 
         return annotations;
     }
@@ -63,20 +63,19 @@ public class IOManager {
      */
     public static Map<String, Map<Integer, String>> readEvaluationData(String directory, String currFile) {
         Map<String, Map<Integer, String>> evaluations = new HashMap<>();
+        String[] argFileTypes = new String[]{FILE_ARG_COMP, FILE_ARG_REL};
 
-        ARG_FILE_TYPES.forEach(fileType -> {
+        for (String fileType : argFileTypes) {
             String filePath = directory + currFile + "_" + fileType + ".csv";
-            List<String[]> data = FileUtils.readCsvFile(filePath);
+            List<String[]> data = FileUtils.readCsvFile(filePath, false);
             Map<Integer, String> evals = new HashMap<>();
             for (String[] row : data) {
-                if (FunctionUtils.isNumeric(row[0])) {
-                    int evalKey = Integer.parseInt(row[0]);
-                    String evalValues = row[1];
-                    evals.put(evalKey, evalValues);
-                }
+                int evalKey = Integer.parseInt(row[0]);
+                String evalValues = row[1];
+                evals.put(evalKey, evalValues);
             }
             evaluations.put(fileType, evals);
-        });
+        }
 
         return evaluations;
     }
