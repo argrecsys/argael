@@ -18,6 +18,8 @@
 package es.uam.irg.gui;
 
 import es.uam.irg.utils.FunctionUtils;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Program main class.
@@ -29,13 +31,31 @@ public class Argael {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        showWinform();
+
+        // Program hyperparameters from JSON config file
+        Map<String, Object> params = InitParams.readInitParams();
+        Map<String, List<String>> annotationModel = (Map<String, List<String>>) params.get("annotation_model");
+        List<String> components = annotationModel.get("components");
+        List<String> relCategories = annotationModel.get("relation_categories");
+        List<String> relIntents = annotationModel.get("relation_intents");
+        Map<String, List<String>> evaluationModel = (Map<String, List<String>>) params.get("evaluation_model");
+        List<String> qualityMetrics = evaluationModel.get("quality");
+        System.out.format(">> Relation Categories: %s, Relation Intents: %s, Quality metrics: %s\n",
+                components, relCategories, relIntents, qualityMetrics);
+
+        // Show ARGAEL guie
+        showWinform(components, relCategories, relIntents, qualityMetrics);
     }
 
     /**
      * Creates and displays the Argument-IR form.
+     *
+     * @param components
+     * @param relCategories
+     * @param relIntents
+     * @param qualityMetrics
      */
-    private static void showWinform() {
+    private static void showWinform(List<String> components, List<String> relCategories, List<String> relIntents, List<String> qualityMetrics) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -50,7 +70,7 @@ public class Argael {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             FunctionUtils.printWithDatestamp(">> ARG-TOOL BEGINS");
-            new ArgaelForm();
+            new ArgaelForm(components, relCategories, relIntents, qualityMetrics);
             FunctionUtils.printWithDatestamp(">> ARG-TOOL ENDS");
         });
     }

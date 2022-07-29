@@ -96,6 +96,23 @@ public class FunctionUtils {
 
     /**
      *
+     * @param strNum
+     * @return
+     */
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            Double.parseDouble(strNum);
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     *
      * @param json
      * @param id
      * @return

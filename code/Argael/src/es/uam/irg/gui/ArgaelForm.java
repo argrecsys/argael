@@ -64,15 +64,20 @@ public class ArgaelForm extends javax.swing.JFrame {
     private String userName;
 
     /**
-     * Creates new form ArgnnotatorForm
+     * Creates new ARGAEL form.
+     *
+     * @param components
+     * @param relCategories
+     * @param relIntents
+     * @param qualityMetrics
      */
-    public ArgaelForm() {
+    public ArgaelForm(List<String> components, List<String> relCategories, List<String> relIntents, List<String> qualityMetrics) {
         initComponents();
 
         this.currDirectory = "";
         this.currEntity = "";
         this.isDirty = false;
-        this.model = new DataModel();
+        this.model = new DataModel(components, relCategories, relIntents, qualityMetrics);
         this.acuSelected = new LinkedList<>();
         this.fileExtension = "";
 
@@ -164,8 +169,6 @@ public class ArgaelForm extends javax.swing.JFrame {
 
         lblAnnotation.setText("Annotate AC:");
 
-        cmbArgCompType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Major claim", "Claim", "Premise" }));
-
         btnAddArgument.setText("Add");
         btnAddArgument.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -178,10 +181,6 @@ public class ArgaelForm extends javax.swing.JFrame {
         scrollPane2.setViewportView(textEditor);
 
         lblAddRelation.setText("Add relation:");
-
-        cmbCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
-
-        cmbIntent.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "support", "attack" }));
 
         btnAddRelation.setText("Add");
         btnAddRelation.addActionListener(new java.awt.event.ActionListener() {
@@ -389,6 +388,11 @@ public class ArgaelForm extends javax.swing.JFrame {
             }
         });
         tblEvaComponents.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        tblEvaComponents.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblEvaComponentsMouseClicked(evt);
+            }
+        });
         scrollPane6.setViewportView(tblEvaComponents);
 
         tblEvaRelations.setModel(new javax.swing.table.DefaultTableModel(
@@ -415,6 +419,11 @@ public class ArgaelForm extends javax.swing.JFrame {
             }
         });
         tblEvaRelations.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblEvaRelations.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblEvaRelationsMouseClicked(evt);
+            }
+        });
         scrollPane7.setViewportView(tblEvaRelations);
 
         scrollPane8.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -583,7 +592,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 0.9.20
+                          Version: 0.9.22
                           Date: 07/29/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
@@ -620,9 +629,9 @@ public class ArgaelForm extends javax.swing.JFrame {
             System.out.println(">> Selectd file: " + currEntity);
 
             // Display result data
-            Map<String, List<String[]>> annos = getSavedAnnotationData();
-            //Map<String, Map<Integer, String>> evals = getSavedEvaluationData();
-            displayResultData(annos);
+            Map<String, List<String[]>> annotations = getSavedAnnotationData();
+            Map<String, Map<Integer, String>> evaluations = getSavedEvaluationData();
+            displayAnnotationData(annotations, evaluations);
 
             // Display HTML report
             updateHtmlReport();
@@ -645,34 +654,6 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void mItemExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemExportActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_mItemExportActionPerformed
-
-    private void tblArgRelationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgRelationsMouseClicked
-        // TODO add your handling code here:
-        int row = tblArgRelations.rowAtPoint(evt.getPoint());
-
-        if (row >= 0) {
-            // Collect relation data
-            String text = "";
-            TableModel acuModel = tblArgComponents.getModel();
-            TableModel relModel = tblArgRelations.getModel();
-            int acuId1 = Integer.parseInt(relModel.getValueAt(row, 1).toString());
-            int acuId2 = Integer.parseInt(relModel.getValueAt(row, 2).toString());
-            String category = relModel.getValueAt(row, 3).toString();
-            String intent = relModel.getValueAt(row, 4).toString();
-            int acuIndex1 = getAcuIndexFromTable(acuModel, acuId1, 0);
-            int acuIndex2 = getAcuIndexFromTable(acuModel, acuId2, 0);
-
-            // Show relation
-            if (acuIndex1 >= 0 && acuIndex2 >= 0) {
-                String acuText1 = acuModel.getValueAt(acuIndex1, 1).toString();
-                String acuType1 = acuModel.getValueAt(acuIndex1, 2).toString();
-                String acuText2 = acuModel.getValueAt(acuIndex2, 1).toString();
-                String acuType2 = acuModel.getValueAt(acuIndex2, 2).toString();
-                text = String.format("[<b>%s</b>: %s] \u2190 [<b>%s</b>: %s] (<b>Relation</b>: \"%s\" and \"%s\")", acuType1, acuText1, acuType2, acuText2, category, intent);
-            }
-            relationPreview.setText(text);
-        }
-    }//GEN-LAST:event_tblArgRelationsMouseClicked
 
     private void btnDeleteARUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteARUActionPerformed
         // TODO add your handling code here:
@@ -714,18 +695,6 @@ public class ArgaelForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDeleteACUActionPerformed
 
-    private void tblArgComponentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgComponentsMouseClicked
-        // TODO add your handling code here:
-        int row = tblArgComponents.rowAtPoint(evt.getPoint());
-
-        if (row >= 0) {
-            acuSelected.add(row);
-            if (acuSelected.size() > 2) {
-                acuSelected.poll();
-            }
-        }
-    }//GEN-LAST:event_tblArgComponentsMouseClicked
-
     private void btnAddRelationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRelationActionPerformed
         // TODO add your handling code here:
         if (acuSelected.size() == 2) {
@@ -761,12 +730,12 @@ public class ArgaelForm extends javax.swing.JFrame {
 
         if (propText != null) {
             propText = propText.trim();
+            String propType = this.cmbArgCompType.getSelectedItem().toString();
 
-            if (propText.length() > PROPOSITION_MIN_SIZE) {
+            if (propText.length() > PROPOSITION_MIN_SIZE && !propType.equals("-")) {
 
                 // Add new argument component
                 int propId = getNextPropositionId();
-                String propType = this.cmbArgCompType.getSelectedItem().toString();
                 DefaultTableModel tblModel = (DefaultTableModel) this.tblArgComponents.getModel();
                 tblModel.addRow(new Object[]{propId, propText, propType});
                 updateCounterLabels();
@@ -792,6 +761,54 @@ public class ArgaelForm extends javax.swing.JFrame {
             saveEvaluationsToFiles(currEntity);
         }
     }//GEN-LAST:event_mItemSaveEvaluationActionPerformed
+
+    private void tblArgComponentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgComponentsMouseClicked
+        // TODO add your handling code here:
+        int row = tblArgComponents.rowAtPoint(evt.getPoint());
+
+        if (row >= 0) {
+            acuSelected.add(row);
+            if (acuSelected.size() > 2) {
+                acuSelected.poll();
+            }
+        }
+    }//GEN-LAST:event_tblArgComponentsMouseClicked
+
+    private void tblArgRelationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgRelationsMouseClicked
+        // TODO add your handling code here:
+        int row = tblArgRelations.rowAtPoint(evt.getPoint());
+
+        if (row >= 0) {
+            // Collect relation data
+            String text = "";
+            TableModel acuModel = tblArgComponents.getModel();
+            TableModel relModel = tblArgRelations.getModel();
+            int acuId1 = Integer.parseInt(relModel.getValueAt(row, 1).toString());
+            int acuId2 = Integer.parseInt(relModel.getValueAt(row, 2).toString());
+            String category = relModel.getValueAt(row, 3).toString();
+            String intent = relModel.getValueAt(row, 4).toString();
+            int acuIndex1 = getAcuIndexFromTable(acuModel, acuId1, 0);
+            int acuIndex2 = getAcuIndexFromTable(acuModel, acuId2, 0);
+
+            // Show relation
+            if (acuIndex1 >= 0 && acuIndex2 >= 0) {
+                String acuText1 = acuModel.getValueAt(acuIndex1, 1).toString();
+                String acuType1 = acuModel.getValueAt(acuIndex1, 2).toString();
+                String acuText2 = acuModel.getValueAt(acuIndex2, 1).toString();
+                String acuType2 = acuModel.getValueAt(acuIndex2, 2).toString();
+                text = String.format("[<b>%s</b>: %s] \u2190 [<b>%s</b>: %s] (<b>Relation</b>: \"%s\" and \"%s\")", acuType1, acuText1, acuType2, acuText2, category, intent);
+            }
+            relationPreview.setText(text);
+        }
+    }//GEN-LAST:event_tblArgRelationsMouseClicked
+
+    private void tblEvaComponentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEvaComponentsMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblEvaComponentsMouseClicked
+
+    private void tblEvaRelationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEvaRelationsMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblEvaRelationsMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddArgument;
@@ -870,12 +887,13 @@ public class ArgaelForm extends javax.swing.JFrame {
 
     /**
      *
-     * @param data
+     * @param annotations
+     * @param evaluations
      */
-    private void displayResultData(Map<String, List<String[]>> data) {
-        List<String[]> argCompUnits = data.get("acu");
-        List<String[]> relationList = data.get("aru");
-        int nAC = 0;
+    private void displayAnnotationData(Map<String, List<String[]>> annotations, Map<String, Map<Integer, String>> evaluations) {
+        List<String> fileTypes = IOManager.ARG_FILE_TYPES;
+        List<String[]> acList = annotations.get(fileTypes.get(0));
+        List<String[]> arList = annotations.get(fileTypes.get(1));
 
         // Update arguments table
         DefaultTableModel acuModel1 = (DefaultTableModel) tblArgComponents.getModel();
@@ -883,8 +901,8 @@ public class ArgaelForm extends javax.swing.JFrame {
         acuModel1.setRowCount(0);
         acuModel2.setRowCount(0);
 
-        for (int i = 1; i < argCompUnits.size(); i++) {
-            String[] rowData = argCompUnits.get(i);
+        for (int i = 1; i < acList.size(); i++) {
+            String[] rowData = acList.get(i);
             try {
                 acuModel1.addRow(FunctionUtils.getSubArray(rowData, 0, 3));
                 acuModel2.addRow(FunctionUtils.getSubArray(rowData, 0, 3));
@@ -899,8 +917,8 @@ public class ArgaelForm extends javax.swing.JFrame {
         aruModel1.setRowCount(0);
         aruModel2.setRowCount(0);
 
-        for (int i = 1; i < relationList.size(); i++) {
-            String[] rowData = relationList.get(i);
+        for (int i = 1; i < arList.size(); i++) {
+            String[] rowData = arList.get(i);
             try {
                 aruModel1.addRow(FunctionUtils.getSubArray(rowData, 0, 5));
                 aruModel2.addRow(FunctionUtils.getSubArray(rowData, 0, 5));
@@ -960,7 +978,7 @@ public class ArgaelForm extends javax.swing.JFrame {
      * @return
      */
     private Map<String, List<String[]>> getSavedAnnotationData() {
-        String directory = currDirectory + "\\..\\results\\anno\\";
+        String directory = currDirectory + "\\..\\results\\annotations\\";
         String currFile = currEntity;
         return IOManager.readAnnotationData(directory, currFile);
     }
@@ -970,7 +988,7 @@ public class ArgaelForm extends javax.swing.JFrame {
      * @return
      */
     private Map<String, Map<Integer, String>> getSavedEvaluationData() {
-        String directory = currDirectory + "\\..\\results\\eval\\";
+        String directory = currDirectory + "\\..\\results\\evaluations\\";
         String currFile = currEntity;
         return IOManager.readEvaluationData(directory, currFile);
     }
@@ -1131,8 +1149,18 @@ public class ArgaelForm extends javax.swing.JFrame {
      *
      */
     private void setComboBoxes() {
-        List<String> subCategories = model.getSubCategories(true);
-        cmbCategory.setModel(new DefaultComboBoxModel<>(subCategories.toArray(new String[0])));
+        List<String> components = model.getArgumentComponents();
+        List<String> relCategories = model.getRelationCategories();
+        List<String> relIntents = model.getRelationIntents();
+
+        components.add(0, "-");
+        cmbArgCompType.setModel(new DefaultComboBoxModel<>(components.toArray(new String[0])));
+
+        relCategories.add(0, "-");
+        cmbCategory.setModel(new DefaultComboBoxModel<>(relCategories.toArray(new String[0])));
+
+        relIntents.add(0, "-");
+        cmbIntent.setModel(new DefaultComboBoxModel<>(relIntents.toArray(new String[0])));
     }
 
     /**
@@ -1142,10 +1170,9 @@ public class ArgaelForm extends javax.swing.JFrame {
         TableColumnModel colModel;
 
         // Argument Quality Selector
+        List<String> qualityMetrics = model.getQualityMetrics();
         JComboBox cmbArgQuality = new JComboBox();
-        cmbArgQuality.addItem("low");
-        cmbArgQuality.addItem("medium");
-        cmbArgQuality.addItem("high");
+        cmbArgQuality.setModel(new DefaultComboBoxModel<>(qualityMetrics.toArray(new String[0])));
 
         // Default column renderer
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();

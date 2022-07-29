@@ -1,0 +1,7 @@
+"aru_id","acu_id1","acu_id2","rel_type","rel_intent","annotator","timestamp"
+"1","1","3","addition","support","andres.segura","2022/07/29 16:12:13"
+"2","2","3","addition","support","andres.segura","2022/07/29 16:12:13"
+"3","2","4","addition","attack","andres.segura","2022/07/29 16:12:13"
+"4","4","5","addition","attack","andres.segura","2022/07/29 16:12:13"
+"5","8","9","addition","support","andres.segura","2022/07/29 16:12:13"
+"6","8","10","explanation","support","andres.segura","2022/07/29 16:12:13"
