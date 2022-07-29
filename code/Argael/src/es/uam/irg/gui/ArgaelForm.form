@@ -379,7 +379,7 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="3" rowCount="0">
-                        <Column editable="false" title="ACU Id" type="java.lang.Integer"/>
+                        <Column editable="false" title="AC Id" type="java.lang.Integer"/>
                         <Column editable="false" title="Text" type="java.lang.String"/>
                         <Column editable="false" title="Type" type="java.lang.String"/>
                       </Table>
@@ -429,9 +429,9 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="5" rowCount="0">
-                        <Column editable="false" title="ARU Id" type="java.lang.Integer"/>
-                        <Column editable="false" title="ACU 1" type="java.lang.Integer"/>
-                        <Column editable="false" title="ACU 2" type="java.lang.Integer"/>
+                        <Column editable="false" title="AR Id" type="java.lang.Integer"/>
+                        <Column editable="false" title="AC Id 1" type="java.lang.Integer"/>
+                        <Column editable="false" title="AC Id 2" type="java.lang.Integer"/>
                         <Column editable="false" title="Relation Type" type="java.lang.String"/>
                         <Column editable="false" title="Intent" type="java.lang.String"/>
                       </Table>
@@ -570,7 +570,7 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="4" rowCount="0">
-                        <Column editable="false" title="ACU Id" type="java.lang.Integer"/>
+                        <Column editable="false" title="AC Id" type="java.lang.Integer"/>
                         <Column editable="false" title="Text" type="java.lang.String"/>
                         <Column editable="false" title="Type" type="java.lang.String"/>
                         <Column editable="true" title="Evaluation" type="java.lang.String"/>
@@ -595,9 +595,9 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="6" rowCount="0">
-                        <Column editable="false" title="ARC Id" type="java.lang.Integer"/>
-                        <Column editable="false" title="ACU 1" type="java.lang.Integer"/>
-                        <Column editable="false" title="ACU 2" type="java.lang.Integer"/>
+                        <Column editable="false" title="AR Id" type="java.lang.Integer"/>
+                        <Column editable="false" title="AC Id 1" type="java.lang.Integer"/>
+                        <Column editable="false" title="AC Id 2" type="java.lang.Integer"/>
                         <Column editable="false" title="Relation Type" type="java.lang.String"/>
                         <Column editable="false" title="Intent" type="java.lang.String"/>
                         <Column editable="true" title="Evaluation" type="java.lang.String"/>

@@ -194,7 +194,7 @@ public class ArgaelForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ACU Id", "Text", "Type"
+                "AC Id", "Text", "Type"
             }
         ) {
             Class[] types = new Class [] {
@@ -243,7 +243,7 @@ public class ArgaelForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ARU Id", "ACU 1", "ACU 2", "Relation Type", "Intent"
+                "AR Id", "AC Id 1", "AC Id 2", "Relation Type", "Intent"
             }
         ) {
             Class[] types = new Class [] {
@@ -369,7 +369,7 @@ public class ArgaelForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ACU Id", "Text", "Type", "Evaluation"
+                "AC Id", "Text", "Type", "Evaluation"
             }
         ) {
             Class[] types = new Class [] {
@@ -400,7 +400,7 @@ public class ArgaelForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ARC Id", "ACU 1", "ACU 2", "Relation Type", "Intent", "Evaluation"
+                "AR Id", "AC Id 1", "AC Id 2", "Relation Type", "Intent", "Evaluation"
             }
         ) {
             Class[] types = new Class [] {
@@ -592,7 +592,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 0.9.22
+                          Version: 0.9.24
                           Date: 07/29/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
