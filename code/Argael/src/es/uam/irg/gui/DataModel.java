@@ -20,7 +20,6 @@ package es.uam.irg.gui;
 import es.uam.irg.io.IOManager;
 import es.uam.irg.utils.FileUtils;
 import es.uam.irg.utils.StringUtils;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,18 +33,38 @@ public class DataModel {
     private static final String DECIMAL_FORMAT = "0.000";
     private static final String LANG = "es";
     private static final String USERS_FILEPATH = "Resources/config/users.txt";
+    private final List<String> components;
 
     private final Map<String, String> files;
     private final ReportFormatter formatter;
+    private final List<String> qualityMetrics;
+    private final List<String> relCategories;
+    private final List<String> relIntents;
     private Map<String, List<String>> taxonomy;
 
     /**
-     * Constructor.
+     * Data model constructor.
+     *
+     * @param components
+     * @param relCategories
+     * @param relIntents
+     * @param qualityMetrics
      */
-    public DataModel() {
+    public DataModel(List<String> components, List<String> relCategories, List<String> relIntents, List<String> qualityMetrics) {
+        this.components = components;
+        this.relCategories = relCategories;
+        this.relIntents = relIntents;
+        this.qualityMetrics = qualityMetrics;
         this.files = new HashMap<>();
         this.formatter = new ReportFormatter(DECIMAL_FORMAT, DATE_FORMAT);
-        this.loadRelationTaxonomy();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public List<String> getArgumentComponents() {
+        return this.components;
     }
 
     /**
@@ -81,22 +100,26 @@ public class DataModel {
 
     /**
      *
-     * @param defaultValue
      * @return
      */
-    public List<String> getSubCategories(boolean defaultValue) {
-        List<String> subCategories = new ArrayList<>();
+    public List<String> getQualityMetrics() {
+        return qualityMetrics;
+    }
 
-        if (defaultValue) {
-            subCategories.add("-");
-        }
-        taxonomy.values().forEach(valueList -> {
-            valueList.forEach(value -> {
-                subCategories.add(value.toLowerCase());
-            });
-        });
+    /**
+     *
+     * @return
+     */
+    public List<String> getRelationCategories() {
+        return relCategories;
+    }
 
-        return subCategories;
+    /**
+     *
+     * @return
+     */
+    public List<String> getRelationIntents() {
+        return relIntents;
     }
 
     /**
@@ -129,24 +152,6 @@ public class DataModel {
         if (!fileName.equals("")) {
             files.put(fileName, content);
         }
-    }
-
-    /**
-     *
-     */
-    private void loadRelationTaxonomy() {
-        this.taxonomy = IOManager.readRelationTaxonomy(LANG);
-
-        System.out.println(">> Taxonomy:");
-        for (String category : taxonomy.keySet()) {
-            System.out.println(" - " + category);
-            List<String> subCategories = taxonomy.get(category);
-            java.util.Collections.sort(subCategories);
-            subCategories.forEach(subCategory -> {
-                System.out.println("\t" + subCategory);
-            });
-        }
-
     }
 
 }

@@ -62,6 +62,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Evaluation"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mItemSaveEvaluationActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -235,7 +238,7 @@
                                           </Group>
                                           <Component id="lblNumberRelations" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="0" pref="136" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="164" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -279,7 +282,7 @@
                                   <Component id="lblNumberArguments" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblNumberRelations" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="23" max="32767" attributes="0"/>
+                              <EmptySpace pref="29" max="32767" attributes="0"/>
                               <Component id="lblRelationPreview" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="scrollPane5" min="-2" pref="95" max="-2" attributes="0"/>
@@ -294,17 +297,13 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="lblAnnotation">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Annotate ACU:"/>
+                <Property name="text" type="java.lang.String" value="Annotate AC:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="cmbArgCompType">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="3">
-                    <StringItem index="0" value="Major claim"/>
-                    <StringItem index="1" value="Claim"/>
-                    <StringItem index="2" value="Premise"/>
-                  </StringArray>
+                  <StringArray count="0"/>
                 </Property>
               </Properties>
               <AuxValues>
@@ -344,9 +343,7 @@
             <Component class="javax.swing.JComboBox" name="cmbCategory">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="1">
-                    <StringItem index="0" value="-"/>
-                  </StringArray>
+                  <StringArray count="0"/>
                 </Property>
               </Properties>
               <AuxValues>
@@ -356,11 +353,7 @@
             <Component class="javax.swing.JComboBox" name="cmbIntent">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="3">
-                    <StringItem index="0" value="-"/>
-                    <StringItem index="1" value="support"/>
-                    <StringItem index="2" value="attack"/>
-                  </StringArray>
+                  <StringArray count="0"/>
                 </Property>
               </Properties>
               <AuxValues>
@@ -386,7 +379,7 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="3" rowCount="0">
-                        <Column editable="false" title="ACU Id" type="java.lang.Integer"/>
+                        <Column editable="false" title="AC Id" type="java.lang.Integer"/>
                         <Column editable="false" title="Text" type="java.lang.String"/>
                         <Column editable="false" title="Type" type="java.lang.String"/>
                       </Table>
@@ -401,7 +394,7 @@
             </Container>
             <Component class="javax.swing.JLabel" name="lblNumberArguments">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Number of argument component units (ACUs): 0"/>
+                <Property name="text" type="java.lang.String" value="Number of argument components (ACs): 0"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblDelete">
@@ -411,7 +404,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnDeleteACU">
               <Properties>
-                <Property name="text" type="java.lang.String" value="ACU"/>
+                <Property name="text" type="java.lang.String" value="AC"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteACUActionPerformed"/>
@@ -419,7 +412,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnDeleteARU">
               <Properties>
-                <Property name="text" type="java.lang.String" value="ARU"/>
+                <Property name="text" type="java.lang.String" value="AR"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteARUActionPerformed"/>
@@ -436,9 +429,9 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="5" rowCount="0">
-                        <Column editable="false" title="ARU Id" type="java.lang.Integer"/>
-                        <Column editable="false" title="ACU 1" type="java.lang.Integer"/>
-                        <Column editable="false" title="ACU 2" type="java.lang.Integer"/>
+                        <Column editable="false" title="AR Id" type="java.lang.Integer"/>
+                        <Column editable="false" title="AC Id 1" type="java.lang.Integer"/>
+                        <Column editable="false" title="AC Id 2" type="java.lang.Integer"/>
                         <Column editable="false" title="Relation Type" type="java.lang.String"/>
                         <Column editable="false" title="Intent" type="java.lang.String"/>
                       </Table>
@@ -453,7 +446,7 @@
             </Container>
             <Component class="javax.swing.JLabel" name="lblNumberRelations">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Number of argument relation units (ARUs): 0"/>
+                <Property name="text" type="java.lang.String" value="Number of argument relations (ARs): 0"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblRelationPreview">
@@ -471,7 +464,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JEditorPane" name="relationPreview">
+                <Component class="javax.swing.JEditorPane" name="txtAnnotationPreview">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="contentType" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
@@ -498,15 +491,26 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="scrollPane8" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Component id="scrollPane6" min="-2" pref="902" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="scrollPane7" pref="500" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="lblEvaluator" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="cmbEvaluators" min="-2" pref="150" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="lblEvaluator" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="cmbEvaluators" min="-2" pref="150" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="scrollPane6" min="-2" pref="902" max="-2" attributes="0"/>
+                                          <Component id="lblNumberArguments1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="lblNumberRelations1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="scrollPane7" min="-2" pref="500" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -522,11 +526,18 @@
                           <Component id="lblEvaluator" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cmbEvaluators" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace pref="19" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="scrollPane7" pref="651" max="32767" attributes="0"/>
+                          <Component id="lblNumberRelations1" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblNumberArguments1" alignment="1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="scrollPane7" pref="517" max="32767" attributes="0"/>
                           <Component id="scrollPane6" max="32767" attributes="0"/>
                       </Group>
+                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                      <Component id="scrollPane8" min="-2" pref="96" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -559,10 +570,10 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="4" rowCount="0">
-                        <Column editable="false" title="ACU Id" type="java.lang.Integer"/>
+                        <Column editable="false" title="AC Id" type="java.lang.Integer"/>
                         <Column editable="false" title="Text" type="java.lang.String"/>
                         <Column editable="false" title="Type" type="java.lang.String"/>
-                        <Column editable="false" title="Evaluation" type="java.lang.String"/>
+                        <Column editable="true" title="Evaluation" type="java.lang.String"/>
                       </Table>
                     </Property>
                     <Property name="selectionMode" type="int" value="2"/>
@@ -583,12 +594,13 @@
                 <Component class="javax.swing.JTable" name="tblEvaRelations">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="5" rowCount="0">
-                        <Column editable="false" title="ACU 1" type="java.lang.Integer"/>
-                        <Column editable="false" title="ACU 2" type="java.lang.Integer"/>
+                      <Table columnCount="6" rowCount="0">
+                        <Column editable="false" title="AR Id" type="java.lang.Integer"/>
+                        <Column editable="false" title="AC Id 1" type="java.lang.Integer"/>
+                        <Column editable="false" title="AC Id 2" type="java.lang.Integer"/>
                         <Column editable="false" title="Relation Type" type="java.lang.String"/>
                         <Column editable="false" title="Intent" type="java.lang.String"/>
-                        <Column editable="false" title="Evaluation" type="java.lang.String"/>
+                        <Column editable="true" title="Evaluation" type="java.lang.String"/>
                       </Table>
                     </Property>
                     <Property name="selectionMode" type="int" value="0"/>
@@ -599,6 +611,36 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Container class="javax.swing.JScrollPane" name="scrollPane8">
+              <Properties>
+                <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JEditorPane" name="txtEvaluationPreview">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="contentType" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="HTML_CONTENT_TYPE" type="code"/>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="javax.swing.JLabel" name="lblNumberArguments1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Argument components (ACs)"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblNumberRelations1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Argument relations (ARs)"/>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>

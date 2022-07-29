@@ -18,6 +18,7 @@
 package es.uam.irg.io;
 
 import es.uam.irg.utils.FileUtils;
+import es.uam.irg.utils.FunctionUtils;
 import es.uam.irg.utils.StringUtils;
 import java.io.File;
 import java.nio.file.Path;
@@ -25,10 +26,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Input-output manager class.
@@ -36,7 +35,7 @@ import java.util.Set;
 public class IOManager {
 
     // Class constants
-    private static final String LEXICON_FILEPATH = "Resources/data/argument_lexicon_{}.csv";
+    public static final List<String> ARG_FILE_TYPES = Arrays.asList(new String[]{"arg_comp", "arg_rel"});
 
     /**
      *
@@ -45,15 +44,41 @@ public class IOManager {
      * @return
      */
     public static Map<String, List<String[]>> readAnnotationData(String directory, String currFile) {
-        Map<String, List<String[]>> data = new HashMap<>();
-        Set<String> fileTypes = new HashSet<>(Arrays.asList(new String[]{"acu", "aru"}));
+        Map<String, List<String[]>> annotations = new HashMap<>();
 
-        fileTypes.forEach(fileType -> {
+        ARG_FILE_TYPES.forEach(fileType -> {
             String filePath = directory + currFile + "_" + fileType + ".csv";
-            data.put(fileType, FileUtils.readCsvFile(filePath));
+            List<String[]> data = FileUtils.readCsvFile(filePath);
+            annotations.put(fileType, data);
         });
 
-        return data;
+        return annotations;
+    }
+
+    /**
+     *
+     * @param directory
+     * @param currFile
+     * @return
+     */
+    public static Map<String, Map<Integer, String>> readEvaluationData(String directory, String currFile) {
+        Map<String, Map<Integer, String>> evaluations = new HashMap<>();
+
+        ARG_FILE_TYPES.forEach(fileType -> {
+            String filePath = directory + currFile + "_" + fileType + ".csv";
+            List<String[]> data = FileUtils.readCsvFile(filePath);
+            Map<Integer, String> evals = new HashMap<>();
+            for (String[] row : data) {
+                if (FunctionUtils.isNumeric(row[0])) {
+                    int evalKey = Integer.parseInt(row[0]);
+                    String evalValues = row[1];
+                    evals.put(evalKey, evalValues);
+                }
+            }
+            evaluations.put(fileType, evals);
+        });
+
+        return evaluations;
     }
 
     /**
@@ -77,44 +102,6 @@ public class IOManager {
         }
 
         return reports;
-    }
-
-    /**
-     *
-     * @param lang
-     * @return
-     */
-    public static Map<String, List<String>> readRelationTaxonomy(String lang) {
-        Map<String, List<String>> taxonomy = new HashMap<>();
-        String taxonomyFilepath = LEXICON_FILEPATH.replace("{}", lang);
-
-        // Get the file
-        String content = FileUtils.readFile(taxonomyFilepath);
-
-        // Check if the specified file exists or not
-        if (!StringUtils.isEmpty(content)) {
-            String[] rows = content.split("\n");
-            String category;
-            String subCategory;
-
-            for (int i = 1; i < rows.length; i++) {
-                String[] data = rows[i].split(",");
-
-                if (data.length == 6) {
-                    category = StringUtils.toTitleCase(data[2]);
-                    subCategory = StringUtils.toTitleCase(data[3]);
-
-                    if (!taxonomy.containsKey(category)) {
-                        taxonomy.put(category, new ArrayList<>());
-                    }
-                    if (!taxonomy.get(category).contains(subCategory)) {
-                        taxonomy.get(category).add(subCategory);
-                    }
-                }
-            }
-        }
-
-        return taxonomy;
     }
 
     /**
