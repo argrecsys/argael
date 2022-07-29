@@ -121,7 +121,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         lblNumberRelations = new javax.swing.JLabel();
         lblRelationPreview = new javax.swing.JLabel();
         scrollPane5 = new javax.swing.JScrollPane();
-        relationPreview = new javax.swing.JEditorPane();
+        txtAnnotationPreview = new javax.swing.JEditorPane();
         pnlEvaluation = new javax.swing.JPanel();
         lblEvaluator = new javax.swing.JLabel();
         cmbEvaluators = new javax.swing.JComboBox<>();
@@ -130,7 +130,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         scrollPane7 = new javax.swing.JScrollPane();
         tblEvaRelations = new javax.swing.JTable();
         scrollPane8 = new javax.swing.JScrollPane();
-        relationPreview2 = new javax.swing.JEditorPane();
+        txtEvaluationPreview = new javax.swing.JEditorPane();
         lblNumberArguments1 = new javax.swing.JLabel();
         lblNumberRelations1 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
@@ -275,9 +275,9 @@ public class ArgaelForm extends javax.swing.JFrame {
 
         scrollPane5.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        relationPreview.setEditable(false);
-        relationPreview.setContentType(HTML_CONTENT_TYPE);
-        scrollPane5.setViewportView(relationPreview);
+        txtAnnotationPreview.setEditable(false);
+        txtAnnotationPreview.setContentType(HTML_CONTENT_TYPE);
+        scrollPane5.setViewportView(txtAnnotationPreview);
 
         javax.swing.GroupLayout pnlAnnotationLayout = new javax.swing.GroupLayout(pnlAnnotation);
         pnlAnnotation.setLayout(pnlAnnotationLayout);
@@ -428,9 +428,9 @@ public class ArgaelForm extends javax.swing.JFrame {
 
         scrollPane8.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        relationPreview2.setEditable(false);
-        relationPreview2.setContentType(HTML_CONTENT_TYPE);
-        scrollPane8.setViewportView(relationPreview2);
+        txtEvaluationPreview.setEditable(false);
+        txtEvaluationPreview.setContentType(HTML_CONTENT_TYPE);
+        scrollPane8.setViewportView(txtEvaluationPreview);
 
         lblNumberArguments1.setText("Argument components (ACs)");
 
@@ -663,7 +663,7 @@ public class ArgaelForm extends javax.swing.JFrame {
             if (row >= 0) {
                 ((DefaultTableModel) tblArgRelations.getModel()).removeRow(row);
                 updateCounterLabels();
-                relationPreview.setText("");
+                txtAnnotationPreview.setText("");
                 isDirty = true;
             }
         }
@@ -777,37 +777,32 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void tblArgRelationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgRelationsMouseClicked
         // TODO add your handling code here:
         int row = tblArgRelations.rowAtPoint(evt.getPoint());
-
-        if (row >= 0) {
-            // Collect relation data
-            String text = "";
-            TableModel acuModel = tblArgComponents.getModel();
-            TableModel relModel = tblArgRelations.getModel();
-            int acuId1 = Integer.parseInt(relModel.getValueAt(row, 1).toString());
-            int acuId2 = Integer.parseInt(relModel.getValueAt(row, 2).toString());
-            String category = relModel.getValueAt(row, 3).toString();
-            String intent = relModel.getValueAt(row, 4).toString();
-            int acuIndex1 = getAcuIndexFromTable(acuModel, acuId1, 0);
-            int acuIndex2 = getAcuIndexFromTable(acuModel, acuId2, 0);
-
-            // Show relation
-            if (acuIndex1 >= 0 && acuIndex2 >= 0) {
-                String acuText1 = acuModel.getValueAt(acuIndex1, 1).toString();
-                String acuType1 = acuModel.getValueAt(acuIndex1, 2).toString();
-                String acuText2 = acuModel.getValueAt(acuIndex2, 1).toString();
-                String acuType2 = acuModel.getValueAt(acuIndex2, 2).toString();
-                text = String.format("[<b>%s</b>: %s] \u2190 [<b>%s</b>: %s] (<b>Relation</b>: \"%s\" and \"%s\")", acuType1, acuText1, acuType2, acuText2, category, intent);
-            }
-            relationPreview.setText(text);
-        }
+        TableModel acuModel = tblArgComponents.getModel();
+        TableModel relModel = tblArgRelations.getModel();
+        String relationString = createArgumentRelationString(row, acuModel, relModel);
+        txtAnnotationPreview.setText(relationString);
     }//GEN-LAST:event_tblArgRelationsMouseClicked
 
     private void tblEvaComponentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEvaComponentsMouseClicked
         // TODO add your handling code here:
+        int row = tblEvaComponents.rowAtPoint(evt.getPoint());
+
+        if (row >= 0) {
+            TableModel acModel = tblEvaComponents.getModel();
+            String acText = acModel.getValueAt(row, 1).toString();
+            String acType = acModel.getValueAt(row, 2).toString();
+            String text = String.format("[<b>%s</b>: %s]", acType, acText);
+            txtEvaluationPreview.setText(text);
+        }
     }//GEN-LAST:event_tblEvaComponentsMouseClicked
 
     private void tblEvaRelationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEvaRelationsMouseClicked
         // TODO add your handling code here:
+        int row = tblEvaRelations.rowAtPoint(evt.getPoint());
+        TableModel acuModel = tblEvaComponents.getModel();
+        TableModel relModel = tblEvaRelations.getModel();
+        String relationString = createArgumentRelationString(row, acuModel, relModel);
+        txtEvaluationPreview.setText(relationString);
     }//GEN-LAST:event_tblEvaRelationsMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -845,8 +840,6 @@ public class ArgaelForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuUser;
     private javax.swing.JPanel pnlAnnotation;
     private javax.swing.JPanel pnlEvaluation;
-    private javax.swing.JEditorPane relationPreview;
-    private javax.swing.JEditorPane relationPreview2;
     private javax.swing.JScrollPane scrollPane1;
     private javax.swing.JScrollPane scrollPane2;
     private javax.swing.JScrollPane scrollPane3;
@@ -861,19 +854,40 @@ public class ArgaelForm extends javax.swing.JFrame {
     private javax.swing.JTable tblEvaComponents;
     private javax.swing.JTable tblEvaRelations;
     private javax.swing.JEditorPane textEditor;
+    private javax.swing.JEditorPane txtAnnotationPreview;
+    private javax.swing.JEditorPane txtEvaluationPreview;
     // End of variables declaration//GEN-END:variables
 
     /**
      *
-     * @param acuId
+     * @param row
+     * @param acuModel
+     * @param relModel
      * @return
      */
-    private boolean isAcuInRelation(int acuId) {
-        TableModel relModel = tblArgRelations.getModel();
-        if (getAcuIndexFromTable(relModel, acuId, 0) >= 0 || getAcuIndexFromTable(relModel, acuId, 1) >= 0) {
-            return true;
+    private String createArgumentRelationString(int row, TableModel acuModel, TableModel relModel) {
+        // Collect relation data
+        String text = "";
+
+        if (row >= 0) {
+            int acuId1 = Integer.parseInt(relModel.getValueAt(row, 1).toString());
+            int acuId2 = Integer.parseInt(relModel.getValueAt(row, 2).toString());
+            String category = relModel.getValueAt(row, 3).toString();
+            String intent = relModel.getValueAt(row, 4).toString();
+            int acuIndex1 = getAcuIndexFromTable(acuModel, acuId1, 0);
+            int acuIndex2 = getAcuIndexFromTable(acuModel, acuId2, 0);
+
+            // Show relation
+            if (acuIndex1 >= 0 && acuIndex2 >= 0) {
+                String acuText1 = acuModel.getValueAt(acuIndex1, 1).toString();
+                String acuType1 = acuModel.getValueAt(acuIndex1, 2).toString();
+                String acuText2 = acuModel.getValueAt(acuIndex2, 1).toString();
+                String acuType2 = acuModel.getValueAt(acuIndex2, 2).toString();
+                text = String.format("[<b>%s</b>: %s] \u2190 [<b>%s</b>: %s] (<b>Relation</b>: \"%s\" and \"%s\")", acuType1, acuText1, acuType2, acuText2, category, intent);
+            }
         }
-        return false;
+
+        return text;
     }
 
     /**
@@ -1026,6 +1040,19 @@ public class ArgaelForm extends javax.swing.JFrame {
                 lstFiles.setModel(listModel);
             }
         }
+    }
+
+    /**
+     *
+     * @param acuId
+     * @return
+     */
+    private boolean isAcuInRelation(int acuId) {
+        TableModel relModel = tblArgRelations.getModel();
+        if (getAcuIndexFromTable(relModel, acuId, 0) >= 0 || getAcuIndexFromTable(relModel, acuId, 1) >= 0) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -1283,7 +1310,8 @@ public class ArgaelForm extends javax.swing.JFrame {
         // Display report
         this.textEditor.setText(report);
         this.textEditor.setCaretPosition(caretPosition);
-        this.relationPreview.setText("");
+        this.txtAnnotationPreview.setText("");
+        this.txtEvaluationPreview.setText("");
     }
 
 }

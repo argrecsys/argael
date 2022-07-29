@@ -464,7 +464,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JEditorPane" name="relationPreview">
+                <Component class="javax.swing.JEditorPane" name="txtAnnotationPreview">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="contentType" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
@@ -621,7 +621,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JEditorPane" name="relationPreview2">
+                <Component class="javax.swing.JEditorPane" name="txtEvaluationPreview">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="contentType" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
