@@ -592,7 +592,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 0.9.26
+                          Version: 0.9.28
                           Date: 07/29/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
@@ -911,6 +911,8 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void displayAnnotationData(Map<String, List<String[]>> annotations, Map<String, Map<Integer, String>> evaluations) {
         List<String[]> acList = annotations.get(IOManager.FILE_ARG_COMP);
         List<String[]> arList = annotations.get(IOManager.FILE_ARG_REL);
+        Map<Integer, String> acEval = evaluations.get(IOManager.FILE_ARG_COMP);
+        Map<Integer, String> arEval = evaluations.get(IOManager.FILE_ARG_REL);
 
         // Update arguments table
         DefaultTableModel acModel1 = (DefaultTableModel) tblArgComponents.getModel();
@@ -918,27 +920,39 @@ public class ArgaelForm extends javax.swing.JFrame {
         acModel1.setRowCount(0);
         acModel2.setRowCount(0);
 
-        for (int i = 1; i < acList.size(); i++) {
+        for (int i = 0; i < acList.size(); i++) {
             String[] rowData = acList.get(i);
+            int rowId = Integer.parseInt(rowData[0]);
+
             try {
                 acModel1.addRow(FunctionUtils.getSubArray(rowData, 0, 3));
                 acModel2.addRow(FunctionUtils.getSubArray(rowData, 0, 3));
+
+                if (acEval.containsKey(rowId)) {
+                    acModel2.setValueAt(acEval.get(rowId), i, 3);
+                }
             } catch (Exception ex) {
                 Logger.getLogger(ArgaelForm.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
         // Update relations table
-        DefaultTableModel aruModel1 = (DefaultTableModel) tblArgRelations.getModel();
-        DefaultTableModel aruModel2 = (DefaultTableModel) tblEvaRelations.getModel();
-        aruModel1.setRowCount(0);
-        aruModel2.setRowCount(0);
+        DefaultTableModel arModel1 = (DefaultTableModel) tblArgRelations.getModel();
+        DefaultTableModel arModel2 = (DefaultTableModel) tblEvaRelations.getModel();
+        arModel1.setRowCount(0);
+        arModel2.setRowCount(0);
 
-        for (int i = 1; i < arList.size(); i++) {
+        for (int i = 0; i < arList.size(); i++) {
             String[] rowData = arList.get(i);
+            int rowId = Integer.parseInt(rowData[0]);
+
             try {
-                aruModel1.addRow(FunctionUtils.getSubArray(rowData, 0, 5));
-                aruModel2.addRow(FunctionUtils.getSubArray(rowData, 0, 5));
+                arModel1.addRow(FunctionUtils.getSubArray(rowData, 0, 5));
+                arModel2.addRow(FunctionUtils.getSubArray(rowData, 0, 5));
+
+                if (arEval.containsKey(rowId)) {
+                    arModel2.setValueAt(arEval.get(rowId), i, 5);
+                }
             } catch (Exception ex) {
                 Logger.getLogger(ArgaelForm.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1138,10 +1152,10 @@ public class ArgaelForm extends javax.swing.JFrame {
             TableModel arModel = tblEvaRelations.getModel();
             for (int i = 0; i < arModel.getRowCount(); i++) {
                 if (arModel.getValueAt(i, 5) != null) {
-                    String aruId = arModel.getValueAt(i, 0).toString();
-                    String aruQuality = arModel.getValueAt(i, 5).toString();
+                    String arId = arModel.getValueAt(i, 0).toString();
+                    String arQuality = arModel.getValueAt(i, 5).toString();
                     String dateStamp = dateFormat.format(new Date());
-                    arEvaluations.add(new String[]{aruId, aruQuality, userName, dateStamp});
+                    arEvaluations.add(new String[]{arId, arQuality, userName, dateStamp});
                 }
             }
 
@@ -1149,7 +1163,7 @@ public class ArgaelForm extends javax.swing.JFrame {
             header = new ArrayList<>(Arrays.asList("ac_id", "ac_quality", "evaluator", "timestamp"));
             saveResults(filePath, IOManager.FILE_ARG_COMP, header, acEvaluations);
 
-            // Save ARUs results
+            // Save ARs results
             header = new ArrayList<>(Arrays.asList("ar_id", "ar_quality", "evaluator", "timestamp"));
             saveResults(filePath, IOManager.FILE_ARG_REL, header, arEvaluations);
         }

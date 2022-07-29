@@ -18,7 +18,6 @@
 package es.uam.irg.io;
 
 import es.uam.irg.utils.FileUtils;
-import es.uam.irg.utils.FunctionUtils;
 import es.uam.irg.utils.StringUtils;
 import java.io.File;
 import java.nio.file.Path;
@@ -49,7 +48,7 @@ public class IOManager {
 
         for (String fileType : argFileTypes) {
             String filePath = directory + currFile + "_" + fileType + ".csv";
-            List<String[]> data = FileUtils.readCsvFile(filePath);
+            List<String[]> data = FileUtils.readCsvFile(filePath, false);
             annotations.put(fileType, data);
         }
 
@@ -68,14 +67,12 @@ public class IOManager {
 
         for (String fileType : argFileTypes) {
             String filePath = directory + currFile + "_" + fileType + ".csv";
-            List<String[]> data = FileUtils.readCsvFile(filePath);
+            List<String[]> data = FileUtils.readCsvFile(filePath, false);
             Map<Integer, String> evals = new HashMap<>();
             for (String[] row : data) {
-                if (FunctionUtils.isNumeric(row[0])) {
-                    int evalKey = Integer.parseInt(row[0]);
-                    String evalValues = row[1];
-                    evals.put(evalKey, evalValues);
-                }
+                int evalKey = Integer.parseInt(row[0]);
+                String evalValues = row[1];
+                evals.put(evalKey, evalValues);
             }
             evaluations.put(fileType, evals);
         }
