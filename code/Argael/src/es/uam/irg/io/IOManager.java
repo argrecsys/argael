@@ -45,15 +45,41 @@ public class IOManager {
      * @return
      */
     public static Map<String, List<String[]>> readAnnotationData(String directory, String currFile) {
-        Map<String, List<String[]>> data = new HashMap<>();
+        Map<String, List<String[]>> annotations = new HashMap<>();
         Set<String> fileTypes = new HashSet<>(Arrays.asList(new String[]{"acu", "aru"}));
 
         fileTypes.forEach(fileType -> {
             String filePath = directory + currFile + "_" + fileType + ".csv";
-            data.put(fileType, FileUtils.readCsvFile(filePath));
+            List<String[]> data = FileUtils.readCsvFile(filePath);
+            annotations.put(fileType, data);
         });
 
-        return data;
+        return annotations;
+    }
+
+    /**
+     *
+     * @param directory
+     * @param currFile
+     * @return
+     */
+    public static Map<String, Map<Integer, String>> readEvaluationData(String directory, String currFile) {
+        Map<String, Map<Integer, String>> evaluations = new HashMap<>();
+        Set<String> fileTypes = new HashSet<>(Arrays.asList(new String[]{"acu", "aru"}));
+
+        fileTypes.forEach(fileType -> {
+            String filePath = directory + currFile + "_" + fileType + ".csv";
+            List<String[]> data = FileUtils.readCsvFile(filePath);
+            Map<Integer, String> evals = new HashMap<>();
+            for (String[] row : data) {
+                int evalKey = Integer.parseInt(row[0]);
+                String evalValues = row[1];
+                evals.put(evalKey, evalValues);
+            }
+            evaluations.put(fileType, evals);
+        });
+
+        return evaluations;
     }
 
     /**

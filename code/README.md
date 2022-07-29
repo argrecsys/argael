@@ -7,13 +7,13 @@ The input parameters (<a href="https://github.com/argrecsys/argael/blob/main/cod
 ```json
 {
     "language": "es",
-    "anno_model": {
-        "categories": ["addition", "alternative", "comparison", "concession", "conclusion", "condition", "exemplification", "explanation", "goal", "opposition", "precision", "reason", "restatement", "result", "similarity", "summary"],
+    "annotation_model": {
         "components": ["major claim", "claim", "premise"],
-        "intents": ["support", "attack"]
+        "relation_categories": ["addition", "alternative", "comparison", "concession", "conclusion", "condition", "exemplification", "explanation", "goal", "opposition", "precision", "reason", "restatement", "result", "similarity", "summary"],
+        "relation_intents": ["support", "attack"]
     },
-    "eval_model": {
-        "quality": ["low", "medium", "high"]
+    "evaluation_model": {
+        "quality": ["incorrect", "not relevant", "relevant", "very relevant"]
     }
 }
 ```
