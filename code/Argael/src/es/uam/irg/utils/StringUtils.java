@@ -21,6 +21,9 @@ import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+/**
+ * Class with a set of static utility functions.
+ */
 public class StringUtils {
 
     // Class contants

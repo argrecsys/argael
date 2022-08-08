@@ -37,10 +37,24 @@ import java.util.logging.Logger;
 import org.yaml.snakeyaml.Yaml;
 
 /**
- *
- * @author Usuario
+ * Class with a set of static utility functions.
  */
 public class FileUtils {
+
+    /**
+     *
+     * @param directory
+     * @return
+     */
+    public static boolean createDirectory(String directory) {
+        File dir = new File(directory);
+        boolean result = dir.exists();
+        if (!result) {
+            dir.mkdirs();
+            result = dir.exists();
+        }
+        return result;
+    }
 
     /**
      *
@@ -69,10 +83,10 @@ public class FileUtils {
     }
 
     /**
-     * 
+     *
      * @param filepath
      * @param withHeader
-     * @return 
+     * @return
      */
     public static List<String[]> readCsvFile(String filepath, boolean withHeader) {
         List<String[]> csvFile = new ArrayList<>();

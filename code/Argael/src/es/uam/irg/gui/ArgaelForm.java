@@ -593,7 +593,7 @@ public class ArgaelForm extends javax.swing.JFrame {
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
                           Version: 1.0.0
-                          Date: 08/2/2022
+                          Date: 08/8/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
                           Web site: https://argrecsys.github.io/argael/
@@ -1082,12 +1082,12 @@ public class ArgaelForm extends javax.swing.JFrame {
 
     /**
      *
-     * @param fileName
+     * @param entity
      */
-    private void saveAnnotationsToFiles(String fileName) {
+    private void saveAnnotationsToFiles(String entity) {
 
         if (!lstFiles.isSelectionEmpty()) {
-            String filePath = "annotations\\" + fileName;
+            String fileName;
             List<String> header;
             List<String[]> acAnnotations = new ArrayList<>();
             List<String[]> arAnnotations = new ArrayList<>();
@@ -1115,24 +1115,26 @@ public class ArgaelForm extends javax.swing.JFrame {
             }
 
             // Save ACs results
+            fileName = entity + "_" + IOManager.FILE_ARG_COMP;
             header = new ArrayList<>(Arrays.asList("ac_id", "ac_text", "ac_type", "annotator", "timestamp"));
-            saveResults(filePath, IOManager.FILE_ARG_COMP, header, acAnnotations);
+            saveResults(fileName, "annotations", header, acAnnotations);
 
             // Save ARs results
+            fileName = entity + "_" + IOManager.FILE_ARG_REL;
             header = new ArrayList<>(Arrays.asList("ar_id", "ac_id1", "ac_id2", "rel_type", "rel_intent", "annotator", "timestamp"));
-            saveResults(filePath, IOManager.FILE_ARG_REL, header, arAnnotations);
+            saveResults(fileName, "annotations", header, arAnnotations);
         }
 
     }
 
     /**
      *
-     * @param fileName
+     * @param entity
      */
-    private void saveEvaluationsToFiles(String fileName) {
+    private void saveEvaluationsToFiles(String entity) {
 
         if (!lstFiles.isSelectionEmpty()) {
-            String filePath = "evaluations\\" + fileName;
+            String fileName;
             List<String> header;
             List<String[]> acEvaluations = new ArrayList<>();
             List<String[]> arEvaluations = new ArrayList<>();
@@ -1160,12 +1162,14 @@ public class ArgaelForm extends javax.swing.JFrame {
             }
 
             // Save ACs results
+            fileName = entity + "_" + IOManager.FILE_ARG_COMP;
             header = new ArrayList<>(Arrays.asList("ac_id", "ac_quality", "evaluator", "timestamp"));
-            saveResults(filePath, IOManager.FILE_ARG_COMP, header, acEvaluations);
+            saveResults(fileName, "evaluations", header, acEvaluations);
 
             // Save ARs results
+            fileName = entity + "_" + IOManager.FILE_ARG_REL;
             header = new ArrayList<>(Arrays.asList("ar_id", "ar_quality", "evaluator", "timestamp"));
-            saveResults(filePath, IOManager.FILE_ARG_REL, header, arEvaluations);
+            saveResults(fileName, "evaluations", header, arEvaluations);
         }
 
     }
@@ -1174,18 +1178,26 @@ public class ArgaelForm extends javax.swing.JFrame {
      *
      * @param fileName
      * @param fileType
-     * @param data
+     * @param header
+     * @param rows
      * @return
      */
     private boolean saveResults(String fileName, String fileType, List<String> header, List<String[]> rows) {
-        String filepath = currDirectory + "\\..\\results\\" + fileName + "_" + fileType + ".csv";
+        boolean result = false;
+        String directory = currDirectory + "\\..\\results\\" + fileType;
+        String filePath = directory + "\\" + fileName + ".csv";
         List<String[]> data = new ArrayList<>();
         data.add(header.toArray(new String[header.size()]));
         data.addAll(rows);
-        boolean result = FileUtils.saveCsvFile(filepath, data);
+
+        result = FileUtils.createDirectory(directory);
         if (result) {
-            System.out.println(">> Data saved correctly (" + fileType + ").");
+            result = FileUtils.saveCsvFile(filePath, data);
+            if (result) {
+                System.out.println(">> Data saved correctly (" + fileType + ").");
+            }
         }
+
         return result;
     }
 
