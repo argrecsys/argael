@@ -1,0 +1,11 @@
+{
+    "language": "es",
+    "annotation_model": {
+        "components": ["major claim", "claim", "premise"],
+        "relation_categories": ["addition", "alternative", "comparison", "concession", "conclusion", "condition", "exemplification", "explanation", "goal", "opposition", "precision", "reason", "restatement", "result", "similarity", "summary"],
+        "relation_intents": ["support", "attack"]
+    },
+    "evaluation_model": {
+        "quality": ["incorrect", "not relevant", "relevant", "very relevant"]
+    }
+}

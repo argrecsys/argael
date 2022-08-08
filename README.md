@@ -35,6 +35,14 @@ The implemented solution depends on or make use of the following libraries:
 - OpenCSV 4.1
 - Snake YAML 1.9
 
+## Execution and Use
+The project has an executable package in the `\jar` folder, called `Argael.jar`. To run the tool from the Command Prompt (CMD), execute the following commands:
+
+``` console
+  cd "argael\jar\"
+  java -jar Argael.jar
+```
+
 ## Authors
 Created on Jun 29, 2022  
 Created by:
