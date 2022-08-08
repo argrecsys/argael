@@ -22,10 +22,10 @@ import com.opencsv.CSVWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -37,10 +37,26 @@ import java.util.logging.Logger;
 import org.yaml.snakeyaml.Yaml;
 
 /**
- *
- * @author Usuario
+ * Class with a set of static utility functions.
  */
 public class FileUtils {
+
+    public static final String FILE_ENCODING = "UTF-8";
+
+    /**
+     *
+     * @param directory
+     * @return
+     */
+    public static boolean createDirectory(String directory) {
+        File dir = new File(directory);
+        boolean result = dir.exists();
+        if (!result) {
+            dir.mkdirs();
+            result = dir.exists();
+        }
+        return result;
+    }
 
     /**
      *
@@ -69,10 +85,10 @@ public class FileUtils {
     }
 
     /**
-     * 
+     *
      * @param filepath
      * @param withHeader
-     * @return 
+     * @return
      */
     public static List<String[]> readCsvFile(String filepath, boolean withHeader) {
         List<String[]> csvFile = new ArrayList<>();
@@ -80,7 +96,7 @@ public class FileUtils {
 
         if (file.exists()) {
             try {
-                FileReader inputFile = new FileReader(file);
+                InputStreamReader inputFile = new InputStreamReader(new FileInputStream(filepath), FILE_ENCODING);
                 try ( CSVReader reader = new CSVReader(inputFile)) {
                     if (!withHeader) {
                         reader.readNext();

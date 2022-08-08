@@ -1,6 +1,6 @@
 # ARGAEL: ARGument Annotation and Evaluation tooL
 ![version](https://img.shields.io/badge/version-1.0.0-blue)
-![last-update](https://img.shields.io/badge/last_update-8/5/2022-orange)
+![last-update](https://img.shields.io/badge/last_update-8/8/2022-orange)
 ![license](https://img.shields.io/badge/license-Apache_2.0-brightgreen)
 
 **ARGAEL** is an open-source Java desktop application designed to maximize the experience and efficiency of the process of annotating and evaluating arguments in large text corpora.
@@ -34,6 +34,14 @@ The implemented solution depends on or make use of the following libraries:
 - JSON Java 20210307
 - OpenCSV 4.1
 - Snake YAML 1.9
+
+## Execution and Use
+The project has an executable package in the `\jar` folder, called `Argael.jar`. To run the tool from the Command Prompt (CMD), execute the following commands:
+
+``` console
+  cd "argael\jar\"
+  java -jar Argael.jar
+```
 
 ## Authors
 Created on Jun 29, 2022  
