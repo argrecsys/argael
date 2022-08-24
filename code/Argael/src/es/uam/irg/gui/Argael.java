@@ -43,7 +43,7 @@ public class Argael {
         System.out.format(">> Relation Categories: %s, Relation Intents: %s, Quality metrics: %s\n",
                 components, relCategories, relIntents, qualityMetrics);
 
-        // Show ARGAEL guie
+        // Show ARGAEL gui
         showWinform(components, relCategories, relIntents, qualityMetrics);
     }
 
