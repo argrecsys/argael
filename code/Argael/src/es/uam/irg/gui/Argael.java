@@ -34,28 +34,34 @@ public class Argael {
 
         // Program hyperparameters from JSON config file
         Map<String, Object> params = InitParams.readInitParams();
+        Map<String, String> data = (Map<String, String>) params.get("data");
+        String dataFolder = data.get("folder");
+        String fileExtension = data.get("extension");
+        String lang = data.get("language");
         Map<String, List<String>> annotationModel = (Map<String, List<String>>) params.get("annotation_model");
         List<String> components = annotationModel.get("components");
         List<String> relCategories = annotationModel.get("relation_categories");
         List<String> relIntents = annotationModel.get("relation_intents");
         Map<String, List<String>> evaluationModel = (Map<String, List<String>>) params.get("evaluation_model");
         List<String> qualityMetrics = evaluationModel.get("quality");
-        System.out.format(">> Relation Categories: %s, Relation Intents: %s, Quality metrics: %s\n",
-                components, relCategories, relIntents, qualityMetrics);
+        System.out.format(">> Data folder: %s, File extension: %s, document language: %s\n", dataFolder, fileExtension, lang);
+        System.out.format(">> Relation Categories: %s, Relation Intents: %s, Quality metrics: %s\n", components, relCategories, relIntents, qualityMetrics);
 
         // Show ARGAEL gui
-        showWinform(components, relCategories, relIntents, qualityMetrics);
+        showWinform(dataFolder, fileExtension, components, relCategories, relIntents, qualityMetrics);
     }
 
     /**
      * Creates and displays the Argument-IR form.
      *
+     * @param dataFolder
+     * @param fileExtension
      * @param components
      * @param relCategories
      * @param relIntents
      * @param qualityMetrics
      */
-    private static void showWinform(List<String> components, List<String> relCategories, List<String> relIntents, List<String> qualityMetrics) {
+    private static void showWinform(String dataFolder, String fileExtension, List<String> components, List<String> relCategories, List<String> relIntents, List<String> qualityMetrics) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -70,7 +76,7 @@ public class Argael {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             FunctionUtils.printWithDatestamp(">> ARG-TOOL BEGINS");
-            new ArgaelForm(components, relCategories, relIntents, qualityMetrics);
+            new ArgaelForm(dataFolder, fileExtension, components, relCategories, relIntents, qualityMetrics);
             FunctionUtils.printWithDatestamp(">> ARG-TOOL ENDS");
         });
     }

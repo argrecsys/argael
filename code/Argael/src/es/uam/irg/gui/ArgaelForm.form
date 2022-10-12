@@ -6,7 +6,7 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="menuFile">
           <Properties>
-            <Property name="text" type="java.lang.String" value="File"/>
+            <Property name="text" type="java.lang.String" value="Docs"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="mItemImportJsonl">
@@ -177,7 +177,7 @@
     </Container>
     <Component class="javax.swing.JLabel" name="lblFileList">
       <Properties>
-        <Property name="text" type="java.lang.String" value="File list:"/>
+        <Property name="text" type="java.lang.String" value="Document list:"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JTabbedPane" name="tabbedPane">
