@@ -45,8 +45,12 @@ public class InitParams {
                 JSONObject data;
 
                 // General parameters
-                String lang = json.getString("language");
-                params.put("language", lang);
+                data = json.getJSONObject("data");
+                Map<String, Object> documents = new HashMap<>();
+                documents.put("folder", data.getString("folder"));
+                documents.put("extension", data.getString("extension"));
+                documents.put("language", data.getString("language"));
+                params.put("data", documents);
 
                 // Annotation model parameters
                 data = json.getJSONObject("annotation_model");

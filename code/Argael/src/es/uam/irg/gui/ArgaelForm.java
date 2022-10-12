@@ -21,6 +21,7 @@ import es.uam.irg.io.IOManager;
 import es.uam.irg.utils.FileUtils;
 import es.uam.irg.utils.FunctionUtils;
 import es.uam.irg.utils.StringUtils;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -66,25 +67,28 @@ public class ArgaelForm extends javax.swing.JFrame {
     /**
      * Creates new ARGAEL form.
      *
+     * @param dataFolder
+     * @param fileExtension
      * @param components
      * @param relCategories
      * @param relIntents
      * @param qualityMetrics
      */
-    public ArgaelForm(List<String> components, List<String> relCategories, List<String> relIntents, List<String> qualityMetrics) {
+    public ArgaelForm(String dataFolder, String fileExtension, List<String> components, List<String> relCategories, List<String> relIntents, List<String> qualityMetrics) {
         initComponents();
 
-        this.currDirectory = "";
+        this.currDirectory = dataFolder;
+        this.fileExtension = fileExtension;
         this.currEntity = "";
         this.isDirty = false;
         this.model = new DataModel(components, relCategories, relIntents, qualityMetrics);
         this.acSelected = new LinkedList<>();
-        this.fileExtension = "";
 
         this.setTablesLookAndFeel();
         this.setComboBoxes();
         this.setVisible(true);
         this.setAppUsers();
+        this.importFilesFromDirectory(false);
     }
 
     /**
@@ -643,14 +647,14 @@ public class ArgaelForm extends javax.swing.JFrame {
 
     private void mItemImportJsonlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemImportJsonlActionPerformed
         // TODO add your handling code here:
-        this.fileExtension = "jsonl";
-        importFilesFromDirectory();
+        this.fileExtension = IOManager.DocExt.JSONL.toString();
+        importFilesFromDirectory(true);
     }//GEN-LAST:event_mItemImportJsonlActionPerformed
 
     private void mItemImportTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemImportTextActionPerformed
         // TODO add your handling code here:
-        this.fileExtension = "txt";
-        importFilesFromDirectory();
+        this.fileExtension = IOManager.DocExt.TXT.toString();
+        importFilesFromDirectory(true);
     }//GEN-LAST:event_mItemImportTextActionPerformed
 
     private void mItemExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemExportActionPerformed
@@ -1040,15 +1044,24 @@ public class ArgaelForm extends javax.swing.JFrame {
      *
      * @param fileExt
      */
-    private void importFilesFromDirectory() {
-        JFileChooser jfc = new JFileChooser();
-        jfc.setCurrentDirectory(new java.io.File("."));
-        jfc.setDialogTitle("Select folder");
-        jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        jfc.setAcceptAllFileFilterUsed(false);
+    private void importFilesFromDirectory(boolean reload) {
 
-        if (jfc.showOpenDialog(ArgaelForm.this) == JFileChooser.APPROVE_OPTION) {
-            currDirectory = jfc.getSelectedFile().toString();
+        // Reload document directory
+        if (reload) {
+            JFileChooser jfc = new JFileChooser();
+            jfc.setCurrentDirectory(new java.io.File("."));
+            jfc.setDialogTitle("Select folder");
+            jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            jfc.setAcceptAllFileFilterUsed(false);
+
+            if (jfc.showOpenDialog(ArgaelForm.this) == JFileChooser.APPROVE_OPTION) {
+                currDirectory = jfc.getSelectedFile().toString();
+            }
+        }
+
+        // Import documents/files
+        File file = new File(currDirectory);
+        if (file.isDirectory() && !StringUtils.isEmpty(fileExtension)) {
             List<String> files = model.readFilenamesInFolder(currDirectory, fileExtension);
             System.out.println(String.format(">> Directory: '%s' and number of uploaded files: %d", currDirectory, files.size()));
 
@@ -1058,6 +1071,9 @@ public class ArgaelForm extends javax.swing.JFrame {
                 listModel.addAll(files);
                 lstFiles.setModel(listModel);
             }
+
+        } else {
+            System.out.println(">> Error importing documents/files [" + currDirectory + "]");
         }
     }
 

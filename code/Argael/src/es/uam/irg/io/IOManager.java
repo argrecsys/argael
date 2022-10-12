@@ -36,6 +36,24 @@ public class IOManager {
     public static final String FILE_ARG_COMP = "arg_comp";
     public static final String FILE_ARG_REL = "arg_rel";
 
+    // Allowed document (file) extensions
+    public enum DocExt {
+        JSONL("jsonl"),
+        JSON("json"),
+        TXT("txt");
+
+        private final String value;
+
+        private DocExt(String v) {
+            value = v;
+        }
+
+        @Override
+        public String toString() {
+            return this.value;
+        }
+    }
+
     /**
      *
      * @param directory
