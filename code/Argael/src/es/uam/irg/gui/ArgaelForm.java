@@ -169,7 +169,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         });
         scrollPane1.setViewportView(lstFiles);
 
-        lblFileList.setText("File list:");
+        lblFileList.setText("Document list:");
 
         lblAddArgComp.setText("Annotate AC:");
 
@@ -489,7 +489,7 @@ public class ArgaelForm extends javax.swing.JFrame {
 
         tabbedPane.addTab("Evaluation", pnlEvaluation);
 
-        menuFile.setText("File");
+        menuFile.setText("Docs");
 
         mItemImportJsonl.setText("Import from Jsonl");
         mItemImportJsonl.addActionListener(new java.awt.event.ActionListener() {
