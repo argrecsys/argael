@@ -495,9 +495,9 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="lblEvaluator" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblTargetAnnotator" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="cmbEvaluators" min="-2" pref="150" max="-2" attributes="0"/>
+                                      <Component id="cmbTargetAnnotator" min="-2" pref="150" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
@@ -523,8 +523,8 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblEvaluator" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cmbEvaluators" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblTargetAnnotator" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cmbTargetAnnotator" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="19" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -544,12 +544,15 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="lblEvaluator">
+            <Component class="javax.swing.JLabel" name="lblTargetAnnotator">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Evaluator:"/>
+                <Property name="text" type="java.lang.String" value="Target annotator:"/>
               </Properties>
+              <AccessibilityProperties>
+                <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Select annotator:"/>
+              </AccessibilityProperties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cmbEvaluators">
+            <Component class="javax.swing.JComboBox" name="cmbTargetAnnotator">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="0"/>

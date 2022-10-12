@@ -123,8 +123,8 @@ public class ArgaelForm extends javax.swing.JFrame {
         scrollPane5 = new javax.swing.JScrollPane();
         txtAnnotationPreview = new javax.swing.JEditorPane();
         pnlEvaluation = new javax.swing.JPanel();
-        lblEvaluator = new javax.swing.JLabel();
-        cmbEvaluators = new javax.swing.JComboBox<>();
+        lblTargetAnnotator = new javax.swing.JLabel();
+        cmbTargetAnnotator = new javax.swing.JComboBox<>();
         lblNumberArguments1 = new javax.swing.JLabel();
         lblNumberRelations1 = new javax.swing.JLabel();
         scrollPane6 = new javax.swing.JScrollPane();
@@ -362,7 +362,7 @@ public class ArgaelForm extends javax.swing.JFrame {
 
         tabbedPane.addTab("Annotation", pnlAnnotation);
 
-        lblEvaluator.setText("Evaluator:");
+        lblTargetAnnotator.setText("Target annotator:");
 
         lblNumberArguments1.setText("Argument components (ACs)");
 
@@ -447,9 +447,9 @@ public class ArgaelForm extends javax.swing.JFrame {
                     .addGroup(pnlEvaluationLayout.createSequentialGroup()
                         .addGroup(pnlEvaluationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlEvaluationLayout.createSequentialGroup()
-                                .addComponent(lblEvaluator)
+                                .addComponent(lblTargetAnnotator)
                                 .addGap(18, 18, 18)
-                                .addComponent(cmbEvaluators, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cmbTargetAnnotator, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlEvaluationLayout.createSequentialGroup()
                                 .addGroup(pnlEvaluationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(scrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 902, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -466,8 +466,8 @@ public class ArgaelForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEvaluationLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlEvaluationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEvaluator)
-                    .addComponent(cmbEvaluators, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblTargetAnnotator)
+                    .addComponent(cmbTargetAnnotator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addGroup(pnlEvaluationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNumberRelations1, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -480,6 +480,8 @@ public class ArgaelForm extends javax.swing.JFrame {
                 .addComponent(scrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        lblTargetAnnotator.getAccessibleContext().setAccessibleName("Select annotator:");
 
         tabbedPane.addTab("Evaluation", pnlEvaluation);
 
@@ -816,18 +818,18 @@ public class ArgaelForm extends javax.swing.JFrame {
     private javax.swing.JButton btnDeleteAR;
     private javax.swing.JComboBox<String> cmbArgCompType;
     private javax.swing.JComboBox<String> cmbCategory;
-    private javax.swing.JComboBox<String> cmbEvaluators;
     private javax.swing.JComboBox<String> cmbIntent;
+    private javax.swing.JComboBox<String> cmbTargetAnnotator;
     private javax.swing.JLabel lblAddArgComp;
     private javax.swing.JLabel lblAddArgRel;
     private javax.swing.JLabel lblDelete;
-    private javax.swing.JLabel lblEvaluator;
     private javax.swing.JLabel lblFileList;
     private javax.swing.JLabel lblNumberArguments;
     private javax.swing.JLabel lblNumberArguments1;
     private javax.swing.JLabel lblNumberRelations;
     private javax.swing.JLabel lblNumberRelations1;
     private javax.swing.JLabel lblRelationPreview;
+    private javax.swing.JLabel lblTargetAnnotator;
     private javax.swing.JList<String> lstFiles;
     private javax.swing.JMenuItem mItemAbout;
     private javax.swing.JMenuItem mItemClose;
@@ -1301,8 +1303,8 @@ public class ArgaelForm extends javax.swing.JFrame {
         }
 
         this.menuUser.setText("| User: " + userName);
-        this.cmbEvaluators.setModel(new DefaultComboBoxModel(users));
-        this.cmbEvaluators.setSelectedItem(userName);
+        this.cmbTargetAnnotator.setModel(new DefaultComboBoxModel(users));
+        this.cmbTargetAnnotator.removeItem(userName);
     }
 
     /**
