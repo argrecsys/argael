@@ -152,7 +152,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         menuUser = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("ARGAEL v1.0");
+        setTitle("ARGAEL v1.2");
         setMinimumSize(new java.awt.Dimension(1111, 500));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -589,6 +589,8 @@ public class ArgaelForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        getAccessibleContext().setAccessibleName("ARGAEL v1.2");
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -598,8 +600,8 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 1.0.0
-                          Date: 08/8/2022
+                          Version: 1.2.2
+                          Date: 10/14/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
                           Web site: https://argrecsys.github.io/argael/
@@ -661,6 +663,52 @@ public class ArgaelForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_mItemExportActionPerformed
 
+    private void mItemSaveAnnotationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemSaveAnnotationActionPerformed
+        // TODO add your handling code here:
+        if (!StringUtils.isEmpty(currEntity)) {
+            saveAnnotationsToFiles(currEntity);
+            isDirty = false;
+        }
+    }//GEN-LAST:event_mItemSaveAnnotationActionPerformed
+
+    private void mItemSaveEvaluationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemSaveEvaluationActionPerformed
+        // TODO add your handling code here:
+        if (!StringUtils.isEmpty(currEntity)) {
+            saveEvaluationsToFiles(currEntity);
+        }
+    }//GEN-LAST:event_mItemSaveEvaluationActionPerformed
+
+    private void tblEvaRelationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEvaRelationsMouseClicked
+        // TODO add your handling code here:
+        int row = tblEvaRelations.rowAtPoint(evt.getPoint());
+        TableModel acModel = tblEvaComponents.getModel();
+        TableModel arModel = tblEvaRelations.getModel();
+        String relationString = createArgumentRelationString(row, acModel, arModel);
+        txtEvaluationPreview.setText(relationString);
+    }//GEN-LAST:event_tblEvaRelationsMouseClicked
+
+    private void tblEvaComponentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEvaComponentsMouseClicked
+        // TODO add your handling code here:
+        int row = tblEvaComponents.rowAtPoint(evt.getPoint());
+
+        if (row >= 0) {
+            TableModel acModel = tblEvaComponents.getModel();
+            String acText = acModel.getValueAt(row, 1).toString();
+            String acType = acModel.getValueAt(row, 2).toString();
+            String text = String.format("[<b>%s</b>: %s]", acType, acText);
+            txtEvaluationPreview.setText(text);
+        }
+    }//GEN-LAST:event_tblEvaComponentsMouseClicked
+
+    private void tblArgRelationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgRelationsMouseClicked
+        // TODO add your handling code here:
+        int row = tblArgRelations.rowAtPoint(evt.getPoint());
+        TableModel acModel = tblArgComponents.getModel();
+        TableModel relModel = tblArgRelations.getModel();
+        String relationString = createArgumentRelationString(row, acModel, relModel);
+        txtAnnotationPreview.setText(relationString);
+    }//GEN-LAST:event_tblArgRelationsMouseClicked
+
     private void btnDeleteARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteARActionPerformed
         // TODO add your handling code here:
         if (tblArgRelations.getRowCount() > 0) {
@@ -702,6 +750,18 @@ public class ArgaelForm extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnDeleteACActionPerformed
+
+    private void tblArgComponentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgComponentsMouseClicked
+        // TODO add your handling code here:
+        int row = tblArgComponents.rowAtPoint(evt.getPoint());
+
+        if (row >= 0) {
+            acSelected.add(row);
+            if (acSelected.size() > 2) {
+                acSelected.poll();
+            }
+        }
+    }//GEN-LAST:event_tblArgComponentsMouseClicked
 
     private void btnAddRelationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRelationActionPerformed
         // TODO add your handling code here:
@@ -756,64 +816,6 @@ public class ArgaelForm extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnAddArgumentActionPerformed
-
-    private void mItemSaveAnnotationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemSaveAnnotationActionPerformed
-        // TODO add your handling code here:
-        if (!StringUtils.isEmpty(currEntity)) {
-            saveAnnotationsToFiles(currEntity);
-            isDirty = false;
-        }
-    }//GEN-LAST:event_mItemSaveAnnotationActionPerformed
-
-    private void mItemSaveEvaluationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemSaveEvaluationActionPerformed
-        // TODO add your handling code here:
-        if (!StringUtils.isEmpty(currEntity)) {
-            saveEvaluationsToFiles(currEntity);
-        }
-    }//GEN-LAST:event_mItemSaveEvaluationActionPerformed
-
-    private void tblArgComponentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgComponentsMouseClicked
-        // TODO add your handling code here:
-        int row = tblArgComponents.rowAtPoint(evt.getPoint());
-
-        if (row >= 0) {
-            acSelected.add(row);
-            if (acSelected.size() > 2) {
-                acSelected.poll();
-            }
-        }
-    }//GEN-LAST:event_tblArgComponentsMouseClicked
-
-    private void tblArgRelationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgRelationsMouseClicked
-        // TODO add your handling code here:
-        int row = tblArgRelations.rowAtPoint(evt.getPoint());
-        TableModel acModel = tblArgComponents.getModel();
-        TableModel relModel = tblArgRelations.getModel();
-        String relationString = createArgumentRelationString(row, acModel, relModel);
-        txtAnnotationPreview.setText(relationString);
-    }//GEN-LAST:event_tblArgRelationsMouseClicked
-
-    private void tblEvaComponentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEvaComponentsMouseClicked
-        // TODO add your handling code here:
-        int row = tblEvaComponents.rowAtPoint(evt.getPoint());
-
-        if (row >= 0) {
-            TableModel acModel = tblEvaComponents.getModel();
-            String acText = acModel.getValueAt(row, 1).toString();
-            String acType = acModel.getValueAt(row, 2).toString();
-            String text = String.format("[<b>%s</b>: %s]", acType, acText);
-            txtEvaluationPreview.setText(text);
-        }
-    }//GEN-LAST:event_tblEvaComponentsMouseClicked
-
-    private void tblEvaRelationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEvaRelationsMouseClicked
-        // TODO add your handling code here:
-        int row = tblEvaRelations.rowAtPoint(evt.getPoint());
-        TableModel acModel = tblEvaComponents.getModel();
-        TableModel arModel = tblEvaRelations.getModel();
-        String relationString = createArgumentRelationString(row, acModel, arModel);
-        txtEvaluationPreview.setText(relationString);
-    }//GEN-LAST:event_tblEvaRelationsMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddArgument;
@@ -893,7 +895,7 @@ public class ArgaelForm extends javax.swing.JFrame {
                 String acType1 = acModel.getValueAt(acIndex1, 2).toString();
                 String acText2 = acModel.getValueAt(acIndex2, 1).toString();
                 String acType2 = acModel.getValueAt(acIndex2, 2).toString();
-                text = String.format("[<b>%s</b>: %s] \u2190 [<b>%s</b>: %s] (<b>Relation</b>: \"%s\" and \"%s\")", acType1, acText1, acType2, acText2, category, intent);
+                text = String.format("[<b>%s (%s)</b>: %s] \u2190 [<b>%s (%s)</b>: %s] (<b>relation</b>: \"%s\" and \"%s\")", acType1, acId1, acText1, acType2, acId2, acText2, category, intent);
             }
         }
 
