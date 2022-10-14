@@ -874,7 +874,7 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void lstDocsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstDocsValueChanged
         // TODO add your handling code here:
         if (!lstDocs.isSelectionEmpty() && !evt.getValueIsAdjusting()) {
-            currEntity = lstDocs.getSelectedValue();
+            this.currEntity = lstDocs.getSelectedValue();
             refreshViewData();
         }
     }//GEN-LAST:event_lstDocsValueChanged
@@ -897,16 +897,12 @@ public class ArgaelForm extends javax.swing.JFrame {
 
     private void mItemSaveAnnotationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemSaveAnnotationActionPerformed
         // TODO add your handling code here:
-        if (!StringUtils.isEmpty(currEntity)) {
-            saveAnnotationsToFiles();
-        }
+        saveAnnotationsToFiles();
     }//GEN-LAST:event_mItemSaveAnnotationActionPerformed
 
     private void mItemSaveEvaluationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemSaveEvaluationActionPerformed
         // TODO add your handling code here:
-        if (!StringUtils.isEmpty(currEntity)) {
-            saveEvaluationsToFiles();
-        }
+        saveEvaluationsToFiles();
     }//GEN-LAST:event_mItemSaveEvaluationActionPerformed
 
     private void tblEvaRelationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEvaRelationsMouseClicked
@@ -1018,6 +1014,7 @@ public class ArgaelForm extends javax.swing.JFrame {
                 tblArgRelations.clearSelection();
                 acSelected.clear();
                 isDirty = true;
+
             } else {
                 JOptionPane.showMessageDialog(this, "You must select the category and main intent of the relation.", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -1394,7 +1391,7 @@ public class ArgaelForm extends javax.swing.JFrame {
      */
     private void saveAnnotationsToFiles() {
 
-        if (!lstDocs.isSelectionEmpty()) {
+        if (!StringUtils.isEmpty(currEntity)) {
             String fileName;
             List<String> header;
             List<String[]> acAnnotations = new ArrayList<>();
@@ -1440,7 +1437,7 @@ public class ArgaelForm extends javax.swing.JFrame {
      */
     private void saveEvaluationsToFiles() {
 
-        if (!lstDocs.isSelectionEmpty()) {
+        if (!StringUtils.isEmpty(currEntity)) {
             String fileName;
             List<String> header;
             List<String[]> acEvaluations = new ArrayList<>();
@@ -1535,7 +1532,7 @@ public class ArgaelForm extends javax.swing.JFrame {
     }
 
     /**
-     *
+     * Sets the current user of the system.
      */
     private void setAppUsers() {
         String[] users = model.getUserList();
@@ -1550,6 +1547,8 @@ public class ArgaelForm extends javax.swing.JFrame {
         this.menuUser.setText("| User: " + userName);
         this.cmbTargetAnnotator.setModel(new DefaultComboBoxModel(users));
         this.cmbTargetAnnotator.removeItem(userName);
+        this.cmbTargetAnnotator1.setModel(new DefaultComboBoxModel(users));
+        this.cmbTargetAnnotator1.removeItem(userName);
     }
 
     /**
@@ -1562,12 +1561,15 @@ public class ArgaelForm extends javax.swing.JFrame {
 
         components.add(0, "-");
         cmbArgCompType.setModel(new DefaultComboBoxModel<>(components.toArray(new String[0])));
+        cmbArgCompType1.setModel(new DefaultComboBoxModel<>(components.toArray(new String[0])));
 
         relCategories.add(0, "-");
         cmbCategory.setModel(new DefaultComboBoxModel<>(relCategories.toArray(new String[0])));
+        cmbCategory1.setModel(new DefaultComboBoxModel<>(relCategories.toArray(new String[0])));
 
         relIntents.add(0, "-");
         cmbIntent.setModel(new DefaultComboBoxModel<>(relIntents.toArray(new String[0])));
+        cmbIntent1.setModel(new DefaultComboBoxModel<>(relIntents.toArray(new String[0])));
     }
 
     /**
@@ -1703,7 +1705,10 @@ public class ArgaelForm extends javax.swing.JFrame {
         } else if (currTabIndex == 1) {
 
         } else if (currTabIndex == 2) {
-
+            // Display result data
+            Map<String, List<String[]>> annotations = getSavedAnnotationData();
+            Map<String, Map<Integer, String>> evaluations = getSavedEvaluationData();
+            displayAnnotationData(annotations, evaluations);
         }
     }
 
