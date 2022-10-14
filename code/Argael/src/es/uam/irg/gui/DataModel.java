@@ -40,15 +40,14 @@ public class DataModel {
     private final List<String> qualityMetrics;
     private final List<String> relCategories;
     private final List<String> relIntents;
-    private Map<String, List<String>> taxonomy;
 
     /**
      * Data model constructor.
      *
-     * @param components
-     * @param relCategories
-     * @param relIntents
-     * @param qualityMetrics
+     * @param components (e.g., claim, premise, major claim)
+     * @param relCategories (e.g., addition, conclusion, summary)
+     * @param relIntents (e.g., support, attack)
+     * @param qualityMetrics (e.g., incorrect, not relevant, relevant)
      */
     public DataModel(List<String> components, List<String> relCategories, List<String> relIntents, List<String> qualityMetrics) {
         this.components = components;
