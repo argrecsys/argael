@@ -99,9 +99,6 @@
     </Property>
     <Property name="resizable" type="boolean" value="false"/>
   </Properties>
-  <AccessibilityProperties>
-    <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="ARGAEL v1.2"/>
-  </AccessibilityProperties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="menuBar"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -187,11 +184,11 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="pnlAnnotation">
+        <Container class="javax.swing.JPanel" name="pnlIndependentAnnotation">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Annotation">
-                <Property name="tabTitle" type="java.lang.String" value="Annotation"/>
+              <JTabbedPaneConstraints tabName="Independent Annotation">
+                <Property name="tabTitle" type="java.lang.String" value="Independent Annotation"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
