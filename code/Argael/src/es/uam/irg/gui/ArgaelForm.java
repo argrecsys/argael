@@ -79,7 +79,7 @@ public class ArgaelForm extends javax.swing.JFrame {
      */
     public ArgaelForm(String dataFolder, String fileExtension, List<String> components, List<String> relCategories, List<String> relIntents, List<String> qualityMetrics) {
         initComponents();
-        
+
         this.currEntity = "";
         this.currTabIndex = 0;
         this.currDirectory = dataFolder;
@@ -554,7 +554,6 @@ public class ArgaelForm extends javax.swing.JFrame {
                             .addComponent(lblNumberArguments2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblNumberRelations2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(pnlAssistedAnnotationLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblAddArgComp1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cmbArgCompType1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -580,21 +579,22 @@ public class ArgaelForm extends javax.swing.JFrame {
             pnlAssistedAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlAssistedAnnotationLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlAssistedAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTargetAnnotator1)
-                    .addComponent(cmbTargetAnnotator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlAssistedAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlAssistedAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblAddArgComp1)
+                        .addComponent(cmbArgCompType1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAddArgument1)
+                        .addComponent(lblAddArgRel1)
+                        .addComponent(cmbCategory1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAddRelation1)
+                        .addComponent(cmbIntent1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlAssistedAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblDelete1)
                         .addComponent(btnDeleteAR1)
-                        .addComponent(btnDeleteAC1)
-                        .addGroup(pnlAssistedAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblAddArgComp1)
-                            .addComponent(cmbArgCompType1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAddArgument1)
-                            .addComponent(lblAddArgRel1)
-                            .addComponent(cmbCategory1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAddRelation1)
-                            .addComponent(cmbIntent1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(btnDeleteAC1))
+                    .addGroup(pnlAssistedAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblTargetAnnotator1)
+                        .addComponent(cmbTargetAnnotator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlAssistedAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlAssistedAnnotationLayout.createSequentialGroup()
@@ -851,7 +851,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 1.3.0
+                          Version: 1.3.1
                           Date: 10/14/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
@@ -1370,18 +1370,23 @@ public class ArgaelForm extends javax.swing.JFrame {
      *
      */
     private void refreshViewData() {
-        System.out.println("Refresh data for view: " + tabbedPane.getTitleAt(currTabIndex) + " and doc: " + currEntity);
+        if (!StringUtils.isEmpty(currEntity) && currTabIndex > -1) {
+            System.out.println(" - Refresh data for view: " + tabbedPane.getTitleAt(currTabIndex) + " and doc: " + currEntity);
 
-        if (isDirty) {
-            String msg = "There are unsaved changes made to the doc: " + currEntity + ".\nDo you want to save the changes?";
-            int result = JOptionPane.showConfirmDialog(this, msg, "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (result == JOptionPane.YES_OPTION) {
-                saveViewData();
+            // Save last view data
+            if (isDirty) {
+                String msg = "There are unsaved changes made to the doc: " + currEntity + ".\nDo you want to save the changes?";
+                int result = JOptionPane.showConfirmDialog(this, msg, "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (result == JOptionPane.YES_OPTION) {
+                    saveViewData();
+                }
             }
-        }
 
-        updateViewData();
-        isDirty = false;
+            // Update current view data
+            acSelected.clear();
+            updateViewData();
+            isDirty = false;
+        }
     }
 
     /**
@@ -1686,7 +1691,6 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void updateViewData() {
 
         if (currTabIndex == 0) {
-            acSelected.clear();
 
             // Display result data
             Map<String, List<String[]>> annotations = getSavedAnnotationData();

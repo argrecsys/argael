@@ -518,7 +518,6 @@
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="lblAddArgComp1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="cmbArgCompType1" min="-2" pref="100" max="-2" attributes="0"/>
@@ -548,22 +547,24 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblTargetAnnotator1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cmbTargetAnnotator1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                              <Component id="lblAddArgComp1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cmbArgCompType1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnAddArgument1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblAddArgRel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cmbCategory1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnAddRelation1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cmbIntent1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="lblDelete1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btnDeleteAR1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btnDeleteAC1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" alignment="3" groupAlignment="3" attributes="0">
-                                  <Component id="lblAddArgComp1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cmbArgCompType1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnAddArgument1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblAddArgRel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cmbCategory1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnAddRelation1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cmbIntent1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                          </Group>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblTargetAnnotator1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cmbTargetAnnotator1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
