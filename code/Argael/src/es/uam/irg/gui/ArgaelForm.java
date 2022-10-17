@@ -19,7 +19,6 @@ package es.uam.irg.gui;
 
 import es.uam.irg.io.IOManager;
 import es.uam.irg.utils.FileUtils;
-import es.uam.irg.utils.FunctionUtils;
 import es.uam.irg.utils.StringUtils;
 import java.io.File;
 import java.text.DateFormat;
@@ -34,7 +33,6 @@ import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -53,7 +51,6 @@ public class ArgaelForm extends javax.swing.JFrame {
 
     // GUI constants
     private static final String HTML_CONTENT_TYPE = "text/html";
-    private static final int PROPOSITION_MIN_SIZE = 3;
     private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     // GUI variables
@@ -403,6 +400,12 @@ public class ArgaelForm extends javax.swing.JFrame {
 
         lblTargetAnnotator1.setText("Target annotator:");
 
+        cmbTargetAnnotator1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbTargetAnnotator1ActionPerformed(evt);
+            }
+        });
+
         edtTargetAnnotation.setEditable(false);
         edtTargetAnnotation.setContentType(HTML_CONTENT_TYPE);
         scrollPane6.setViewportView(edtTargetAnnotation);
@@ -440,6 +443,11 @@ public class ArgaelForm extends javax.swing.JFrame {
         cmbArgCompType1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnAddArgument1.setText("Add");
+        btnAddArgument1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddArgument1ActionPerformed(evt);
+            }
+        });
 
         lblAddArgRel1.setText("Annotate AR:");
 
@@ -532,10 +540,10 @@ public class ArgaelForm extends javax.swing.JFrame {
             pnlAssistedAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlAssistedAnnotationLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlAssistedAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAssistedAnnotationLayout.createSequentialGroup()
+                .addGroup(pnlAssistedAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlAssistedAnnotationLayout.createSequentialGroup()
                         .addComponent(scrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(10, 10, 10)
                         .addComponent(btnArgRelCopy))
                     .addComponent(scrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlAssistedAnnotationLayout.createSequentialGroup()
@@ -608,11 +616,9 @@ public class ArgaelForm extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlAssistedAnnotationLayout.createSequentialGroup()
                         .addComponent(scrollPane6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pnlAssistedAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(pnlAssistedAnnotationLayout.createSequentialGroup()
-                                .addComponent(btnArgRelCopy)
-                                .addGap(227, 227, 227))
-                            .addComponent(scrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                        .addGroup(pnlAssistedAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(scrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnArgRelCopy))))
                 .addContainerGap())
         );
 
@@ -850,7 +856,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 1.3.3
+                          Version: 1.3.5
                           Date: 10/17/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
@@ -909,7 +915,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         int row = tblEvaRelations.rowAtPoint(evt.getPoint());
         TableModel acModel = tblEvaComponents.getModel();
         TableModel arModel = tblEvaRelations.getModel();
-        String relationString = createArgumentRelationString(row, tblEvaComponents, acModel, arModel);
+        String relationString = ArgaelFormUtils.createArgumentRelationString(row, tblEvaComponents, acModel, arModel);
         txtEvaluationPreview.setText(relationString);
     }//GEN-LAST:event_tblEvaRelationsMouseClicked
 
@@ -931,7 +937,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         int row = tblArgRelations.rowAtPoint(evt.getPoint());
         TableModel acModel = tblArgComponents.getModel();
         TableModel arModel = tblArgRelations.getModel();
-        String relationString = createArgumentRelationString(row, tblArgComponents, acModel, arModel);
+        String relationString = ArgaelFormUtils.createArgumentRelationString(row, tblArgComponents, acModel, arModel);
         txtAnnotationPreview.setText(relationString);
     }//GEN-LAST:event_tblArgRelationsMouseClicked
 
@@ -967,7 +973,7 @@ public class ArgaelForm extends javax.swing.JFrame {
                     updateCounterLabels();
 
                     // Update editor report content
-                    updateEditorReports(currTabIndex);
+                    // updateEditorReports(currTabIndex); TODO
                     isDirty = true;
 
                 } else {
@@ -992,60 +998,36 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void btnAddRelationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRelationActionPerformed
         // TODO add your handling code here:
         if (acSelected.size() == 2) {
-            Integer[] selected = new Integer[2];
-            selected = acSelected.toArray(selected);
-
-            TableModel acModel = tblArgComponents.getModel();
-            int acId1 = Integer.parseInt(acModel.getValueAt(selected[0], 0).toString());
-            int acId2 = Integer.parseInt(acModel.getValueAt(selected[1], 0).toString());
-
-            if (cmbCategory.getSelectedIndex() > 0 && cmbIntent.getSelectedIndex() > 0) {
-                int arId = getNextRelationId();
-                String category = cmbCategory.getSelectedItem().toString();
-                String intent = cmbIntent.getSelectedItem().toString();
-
-                Object[] newRow = new Object[]{arId, acId1, acId2, category, intent};
-                ((DefaultTableModel) this.tblArgRelations.getModel()).addRow(newRow);
-                ((DefaultTableModel) this.tblEvaRelations.getModel()).addRow(newRow);
+            boolean result = ArgaelFormUtils.createNewArgumentRelation(acSelected, tblArgComponents, cmbCategory, cmbIntent, tblArgRelations);
+            if (result) {
                 updateCounterLabels();
-
-                tblArgComponents.clearSelection();
-                tblArgRelations.clearSelection();
-                acSelected.clear();
                 isDirty = true;
-
-            } else {
-                JOptionPane.showMessageDialog(this, "You must select the category and main intent of the relation.", "Error", JOptionPane.ERROR_MESSAGE);
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "You must select the category and main intent of the relation.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnAddRelationActionPerformed
 
     private void btnAddArgumentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddArgumentActionPerformed
         // TODO add your handling code here:
-        String propText = this.edtSimpleAnnotation.getSelectedText().trim();
-
-        if (propText != null) {
-            propText = propText.trim();
-            String propType = this.cmbArgCompType.getSelectedItem().toString();
-
-            if (propText.length() > PROPOSITION_MIN_SIZE && !propType.equals("-")) {
-
-                // Add new argument component
-                int propId = getNextPropositionId();
-                Object[] newRow = new Object[]{propId, propText, propType};
-                ((DefaultTableModel) this.tblArgComponents.getModel()).addRow(newRow);
-                ((DefaultTableModel) this.tblEvaComponents.getModel()).addRow(newRow);
-                updateCounterLabels();
-
-                // Update editor report content
-                updateEditorReports(currTabIndex);
-                isDirty = true;
-            }
+        boolean result = ArgaelFormUtils.createNewArgumentComponent(this.edtSimpleAnnotation, this.cmbArgCompType, this.tblArgComponents);
+        if (result) {
+            updateCounterLabels();
+            isDirty = true;
         }
     }//GEN-LAST:event_btnAddArgumentActionPerformed
 
     private void btnAddRelation1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRelation1ActionPerformed
         // TODO add your handling code here:
+        if (acSelected.size() == 2) {
+            boolean result = ArgaelFormUtils.createNewArgumentRelation(acSelected, tblArgComponents1, cmbCategory1, cmbIntent1, tblArgRelations1);
+            if (result) {
+                updateCounterLabels();
+                isDirty = true;
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "You must select the category and main intent of the relation.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnAddRelation1ActionPerformed
 
     private void btnDeleteAC1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteAC1ActionPerformed
@@ -1061,6 +1043,21 @@ public class ArgaelForm extends javax.swing.JFrame {
         currTabIndex = tabbedPane.getSelectedIndex();
         refreshViewData();
     }//GEN-LAST:event_tabbedPaneStateChanged
+
+    private void cmbTargetAnnotator1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTargetAnnotator1ActionPerformed
+        // TODO add your handling code here:
+        String targetUser = cmbTargetAnnotator1.getSelectedItem().toString();
+        updatePanelData(edtTargetAnnotation, null, tblArgRelations2, targetUser, "");
+    }//GEN-LAST:event_cmbTargetAnnotator1ActionPerformed
+
+    private void btnAddArgument1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddArgument1ActionPerformed
+        // TODO add your handling code here:
+        boolean result = ArgaelFormUtils.createNewArgumentComponent(this.edtAssistedAnnotation, this.cmbArgCompType1, this.tblArgComponents1);
+        if (result) {
+            updateCounterLabels();
+            isDirty = true;
+        }
+    }//GEN-LAST:event_btnAddArgument1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddArgument;
@@ -1142,147 +1139,12 @@ public class ArgaelForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     /**
-     *
-     * @param row
-     * @param table
-     * @param acModel
-     * @param arModel
-     * @return
-     */
-    private String createArgumentRelationString(int row, JTable table, TableModel acModel, TableModel arModel) {
-        // Collect relation data
-        String text = "";
-
-        if (row >= 0) {
-            int acId1 = Integer.parseInt(arModel.getValueAt(row, 1).toString());
-            int acId2 = Integer.parseInt(arModel.getValueAt(row, 2).toString());
-            String category = arModel.getValueAt(row, 3).toString();
-            String intent = arModel.getValueAt(row, 4).toString();
-            int acIndex1 = ArgaelFormUtils.getAcIndexFromTable(acModel, acId1, 0);
-            int acIndex2 = ArgaelFormUtils.getAcIndexFromTable(acModel, acId2, 0);
-
-            // Show relation
-            if (acIndex1 >= 0 && acIndex2 >= 0) {
-                String acText1 = acModel.getValueAt(acIndex1, 1).toString();
-                String acType1 = acModel.getValueAt(acIndex1, 2).toString();
-                String acText2 = acModel.getValueAt(acIndex2, 1).toString();
-                String acType2 = acModel.getValueAt(acIndex2, 2).toString();
-                text = String.format("[<b>%s (%s)</b>: %s] \u2190 [<b>%s (%s)</b>: %s] (<b>relation</b>: \"%s\" and \"%s\")", acType1, acId1, acText1, acType2, acId2, acText2, category, intent);
-                ArgaelFormUtils.selectMultipleTableRows(table, acIndex1, acIndex2);
-            }
-        }
-
-        return text;
-    }
-
-    /**
      * Closes winform.
      */
     private void closeForm() {
         this.setVisible(false);
         this.dispose();
         System.exit(0);
-    }
-
-    /**
-     *
-     * @param tabIndex
-     */
-    private void displayAnnotationData(int tabIndex) {
-
-        // Get annotation data
-        Map<String, List<String[]>> annotations = getSavedAnnotationData(userName);
-        List<String[]> acList = annotations.get(IOManager.FILE_ARG_COMP);
-        List<String[]> arList = annotations.get(IOManager.FILE_ARG_REL);
-
-        // Get evaluation data
-        Map<Integer, String> acEval = null;
-        Map<Integer, String> arEval = null;
-        if (tabIndex == 2) {
-            Map<String, Map<Integer, String>> evaluations = getSavedEvaluationData(userName);
-            acEval = evaluations.get(IOManager.FILE_ARG_COMP);
-            arEval = evaluations.get(IOManager.FILE_ARG_REL);
-        }
-
-        // Get table objects
-        DefaultTableModel acModel = null;
-        DefaultTableModel arModel = null;
-        switch (tabIndex) {
-            case 0 -> {
-                acModel = (DefaultTableModel) tblArgComponents.getModel();
-                arModel = (DefaultTableModel) tblArgRelations.getModel();
-            }
-            case 1 -> {
-                acModel = (DefaultTableModel) tblArgComponents1.getModel();
-                arModel = (DefaultTableModel) tblArgRelations1.getModel();
-            }
-            case 2 -> {
-                acModel = (DefaultTableModel) tblEvaComponents.getModel();
-                arModel = (DefaultTableModel) tblEvaRelations.getModel();
-            }
-        }
-        acModel.setRowCount(0);
-        arModel.setRowCount(0);
-
-        // Update arguments components table
-        for (int i = 0; i < acList.size(); i++) {
-            String[] rowData = acList.get(i);
-            int rowId = Integer.parseInt(rowData[0]);
-
-            try {
-                acModel.addRow(FunctionUtils.getSubArray(rowData, 0, 3));
-
-                if (acEval != null && acEval.containsKey(rowId)) {
-                    acModel.setValueAt(acEval.get(rowId), i, 3);
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(ArgaelForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        // Update arguments relations table
-        for (int i = 0; i < arList.size(); i++) {
-            String[] rowData = arList.get(i);
-            int rowId = Integer.parseInt(rowData[0]);
-
-            try {
-                arModel.addRow(FunctionUtils.getSubArray(rowData, 0, 5));
-
-                if (acEval != null && arEval.containsKey(rowId)) {
-                    arModel.setValueAt(arEval.get(rowId), i, 5);
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(ArgaelForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        updateCounterLabels();
-    }
-
-    /**
-     *
-     * @return
-     */
-    private int getNextPropositionId() {
-        int propNextId = 1;
-        int nRows = this.tblArgComponents.getRowCount();
-        if (nRows > 0) {
-            propNextId = Integer.parseInt(this.tblArgComponents.getModel().getValueAt(nRows - 1, 0).toString()) + 1;
-        }
-        return propNextId;
-    }
-
-    /**
-     *
-     * @return
-     */
-    private int getNextRelationId() {
-        int propNextId = 1;
-        int nRows = this.tblArgRelations.getRowCount();
-        if (nRows > 0) {
-            propNextId = Integer.parseInt(this.tblArgRelations.getModel().getValueAt(nRows - 1, 0).toString()) + 1;
-        }
-        return propNextId;
     }
 
     /**
@@ -1451,7 +1313,6 @@ public class ArgaelForm extends javax.swing.JFrame {
             header = new ArrayList<>(Arrays.asList("ar_id", "ac_id1", "ac_id2", "rel_type", "rel_intent", "annotator", "timestamp"));
             saveResults(fileName, "annotations", header, arAnnotations);
         }
-
     }
 
     /**
@@ -1497,7 +1358,6 @@ public class ArgaelForm extends javax.swing.JFrame {
             header = new ArrayList<>(Arrays.asList("ar_id", "ar_quality", "evaluator", "timestamp"));
             saveResults(fileName, "evaluations", header, arEvaluations);
         }
-
     }
 
     /**
@@ -1535,7 +1395,7 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void saveViewData() {
         if (currTabIndex == 0 || currTabIndex == 1) {
             saveAnnotationsToFiles();
-            
+
         } else if (currTabIndex == 2) {
             saveEvaluationsToFiles();
         }
@@ -1554,9 +1414,11 @@ public class ArgaelForm extends javax.swing.JFrame {
             userName = "admin";
         }
 
-        users = FunctionUtils.removeItemFromArray(users, userName);
-        this.cmbTargetAnnotator.setModel(new DefaultComboBoxModel(users));
-        this.cmbTargetAnnotator1.setModel(new DefaultComboBoxModel(users));
+        List<String> userList = new ArrayList<>(Arrays.asList(users));
+        userList.add(0, "-");
+        userList.remove(userName);
+        ArgaelFormUtils.setComboBoxModel(this.cmbTargetAnnotator, userList);
+        ArgaelFormUtils.setComboBoxModel(this.cmbTargetAnnotator1, userList);
         this.menuUser.setText("| User: " + userName);
     }
 
@@ -1569,16 +1431,16 @@ public class ArgaelForm extends javax.swing.JFrame {
         List<String> relIntents = model.getRelationIntents();
 
         components.add(0, "-");
-        cmbArgCompType.setModel(new DefaultComboBoxModel<>(components.toArray(new String[0])));
-        cmbArgCompType1.setModel(new DefaultComboBoxModel<>(components.toArray(new String[0])));
+        ArgaelFormUtils.setComboBoxModel(this.cmbArgCompType, components);
+        ArgaelFormUtils.setComboBoxModel(this.cmbArgCompType1, components);
 
         relCategories.add(0, "-");
-        cmbCategory.setModel(new DefaultComboBoxModel<>(relCategories.toArray(new String[0])));
-        cmbCategory1.setModel(new DefaultComboBoxModel<>(relCategories.toArray(new String[0])));
+        ArgaelFormUtils.setComboBoxModel(this.cmbCategory, relCategories);
+        ArgaelFormUtils.setComboBoxModel(this.cmbCategory1, relCategories);
 
         relIntents.add(0, "-");
-        cmbIntent.setModel(new DefaultComboBoxModel<>(relIntents.toArray(new String[0])));
-        cmbIntent1.setModel(new DefaultComboBoxModel<>(relIntents.toArray(new String[0])));
+        ArgaelFormUtils.setComboBoxModel(this.cmbIntent, relIntents);
+        ArgaelFormUtils.setComboBoxModel(this.cmbIntent, relIntents);
     }
 
     /**
@@ -1590,7 +1452,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         // Argument Quality Selector
         List<String> qualityMetrics = model.getQualityMetrics();
         JComboBox cmbArgQuality = new JComboBox();
-        cmbArgQuality.setModel(new DefaultComboBoxModel<>(qualityMetrics.toArray(new String[0])));
+        ArgaelFormUtils.setComboBoxModel(cmbArgQuality, qualityMetrics);
 
         // Default column renderer
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -1694,38 +1556,52 @@ public class ArgaelForm extends javax.swing.JFrame {
     }
 
     /**
-     * Display and update editor report content.
-     */
-    private void updateEditorReports(int tabIndex) {
-
-        if (tabIndex == 0) {
-            updateHtmlReport(this.edtSimpleAnnotation, userName);
-
-        } else if (tabIndex == 1) {
-            String targetUser = cmbTargetAnnotator1.getSelectedItem().toString();
-            updateHtmlReport(this.edtTargetAnnotation, targetUser);
-            updateHtmlReport(this.edtAssistedAnnotation, userName);
-        }
-    }
-
-    /**
      *
      * @param editor
-     * @param user
+     * @param acTable
+     * @param arTable
+     * @param dataUser
+     * @param evalUser
      */
-    private void updateHtmlReport(javax.swing.JEditorPane editor, String user) {
+    private void updatePanelData(javax.swing.JEditorPane editor, javax.swing.JTable acTable, javax.swing.JTable arTable, String dataUser, String evalUser) {
 
-        // Get report data
-        Map<String, List<String[]>> annotations = getSavedAnnotationData(user);
-        List<String[]> acList = annotations.get(IOManager.FILE_ARG_COMP);
+        // Get annotation data
+        Map<String, List<String[]>> annotations = getSavedAnnotationData(dataUser);
+        List<String[]> acData = annotations.get(IOManager.FILE_ARG_COMP);
+        List<String[]> arData = annotations.get(IOManager.FILE_ARG_REL);
 
-        // Update report
-        String filepath = currDirectory + "\\" + currEntity + "." + fileExtension;
-        String rawReport = this.model.getFileReport(filepath);
-        String report = highlightReport(rawReport, acList);
+        // Get evaluation data
+        Map<Integer, String> acEval = null;
+        Map<Integer, String> arEval = null;
+        if (!StringUtils.isEmpty(evalUser)) {
+            Map<String, Map<Integer, String>> evaluations = getSavedEvaluationData(userName);
+            acEval = evaluations.get(IOManager.FILE_ARG_COMP);
+            arEval = evaluations.get(IOManager.FILE_ARG_REL);
+        }
 
-        // Refresh editor
-        ArgaelFormUtils.updateEditorContent(editor, report);
+        // Update editor report
+        if (editor != null) {
+            String filepath = currDirectory + "\\" + currEntity + "." + fileExtension;
+            String rawReport = this.model.getFileReport(filepath);
+            String report = highlightReport(rawReport, acData);
+            ArgaelFormUtils.updateEditorContent(editor, report);
+        }
+
+        // Update arguments components table
+        try {
+            DefaultTableModel acModel = ArgaelFormUtils.getTableModel(acTable);
+            ArgaelFormUtils.loadArgTableData(acModel, acData, acEval, 3);
+        } catch (Exception ex) {
+            Logger.getLogger(ArgaelForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        // Update arguments relations table
+        try {
+            DefaultTableModel arModel = ArgaelFormUtils.getTableModel(arTable);
+            ArgaelFormUtils.loadArgTableData(arModel, arData, arEval, 5);
+        } catch (Exception ex) {
+            Logger.getLogger(ArgaelForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -1734,19 +1610,21 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void updateViewData() {
         acSelected.clear();
 
-        if (currTabIndex == 0 || currTabIndex == 1) {
-
-            // Display HTML reports
-            updateEditorReports(currTabIndex);
-
-            // Display table data
-            displayAnnotationData(currTabIndex);
+        // Refresh data of simple annotation view
+        if (currTabIndex == 0) {
+            updatePanelData(edtSimpleAnnotation, tblArgComponents, tblArgRelations, userName, "");
             this.txtAnnotationPreview.setText("");
+
+        } else if (currTabIndex == 1) {
+
+            String targetUser = cmbTargetAnnotator1.getSelectedItem().toString();
+            updatePanelData(edtTargetAnnotation, null, tblArgRelations2, targetUser, "");
+            updatePanelData(edtAssistedAnnotation, tblArgComponents1, tblArgRelations1, userName, "");
 
         } else if (currTabIndex == 2) {
 
-            // Display table data
-            displayAnnotationData(currTabIndex);
+            String targetUser = cmbTargetAnnotator1.getSelectedItem().toString();
+            updatePanelData(null, tblEvaComponents, tblEvaRelations, targetUser, userName);
             this.txtEvaluationPreview.setText("");
         }
     }
