@@ -17,9 +17,15 @@
  */
 package es.uam.irg.gui;
 
+import es.uam.irg.utils.FunctionUtils;
+import java.util.List;
+import java.util.Map;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
@@ -48,6 +54,43 @@ public class ArgaelFormUtils {
     /**
      *
      * @param table
+     * @return
+     */
+    public static DefaultTableModel getTableModel(JTable table) {
+        if (table != null) {
+            DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+            tableModel.setRowCount(0);
+            return tableModel;
+        }
+        return null;
+    }
+
+    /**
+     * Load table data: arguments annotations and evaluations.
+     *
+     * @param tableModel
+     * @param annotations
+     * @param evaluations
+     * @param nColumns
+     * @throws Exception
+     */
+    public static void loadArgTableData(DefaultTableModel tableModel, List<String[]> annotations, Map<Integer, String> evaluations, int nColumns) throws Exception {
+        if (tableModel != null && annotations != null) {
+            for (int i = 0; i < annotations.size(); i++) {
+                String[] rowData = annotations.get(i);
+                int rowId = Integer.parseInt(rowData[0]);
+
+                tableModel.addRow(FunctionUtils.getSubArray(rowData, 0, nColumns));
+                if (evaluations != null && evaluations.containsKey(rowId)) {
+                    tableModel.setValueAt(evaluations.get(rowId), i, nColumns);
+                }
+            }
+        }
+    }
+
+    /**
+     *
+     * @param table
      * @param index1
      * @param index2
      */
@@ -56,6 +99,15 @@ public class ArgaelFormUtils {
         tblModel.clearSelection();
         tblModel.addSelectionInterval(index1, index1);
         tblModel.addSelectionInterval(index2, index2);
+    }
+
+    /**
+     *
+     * @param cmbTargetAnnotator
+     * @param strList
+     */
+    public static void setComboBoxModel(JComboBox<String> cmbTargetAnnotator, List<String> strList) {
+        cmbTargetAnnotator.setModel(new DefaultComboBoxModel(strList.toArray(new String[0])));
     }
 
     /**
