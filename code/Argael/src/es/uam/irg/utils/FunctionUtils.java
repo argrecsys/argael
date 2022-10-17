@@ -150,6 +150,18 @@ public class FunctionUtils {
 
     /**
      *
+     * @param strList
+     * @param item
+     * @return
+     */
+    public static String[] removeItemFromArray(String[] strList, String item) {
+        List<String> list = new ArrayList<>(Arrays.asList(strList));
+        list.remove(item);
+        return list.toArray(new String[0]);
+    }
+
+    /**
+     *
      * @param map
      * @return
      */

@@ -69,10 +69,9 @@ public class DataModel {
     /**
      *
      * @param filePath
-     * @param fileType
      * @return
      */
-    public String getFileReport(String filePath, String fileType) {
+    public String getFileReport(String filePath) {
         String content = "";
         String fileName = StringUtils.getLastToken(filePath, "\\\\");
 
@@ -80,6 +79,7 @@ public class DataModel {
             if (files.containsKey(fileName)) {
                 content = files.get(fileName);
             } else {
+                String fileType = FileUtils.getFileExtension(filePath);
                 content = IOManager.readTextFile(filePath);
                 content = formatter.getPrettyReport(content, fileType);
                 files.put(fileName, content);
