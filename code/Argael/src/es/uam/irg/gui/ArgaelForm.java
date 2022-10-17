@@ -41,7 +41,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -136,7 +135,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         scrollPane6 = new javax.swing.JScrollPane();
         edtTargetAnnotation = new javax.swing.JEditorPane();
         scrollPane7 = new javax.swing.JScrollPane();
-        tblArgRelations3 = new javax.swing.JTable();
+        tblArgRelations2 = new javax.swing.JTable();
         btnArgRelCopy = new javax.swing.JButton();
         lblAddArgComp1 = new javax.swing.JLabel();
         cmbArgCompType1 = new javax.swing.JComboBox<>();
@@ -352,14 +351,14 @@ public class ArgaelForm extends javax.swing.JFrame {
                             .addGroup(pnlIndependentAnnotationLayout.createSequentialGroup()
                                 .addComponent(lblNumberRelations)
                                 .addGap(0, 208, Short.MAX_VALUE))
-                            .addComponent(scrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlIndependentAnnotationLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(lblDelete)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnDeleteAC)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnDeleteAR))))
+                                .addComponent(btnDeleteAR))
+                            .addComponent(scrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(pnlIndependentAnnotationLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnlIndependentAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -408,7 +407,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         edtTargetAnnotation.setContentType(HTML_CONTENT_TYPE);
         scrollPane6.setViewportView(edtTargetAnnotation);
 
-        tblArgRelations3.setModel(new javax.swing.table.DefaultTableModel(
+        tblArgRelations2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -431,8 +430,8 @@ public class ArgaelForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblArgRelations3.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        scrollPane7.setViewportView(tblArgRelations3);
+        tblArgRelations2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        scrollPane7.setViewportView(tblArgRelations2);
 
         btnArgRelCopy.setText("Copy");
 
@@ -548,11 +547,11 @@ public class ArgaelForm extends javax.swing.JFrame {
                     .addGroup(pnlAssistedAnnotationLayout.createSequentialGroup()
                         .addComponent(scrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pnlAssistedAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(scrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(scrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(pnlAssistedAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(scrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
                             .addComponent(lblNumberArguments2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNumberRelations2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lblNumberRelations2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(scrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(pnlAssistedAnnotationLayout.createSequentialGroup()
                         .addComponent(lblAddArgComp1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -851,8 +850,8 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 1.3.1
-                          Date: 10/14/2022
+                          Version: 1.3.3
+                          Date: 10/17/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
                           Web site: https://argrecsys.github.io/argael/
@@ -874,7 +873,7 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void lstDocsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstDocsValueChanged
         // TODO add your handling code here:
         if (!lstDocs.isSelectionEmpty() && !evt.getValueIsAdjusting()) {
-            currEntity = lstDocs.getSelectedValue();
+            this.currEntity = lstDocs.getSelectedValue();
             refreshViewData();
         }
     }//GEN-LAST:event_lstDocsValueChanged
@@ -897,16 +896,12 @@ public class ArgaelForm extends javax.swing.JFrame {
 
     private void mItemSaveAnnotationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemSaveAnnotationActionPerformed
         // TODO add your handling code here:
-        if (!StringUtils.isEmpty(currEntity)) {
-            saveAnnotationsToFiles();
-        }
+        saveAnnotationsToFiles();
     }//GEN-LAST:event_mItemSaveAnnotationActionPerformed
 
     private void mItemSaveEvaluationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemSaveEvaluationActionPerformed
         // TODO add your handling code here:
-        if (!StringUtils.isEmpty(currEntity)) {
-            saveEvaluationsToFiles();
-        }
+        saveEvaluationsToFiles();
     }//GEN-LAST:event_mItemSaveEvaluationActionPerformed
 
     private void tblEvaRelationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEvaRelationsMouseClicked
@@ -971,8 +966,8 @@ public class ArgaelForm extends javax.swing.JFrame {
                     ((DefaultTableModel) tblEvaComponents.getModel()).removeRow(row);
                     updateCounterLabels();
 
-                    // Display HTML report
-                    updateHtmlReport();
+                    // Update editor report content
+                    updateEditorReports(currTabIndex);
                     isDirty = true;
 
                 } else {
@@ -1018,6 +1013,7 @@ public class ArgaelForm extends javax.swing.JFrame {
                 tblArgRelations.clearSelection();
                 acSelected.clear();
                 isDirty = true;
+
             } else {
                 JOptionPane.showMessageDialog(this, "You must select the category and main intent of the relation.", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -1041,8 +1037,8 @@ public class ArgaelForm extends javax.swing.JFrame {
                 ((DefaultTableModel) this.tblEvaComponents.getModel()).addRow(newRow);
                 updateCounterLabels();
 
-                // Display HTML report
-                updateHtmlReport();
+                // Update editor report content
+                updateEditorReports(currTabIndex);
                 isDirty = true;
             }
         }
@@ -1138,7 +1134,7 @@ public class ArgaelForm extends javax.swing.JFrame {
     private javax.swing.JTable tblArgComponents1;
     private javax.swing.JTable tblArgRelations;
     private javax.swing.JTable tblArgRelations1;
-    private javax.swing.JTable tblArgRelations3;
+    private javax.swing.JTable tblArgRelations2;
     private javax.swing.JTable tblEvaComponents;
     private javax.swing.JTable tblEvaRelations;
     private javax.swing.JEditorPane txtAnnotationPreview;
@@ -1162,8 +1158,8 @@ public class ArgaelForm extends javax.swing.JFrame {
             int acId2 = Integer.parseInt(arModel.getValueAt(row, 2).toString());
             String category = arModel.getValueAt(row, 3).toString();
             String intent = arModel.getValueAt(row, 4).toString();
-            int acIndex1 = getAcIndexFromTable(acModel, acId1, 0);
-            int acIndex2 = getAcIndexFromTable(acModel, acId2, 0);
+            int acIndex1 = ArgaelFormUtils.getAcIndexFromTable(acModel, acId1, 0);
+            int acIndex2 = ArgaelFormUtils.getAcIndexFromTable(acModel, acId2, 0);
 
             // Show relation
             if (acIndex1 >= 0 && acIndex2 >= 0) {
@@ -1172,7 +1168,7 @@ public class ArgaelForm extends javax.swing.JFrame {
                 String acText2 = acModel.getValueAt(acIndex2, 1).toString();
                 String acType2 = acModel.getValueAt(acIndex2, 2).toString();
                 text = String.format("[<b>%s (%s)</b>: %s] \u2190 [<b>%s (%s)</b>: %s] (<b>relation</b>: \"%s\" and \"%s\")", acType1, acId1, acText1, acType2, acId2, acText2, category, intent);
-                selectMultipleTableRows(table, acIndex1, acIndex2);
+                ArgaelFormUtils.selectMultipleTableRows(table, acIndex1, acIndex2);
             }
         }
 
@@ -1190,53 +1186,70 @@ public class ArgaelForm extends javax.swing.JFrame {
 
     /**
      *
-     * @param annotations
-     * @param evaluations
+     * @param tabIndex
      */
-    private void displayAnnotationData(Map<String, List<String[]>> annotations, Map<String, Map<Integer, String>> evaluations) {
+    private void displayAnnotationData(int tabIndex) {
+
+        // Get annotation data
+        Map<String, List<String[]>> annotations = getSavedAnnotationData(userName);
         List<String[]> acList = annotations.get(IOManager.FILE_ARG_COMP);
         List<String[]> arList = annotations.get(IOManager.FILE_ARG_REL);
-        Map<Integer, String> acEval = evaluations.get(IOManager.FILE_ARG_COMP);
-        Map<Integer, String> arEval = evaluations.get(IOManager.FILE_ARG_REL);
 
-        // Update arguments table
-        DefaultTableModel acModel1 = (DefaultTableModel) tblArgComponents.getModel();
-        DefaultTableModel acModel2 = (DefaultTableModel) tblEvaComponents.getModel();
-        acModel1.setRowCount(0);
-        acModel2.setRowCount(0);
+        // Get evaluation data
+        Map<Integer, String> acEval = null;
+        Map<Integer, String> arEval = null;
+        if (tabIndex == 2) {
+            Map<String, Map<Integer, String>> evaluations = getSavedEvaluationData(userName);
+            acEval = evaluations.get(IOManager.FILE_ARG_COMP);
+            arEval = evaluations.get(IOManager.FILE_ARG_REL);
+        }
 
+        // Get table objects
+        DefaultTableModel acModel = null;
+        DefaultTableModel arModel = null;
+        switch (tabIndex) {
+            case 0 -> {
+                acModel = (DefaultTableModel) tblArgComponents.getModel();
+                arModel = (DefaultTableModel) tblArgRelations.getModel();
+            }
+            case 1 -> {
+                acModel = (DefaultTableModel) tblArgComponents1.getModel();
+                arModel = (DefaultTableModel) tblArgRelations1.getModel();
+            }
+            case 2 -> {
+                acModel = (DefaultTableModel) tblEvaComponents.getModel();
+                arModel = (DefaultTableModel) tblEvaRelations.getModel();
+            }
+        }
+        acModel.setRowCount(0);
+        arModel.setRowCount(0);
+
+        // Update arguments components table
         for (int i = 0; i < acList.size(); i++) {
             String[] rowData = acList.get(i);
             int rowId = Integer.parseInt(rowData[0]);
 
             try {
-                acModel1.addRow(FunctionUtils.getSubArray(rowData, 0, 3));
-                acModel2.addRow(FunctionUtils.getSubArray(rowData, 0, 3));
+                acModel.addRow(FunctionUtils.getSubArray(rowData, 0, 3));
 
-                if (acEval.containsKey(rowId)) {
-                    acModel2.setValueAt(acEval.get(rowId), i, 3);
+                if (acEval != null && acEval.containsKey(rowId)) {
+                    acModel.setValueAt(acEval.get(rowId), i, 3);
                 }
             } catch (Exception ex) {
                 Logger.getLogger(ArgaelForm.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
-        // Update relations table
-        DefaultTableModel arModel1 = (DefaultTableModel) tblArgRelations.getModel();
-        DefaultTableModel arModel2 = (DefaultTableModel) tblEvaRelations.getModel();
-        arModel1.setRowCount(0);
-        arModel2.setRowCount(0);
-
+        // Update arguments relations table
         for (int i = 0; i < arList.size(); i++) {
             String[] rowData = arList.get(i);
             int rowId = Integer.parseInt(rowData[0]);
 
             try {
-                arModel1.addRow(FunctionUtils.getSubArray(rowData, 0, 5));
-                arModel2.addRow(FunctionUtils.getSubArray(rowData, 0, 5));
+                arModel.addRow(FunctionUtils.getSubArray(rowData, 0, 5));
 
-                if (arEval.containsKey(rowId)) {
-                    arModel2.setValueAt(arEval.get(rowId), i, 5);
+                if (acEval != null && arEval.containsKey(rowId)) {
+                    arModel.setValueAt(arEval.get(rowId), i, 5);
                 }
             } catch (Exception ex) {
                 Logger.getLogger(ArgaelForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -1244,23 +1257,6 @@ public class ArgaelForm extends javax.swing.JFrame {
         }
 
         updateCounterLabels();
-    }
-
-    /**
-     *
-     * @param model
-     * @param acId
-     * @param acIdIx
-     * @return
-     */
-    private int getAcIndexFromTable(TableModel model, int acId, int acIdIx) {
-        int ix = -1;
-        for (int i = 0; i < model.getRowCount() && ix == -1; i++) {
-            if (acId == Integer.parseInt(model.getValueAt(i, acIdIx).toString())) {
-                ix = i;
-            }
-        }
-        return ix;
     }
 
     /**
@@ -1291,31 +1287,55 @@ public class ArgaelForm extends javax.swing.JFrame {
 
     /**
      *
+     * @param user
      * @return
      */
-    private Map<String, List<String[]>> getSavedAnnotationData() {
-        String directory = currDirectory + "\\..\\results\\" + userName + "\\annotations\\";
+    private Map<String, List<String[]>> getSavedAnnotationData(String user) {
+        String directory = currDirectory + "\\..\\results\\" + user + "\\annotations\\";
         String currFile = currEntity;
         return IOManager.readAnnotationData(directory, currFile);
     }
 
     /**
      *
+     * @param user
      * @return
      */
-    private Map<String, Map<Integer, String>> getSavedEvaluationData() {
-        String directory = currDirectory + "\\..\\results\\" + userName + "\\evaluations\\";
+    private Map<String, Map<Integer, String>> getSavedEvaluationData(String user) {
+        String directory = currDirectory + "\\..\\results\\" + user + "\\evaluations\\";
         String currFile = currEntity;
         return IOManager.readEvaluationData(directory, currFile);
     }
 
     /**
      *
+     * @param report
+     * @param acList
      * @return
      */
-    private String getSelectedReport() {
-        String filepath = currDirectory + "\\" + currEntity + "." + fileExtension;
-        String report = this.model.getFileReport(filepath, fileExtension);
+    public String highlightReport(String report, List<String[]> acList) {
+        String hlText;
+        String acText;
+        String acType;
+
+        for (int i = 0; i < acList.size(); i++) {
+            acText = acList.get(i)[1];
+            acType = acList.get(i)[2];
+
+            switch (acType.toLowerCase()) {
+                case "major claim":
+                    hlText = model.getFormatter().highlightMajorClaim(acText);
+                    break;
+                case "claim":
+                    hlText = model.getFormatter().highlightClaim(acText);
+                    break;
+                default:
+                    hlText = model.getFormatter().highlightPremise(acText);
+                    break;
+            }
+            report = report.replace(acText, hlText);
+        }
+
         return report;
     }
 
@@ -1363,7 +1383,7 @@ public class ArgaelForm extends javax.swing.JFrame {
      */
     private boolean isAcInRelation(int acId) {
         TableModel arModel = tblArgRelations.getModel();
-        return (getAcIndexFromTable(arModel, acId, 1) >= 0 || getAcIndexFromTable(arModel, acId, 2) >= 0);
+        return (ArgaelFormUtils.getAcIndexFromTable(arModel, acId, 1) >= 0 || ArgaelFormUtils.getAcIndexFromTable(arModel, acId, 2) >= 0);
     }
 
     /**
@@ -1371,11 +1391,11 @@ public class ArgaelForm extends javax.swing.JFrame {
      */
     private void refreshViewData() {
         if (!StringUtils.isEmpty(currEntity) && currTabIndex > -1) {
-            System.out.println(" - Refresh data for view: " + tabbedPane.getTitleAt(currTabIndex) + " and doc: " + currEntity);
+            System.out.println(" - Refresh data for view: " + tabbedPane.getTitleAt(currTabIndex) + ", and doc: " + currEntity);
 
             // Save last view data
             if (isDirty) {
-                String msg = "There are unsaved changes made to the doc: " + currEntity + ".\nDo you want to save the changes?";
+                String msg = "There are unsaved annotations made to the doc: " + currEntity + ".\nDo you want to save the changes?";
                 int result = JOptionPane.showConfirmDialog(this, msg, "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (result == JOptionPane.YES_OPTION) {
                     saveViewData();
@@ -1383,7 +1403,6 @@ public class ArgaelForm extends javax.swing.JFrame {
             }
 
             // Update current view data
-            acSelected.clear();
             updateViewData();
             isDirty = false;
         }
@@ -1394,7 +1413,7 @@ public class ArgaelForm extends javax.swing.JFrame {
      */
     private void saveAnnotationsToFiles() {
 
-        if (!lstDocs.isSelectionEmpty()) {
+        if (!StringUtils.isEmpty(currEntity)) {
             String fileName;
             List<String> header;
             List<String[]> acAnnotations = new ArrayList<>();
@@ -1440,7 +1459,7 @@ public class ArgaelForm extends javax.swing.JFrame {
      */
     private void saveEvaluationsToFiles() {
 
-        if (!lstDocs.isSelectionEmpty()) {
+        if (!StringUtils.isEmpty(currEntity)) {
             String fileName;
             List<String> header;
             List<String[]> acEvaluations = new ArrayList<>();
@@ -1516,26 +1535,14 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void saveViewData() {
         if (currTabIndex == 0 || currTabIndex == 1) {
             saveAnnotationsToFiles();
+            
         } else if (currTabIndex == 2) {
             saveEvaluationsToFiles();
         }
     }
 
     /**
-     *
-     * @param table
-     * @param index1
-     * @param index2
-     */
-    private void selectMultipleTableRows(JTable table, int index1, int index2) {
-        ListSelectionModel tblModel = table.getSelectionModel();
-        tblModel.clearSelection();
-        tblModel.addSelectionInterval(index1, index1);
-        tblModel.addSelectionInterval(index2, index2);
-    }
-
-    /**
-     *
+     * Sets the current user of the system.
      */
     private void setAppUsers() {
         String[] users = model.getUserList();
@@ -1547,9 +1554,10 @@ public class ArgaelForm extends javax.swing.JFrame {
             userName = "admin";
         }
 
-        this.menuUser.setText("| User: " + userName);
+        users = FunctionUtils.removeItemFromArray(users, userName);
         this.cmbTargetAnnotator.setModel(new DefaultComboBoxModel(users));
-        this.cmbTargetAnnotator.removeItem(userName);
+        this.cmbTargetAnnotator1.setModel(new DefaultComboBoxModel(users));
+        this.menuUser.setText("| User: " + userName);
     }
 
     /**
@@ -1562,12 +1570,15 @@ public class ArgaelForm extends javax.swing.JFrame {
 
         components.add(0, "-");
         cmbArgCompType.setModel(new DefaultComboBoxModel<>(components.toArray(new String[0])));
+        cmbArgCompType1.setModel(new DefaultComboBoxModel<>(components.toArray(new String[0])));
 
         relCategories.add(0, "-");
         cmbCategory.setModel(new DefaultComboBoxModel<>(relCategories.toArray(new String[0])));
+        cmbCategory1.setModel(new DefaultComboBoxModel<>(relCategories.toArray(new String[0])));
 
         relIntents.add(0, "-");
         cmbIntent.setModel(new DefaultComboBoxModel<>(relIntents.toArray(new String[0])));
+        cmbIntent1.setModel(new DefaultComboBoxModel<>(relIntents.toArray(new String[0])));
     }
 
     /**
@@ -1610,7 +1621,41 @@ public class ArgaelForm extends javax.swing.JFrame {
         colModel.getColumn(4).setPreferredWidth(90);
         colModel.getColumn(4).setCellRenderer(centerRenderer);
 
-        // Table 3: Evaluation Argument Component Units
+        // Table 3: Argument Relations Units
+        colModel = tblArgRelations2.getColumnModel();
+        colModel.getColumn(0).setPreferredWidth(60);
+        colModel.getColumn(0).setCellRenderer(centerRenderer);
+        colModel.getColumn(1).setPreferredWidth(60);
+        colModel.getColumn(1).setCellRenderer(centerRenderer);
+        colModel.getColumn(2).setPreferredWidth(60);
+        colModel.getColumn(2).setCellRenderer(centerRenderer);
+        colModel.getColumn(3).setPreferredWidth(169);
+        colModel.getColumn(3).setCellRenderer(centerRenderer);
+        colModel.getColumn(4).setPreferredWidth(100);
+        colModel.getColumn(4).setCellRenderer(centerRenderer);
+
+        // Table 4: Argument Component Units
+        colModel = tblArgComponents1.getColumnModel();
+        colModel.getColumn(0).setPreferredWidth(50);
+        colModel.getColumn(0).setCellRenderer(centerRenderer);
+        colModel.getColumn(1).setPreferredWidth(296);
+        colModel.getColumn(2).setPreferredWidth(90);
+        colModel.getColumn(2).setCellRenderer(centerRenderer);
+
+        // Table 5: Argument Component Relations
+        colModel = tblArgRelations1.getColumnModel();
+        colModel.getColumn(0).setPreferredWidth(50);
+        colModel.getColumn(0).setCellRenderer(centerRenderer);
+        colModel.getColumn(1).setPreferredWidth(50);
+        colModel.getColumn(1).setCellRenderer(centerRenderer);
+        colModel.getColumn(2).setPreferredWidth(50);
+        colModel.getColumn(2).setCellRenderer(centerRenderer);
+        colModel.getColumn(3).setPreferredWidth(159);
+        colModel.getColumn(3).setCellRenderer(centerRenderer);
+        colModel.getColumn(4).setPreferredWidth(100);
+        colModel.getColumn(4).setCellRenderer(centerRenderer);
+
+        // Table 6: Evaluation Argument Component Units
         colModel = tblEvaComponents.getColumnModel();
         colModel.getColumn(0).setPreferredWidth(60);
         colModel.getColumn(0).setCellRenderer(centerRenderer);
@@ -1621,7 +1666,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         colModel.getColumn(3).setCellRenderer(evalRenderer);
         colModel.getColumn(3).setCellEditor(new DefaultCellEditor(cmbArgQuality));
 
-        // Table 4: Evaluation Argument Component Relations
+        // Table 7: Evaluation Argument Component Relations
         colModel = tblEvaRelations.getColumnModel();
         colModel.getColumn(0).setPreferredWidth(60);
         colModel.getColumn(0).setCellRenderer(centerRenderer);
@@ -1643,67 +1688,66 @@ public class ArgaelForm extends javax.swing.JFrame {
      */
     private void updateCounterLabels() {
         lblNumberArguments.setText("Number of argument components (ACs): " + tblArgComponents.getRowCount());
+        lblNumberArguments1.setText("Number of argument components (ACs): " + tblArgComponents.getRowCount());
         lblNumberRelations.setText("Number of argument relations (ARs): " + tblArgRelations.getRowCount());
+        lblNumberRelations1.setText("Number of argument relations (ARs): " + tblArgRelations.getRowCount());
     }
 
     /**
-     * Display and update html report.
+     * Display and update editor report content.
      */
-    private void updateHtmlReport() {
-        String report = getSelectedReport();
-        int caretPosition = this.edtSimpleAnnotation.getCaretPosition();
+    private void updateEditorReports(int tabIndex) {
 
-        // Update report
-        TableModel acModel = tblArgComponents.getModel();
-        String hlText;
-        String acText;
-        String acType;
+        if (tabIndex == 0) {
+            updateHtmlReport(this.edtSimpleAnnotation, userName);
 
-        for (int i = 0; i < acModel.getRowCount(); i++) {
-            acText = acModel.getValueAt(i, 1).toString();
-            acType = acModel.getValueAt(i, 2).toString();
-
-            switch (acType.toLowerCase()) {
-                case "major claim":
-                    hlText = model.getFormatter().highlightMajorClaim(acText);
-                    break;
-                case "claim":
-                    hlText = model.getFormatter().highlightClaim(acText);
-                    break;
-                default:
-                    hlText = model.getFormatter().highlightPremise(acText);
-                    break;
-            }
-            report = report.replace(acText, hlText);
+        } else if (tabIndex == 1) {
+            String targetUser = cmbTargetAnnotator1.getSelectedItem().toString();
+            updateHtmlReport(this.edtTargetAnnotation, targetUser);
+            updateHtmlReport(this.edtAssistedAnnotation, userName);
         }
-
-        // Display report
-        this.edtSimpleAnnotation.setText(report);
-        this.edtSimpleAnnotation.setCaretPosition(caretPosition);
-        this.txtAnnotationPreview.setText("");
-        this.txtEvaluationPreview.setText("");
     }
 
     /**
      *
-     * @param selectedIndex
+     * @param editor
+     * @param user
+     */
+    private void updateHtmlReport(javax.swing.JEditorPane editor, String user) {
+
+        // Get report data
+        Map<String, List<String[]>> annotations = getSavedAnnotationData(user);
+        List<String[]> acList = annotations.get(IOManager.FILE_ARG_COMP);
+
+        // Update report
+        String filepath = currDirectory + "\\" + currEntity + "." + fileExtension;
+        String rawReport = this.model.getFileReport(filepath);
+        String report = highlightReport(rawReport, acList);
+
+        // Refresh editor
+        ArgaelFormUtils.updateEditorContent(editor, report);
+    }
+
+    /**
+     *
      */
     private void updateViewData() {
+        acSelected.clear();
 
-        if (currTabIndex == 0) {
+        if (currTabIndex == 0 || currTabIndex == 1) {
 
-            // Display result data
-            Map<String, List<String[]>> annotations = getSavedAnnotationData();
-            Map<String, Map<Integer, String>> evaluations = getSavedEvaluationData();
-            displayAnnotationData(annotations, evaluations);
+            // Display HTML reports
+            updateEditorReports(currTabIndex);
 
-            // Display HTML report
-            updateHtmlReport();
-
-        } else if (currTabIndex == 1) {
+            // Display table data
+            displayAnnotationData(currTabIndex);
+            this.txtAnnotationPreview.setText("");
 
         } else if (currTabIndex == 2) {
 
+            // Display table data
+            displayAnnotationData(currTabIndex);
+            this.txtEvaluationPreview.setText("");
         }
     }
 
