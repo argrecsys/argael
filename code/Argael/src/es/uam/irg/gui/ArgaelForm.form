@@ -233,7 +233,6 @@
                                       <Component id="lblNumberRelations" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="208" max="32767" attributes="0"/>
                                   </Group>
-                                  <Component id="scrollPane4" pref="0" max="32767" attributes="0"/>
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                       <Component id="lblDelete" min="-2" max="-2" attributes="0"/>
@@ -242,6 +241,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="btnDeleteAR" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="scrollPane4" alignment="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -510,11 +510,11 @@
                           <Group type="102" attributes="0">
                               <Component id="scrollPane8" pref="521" max="32767" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="scrollPane9" min="-2" pref="409" max="-2" attributes="0"/>
-                                  <Component id="scrollPane10" min="-2" pref="409" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="scrollPane10" pref="409" max="32767" attributes="0"/>
                                   <Component id="lblNumberArguments2" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
                                   <Component id="lblNumberRelations2" min="-2" pref="250" max="-2" attributes="0"/>
+                                  <Component id="scrollPane9" alignment="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -636,7 +636,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="tblArgRelations3">
+                <Component class="javax.swing.JTable" name="tblArgRelations2">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="5" rowCount="0">
