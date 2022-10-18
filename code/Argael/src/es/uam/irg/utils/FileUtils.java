@@ -60,6 +60,17 @@ public class FileUtils {
 
     /**
      *
+     * @param filePath
+     * @return
+     */
+    public static String getDirectory(String filePath) {
+        File file = new File(filePath);
+        String directory = file.getAbsoluteFile().getParent();
+        return directory;
+    }
+
+    /**
+     *
      * @param filename
      * @return
      */
