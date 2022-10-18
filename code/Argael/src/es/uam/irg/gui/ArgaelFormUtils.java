@@ -24,6 +24,7 @@ import java.util.Queue;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -78,7 +79,7 @@ public class ArgaelFormUtils {
      * @param acTable
      * @return
      */
-    public static boolean createNewArgumentComponent(javax.swing.JEditorPane editor, javax.swing.JComboBox<String> cmbACType, javax.swing.JTable acTable) {
+    public static boolean createNewArgumentComponent(JEditorPane editor, JComboBox<String> cmbACType, JTable acTable) {
         boolean result = false;
 
         String propText = editor.getSelectedText().trim();
@@ -109,7 +110,7 @@ public class ArgaelFormUtils {
      * @param arTable
      * @return
      */
-    public static boolean createNewArgumentRelation(Queue<Integer> acSelected, javax.swing.JTable acTable, javax.swing.JComboBox<String> cmbCategory, javax.swing.JComboBox<String> cmbIntent, javax.swing.JTable arTable) {
+    public static boolean createNewArgumentRelation(Queue<Integer> acSelected, JTable acTable, JComboBox<String> cmbCategory, JComboBox<String> cmbIntent, JTable arTable) {
         boolean result = false;
 
         Integer[] selected = new Integer[2];
@@ -215,6 +216,16 @@ public class ArgaelFormUtils {
 
     /**
      *
+     * @param label
+     * @param table
+     * @param unitName
+     */
+    public static void updateCounterLabels(JLabel label, JTable table, String unitName) {
+        label.setText("Number of argument " + unitName + ": " + table.getRowCount());
+    }
+
+    /**
+     *
      * @param editor
      * @param content
      */
@@ -228,7 +239,7 @@ public class ArgaelFormUtils {
      *
      * @return
      */
-    private static int getNextPropositionId(javax.swing.JTable acTable) {
+    private static int getNextPropositionId(JTable acTable) {
         int propNextId = 1;
         int nRows = acTable.getRowCount();
         if (nRows > 0) {
@@ -241,7 +252,7 @@ public class ArgaelFormUtils {
      *
      * @return
      */
-    private static int getNextRelationId(javax.swing.JTable arTable) {
+    private static int getNextRelationId(JTable arTable) {
         int propNextId = 1;
         int nRows = arTable.getRowCount();
         if (nRows > 0) {

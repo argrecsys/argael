@@ -38,7 +38,6 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -178,7 +177,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         menuUser = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("ARGAEL v1.3");
+        setTitle("ARGAEL v1.4");
         setMinimumSize(new java.awt.Dimension(1111, 500));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -856,8 +855,8 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 1.3.5
-                          Date: 10/17/2022
+                          Version: 1.4.0
+                          Date: 10/18/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
                           Web site: https://argrecsys.github.io/argael/
@@ -949,7 +948,7 @@ public class ArgaelForm extends javax.swing.JFrame {
             if (row >= 0) {
                 ((DefaultTableModel) tblArgRelations.getModel()).removeRow(row);
                 ((DefaultTableModel) tblEvaRelations.getModel()).removeRow(row);
-                updateCounterLabels();
+                // updateCounterLabels();
                 txtAnnotationPreview.setText("");
                 txtEvaluationPreview.setText("");
                 isDirty = true;
@@ -970,7 +969,7 @@ public class ArgaelForm extends javax.swing.JFrame {
                     // Remove argument component
                     ((DefaultTableModel) tblArgComponents.getModel()).removeRow(row);
                     ((DefaultTableModel) tblEvaComponents.getModel()).removeRow(row);
-                    updateCounterLabels();
+                    // updateCounterLabels();
 
                     // Update editor report content
                     // updateEditorReports(currTabIndex); TODO
@@ -995,12 +994,32 @@ public class ArgaelForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tblArgComponentsMouseClicked
 
+    private void btnAddArgumentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddArgumentActionPerformed
+        // TODO add your handling code here:
+        boolean result = ArgaelFormUtils.createNewArgumentComponent(edtSimpleAnnotation, cmbArgCompType, tblArgComponents);
+        if (result) {
+            updatePanelData(edtSimpleAnnotation, null, null, userName, "");
+            ArgaelFormUtils.updateCounterLabels(lblNumberArguments, tblArgComponents, "components (ACs)");
+            isDirty = true;
+        }
+    }//GEN-LAST:event_btnAddArgumentActionPerformed
+
+    private void btnAddArgument1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddArgument1ActionPerformed
+        // TODO add your handling code here:
+        boolean result = ArgaelFormUtils.createNewArgumentComponent(edtAssistedAnnotation, cmbArgCompType1, tblArgComponents1);
+        if (result) {
+            updatePanelData(edtAssistedAnnotation, null, null, userName, "");
+            ArgaelFormUtils.updateCounterLabels(lblNumberArguments1, tblArgComponents1, "components (ACs)");
+            isDirty = true;
+        }
+    }//GEN-LAST:event_btnAddArgument1ActionPerformed
+
     private void btnAddRelationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRelationActionPerformed
         // TODO add your handling code here:
         if (acSelected.size() == 2) {
             boolean result = ArgaelFormUtils.createNewArgumentRelation(acSelected, tblArgComponents, cmbCategory, cmbIntent, tblArgRelations);
             if (result) {
-                updateCounterLabels();
+                ArgaelFormUtils.updateCounterLabels(lblNumberRelations, tblArgRelations, "relations (ARs)");
                 isDirty = true;
             }
         } else {
@@ -1008,21 +1027,12 @@ public class ArgaelForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAddRelationActionPerformed
 
-    private void btnAddArgumentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddArgumentActionPerformed
-        // TODO add your handling code here:
-        boolean result = ArgaelFormUtils.createNewArgumentComponent(this.edtSimpleAnnotation, this.cmbArgCompType, this.tblArgComponents);
-        if (result) {
-            updateCounterLabels();
-            isDirty = true;
-        }
-    }//GEN-LAST:event_btnAddArgumentActionPerformed
-
     private void btnAddRelation1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRelation1ActionPerformed
         // TODO add your handling code here:
         if (acSelected.size() == 2) {
             boolean result = ArgaelFormUtils.createNewArgumentRelation(acSelected, tblArgComponents1, cmbCategory1, cmbIntent1, tblArgRelations1);
             if (result) {
-                updateCounterLabels();
+                ArgaelFormUtils.updateCounterLabels(lblNumberRelations1, tblArgRelations1, "relations (ARs)");
                 isDirty = true;
             }
         } else {
@@ -1049,15 +1059,6 @@ public class ArgaelForm extends javax.swing.JFrame {
         String targetUser = cmbTargetAnnotator1.getSelectedItem().toString();
         updatePanelData(edtTargetAnnotation, null, tblArgRelations2, targetUser, "");
     }//GEN-LAST:event_cmbTargetAnnotator1ActionPerformed
-
-    private void btnAddArgument1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddArgument1ActionPerformed
-        // TODO add your handling code here:
-        boolean result = ArgaelFormUtils.createNewArgumentComponent(this.edtAssistedAnnotation, this.cmbArgCompType1, this.tblArgComponents1);
-        if (result) {
-            updateCounterLabels();
-            isDirty = true;
-        }
-    }//GEN-LAST:event_btnAddArgument1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddArgument;
@@ -1543,16 +1544,6 @@ public class ArgaelForm extends javax.swing.JFrame {
         colModel.getColumn(5).setPreferredWidth(120);
         colModel.getColumn(5).setCellRenderer(evalRenderer);
         colModel.getColumn(5).setCellEditor(new DefaultCellEditor(cmbArgQuality));
-    }
-
-    /**
-     *
-     */
-    private void updateCounterLabels() {
-        lblNumberArguments.setText("Number of argument components (ACs): " + tblArgComponents.getRowCount());
-        lblNumberArguments1.setText("Number of argument components (ACs): " + tblArgComponents.getRowCount());
-        lblNumberRelations.setText("Number of argument relations (ARs): " + tblArgRelations.getRowCount());
-        lblNumberRelations1.setText("Number of argument relations (ARs): " + tblArgRelations.getRowCount());
     }
 
     /**
