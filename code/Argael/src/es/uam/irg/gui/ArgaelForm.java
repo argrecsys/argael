@@ -34,9 +34,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultListModel;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -874,14 +872,14 @@ public class ArgaelForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!lstDocs.isSelectionEmpty() && !evt.getValueIsAdjusting()) {
             this.currEntity = lstDocs.getSelectedValue();
-            refreshViewData();
+            updateViewData();
         }
     }//GEN-LAST:event_lstDocsValueChanged
 
     private void tabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabbedPaneStateChanged
         // TODO add your handling code here:
         currTabIndex = tabbedPane.getSelectedIndex();
-        refreshViewData();
+        updateViewData();
     }//GEN-LAST:event_tabbedPaneStateChanged
 
     private void mItemImportJsonlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemImportJsonlActionPerformed
@@ -907,12 +905,14 @@ public class ArgaelForm extends javax.swing.JFrame {
 
     private void mItemSaveAnnotationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemSaveAnnotationActionPerformed
         // TODO add your handling code here:
-        saveAnnotationsToFiles();
+        saveViewData();
+        isDirty = false;
     }//GEN-LAST:event_mItemSaveAnnotationActionPerformed
 
     private void mItemSaveEvaluationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemSaveEvaluationActionPerformed
         // TODO add your handling code here:
-        saveEvaluationsToFiles();
+        saveViewData();
+        isDirty = false;
     }//GEN-LAST:event_mItemSaveEvaluationActionPerformed
 
     private void mItemAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemAboutActionPerformed
@@ -920,7 +920,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 1.4.2
+                          Version: 1.4.3
                           Date: 10/18/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
@@ -958,8 +958,6 @@ public class ArgaelForm extends javax.swing.JFrame {
                 ArgaelFormUtils.updateCounterLabels(lblNumberRelations, tblArgRelations, "relations (ARs)");
                 isDirty = true;
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "You must select the category and main intent of the relation.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnAddRelationActionPerformed
 
@@ -971,15 +969,13 @@ public class ArgaelForm extends javax.swing.JFrame {
                 ArgaelFormUtils.updateCounterLabels(lblNumberRelations1, tblArgRelations1, "relations (ARs)");
                 isDirty = true;
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "You must select the category and main intent of the relation.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnAddRelation1ActionPerformed
 
     private void btnDeleteACActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteACActionPerformed
         // TODO add your handling code here:
         if (tblArgComponents.getRowCount() > 0) {
-            boolean result = ArgaelFormUtils.deleteArgumentComponent(tblArgComponents);
+            boolean result = ArgaelFormUtils.deleteArgumentComponent(tblArgComponents, tblArgRelations);
             if (result) {
                 updatePanelData(edtSimpleAnnotation, null, null, userName, "");
                 ArgaelFormUtils.updateCounterLabels(lblNumberArguments, tblArgComponents, "components (ACs)");
@@ -991,7 +987,7 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void btnDeleteAC1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteAC1ActionPerformed
         // TODO add your handling code here:
         if (tblArgComponents1.getRowCount() > 0) {
-            boolean result = ArgaelFormUtils.deleteArgumentComponent(tblArgComponents1);
+            boolean result = ArgaelFormUtils.deleteArgumentComponent(tblArgComponents1, tblArgRelations1);
             if (result) {
                 updatePanelData(edtAssistedAnnotation, null, null, userName, "");
                 ArgaelFormUtils.updateCounterLabels(lblNumberArguments1, tblArgComponents1, "components (ACs)");
@@ -1275,21 +1271,24 @@ public class ArgaelForm extends javax.swing.JFrame {
      *
      */
     private void refreshViewData() {
-        if (!StringUtils.isEmpty(currEntity) && currTabIndex > -1) {
-            System.out.println(" - Refresh data for view: " + tabbedPane.getTitleAt(currTabIndex) + ", and doc: " + currEntity);
+        acSelected.clear();
 
-            // Save last view data
-            if (isDirty) {
-                String msg = "There are unsaved annotations made to the doc: " + currEntity + ".\nDo you want to save the changes?";
-                int result = JOptionPane.showConfirmDialog(this, msg, "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (result == JOptionPane.YES_OPTION) {
-                    saveViewData();
-                }
-            }
+        // Refresh data of simple annotation view
+        if (currTabIndex == 0) {
+            updatePanelData(edtSimpleAnnotation, tblArgComponents, tblArgRelations, userName, "");
+            this.txtAnnotationPreview.setText("");
 
-            // Update current view data
-            updateViewData();
-            isDirty = false;
+        } else if (currTabIndex == 1) {
+
+            String targetUser = cmbTargetAnnotator1.getSelectedItem().toString();
+            updatePanelData(edtTargetAnnotation, null, tblArgRelations2, targetUser, "");
+            updatePanelData(edtAssistedAnnotation, tblArgComponents1, tblArgRelations1, userName, "");
+
+        } else if (currTabIndex == 2) {
+
+            String targetUser = cmbTargetAnnotator1.getSelectedItem().toString();
+            updatePanelData(null, tblEvaComponents, tblEvaRelations, targetUser, userName);
+            this.txtEvaluationPreview.setText("");
         }
     }
 
@@ -1297,90 +1296,93 @@ public class ArgaelForm extends javax.swing.JFrame {
      *
      */
     private void saveAnnotationsToFiles() {
+        TableModel acModel = null;
+        TableModel arModel = null;
+        List<String[]> acAnnotations = new ArrayList<>();
+        List<String[]> arAnnotations = new ArrayList<>();
+        String fileName;
+        List<String> header;
 
-        if (!StringUtils.isEmpty(currEntity)) {
-            String fileName;
-            List<String> header;
-            List<String[]> acAnnotations = new ArrayList<>();
-            List<String[]> arAnnotations = new ArrayList<>();
+        if (currTabIndex == 0) {
+            acModel = tblArgComponents.getModel();
+            arModel = tblArgRelations.getModel();
 
-            // Loop through the rows
-            TableModel acModel = tblArgComponents.getModel();
-            for (int i = 0; i < acModel.getRowCount(); i++) {
-                String acId = acModel.getValueAt(i, 0).toString();
-                String acText = acModel.getValueAt(i, 1).toString();
-                String acType = acModel.getValueAt(i, 2).toString();
-                String dateStamp = dateFormat.format(new Date());
-                acAnnotations.add(new String[]{acId, acText, acType, userName, dateStamp});
-            }
-
-            // Loop through the rows
-            TableModel arModel = tblArgRelations.getModel();
-            for (int i = 0; i < arModel.getRowCount(); i++) {
-                String arId = arModel.getValueAt(i, 0).toString();
-                String acId1 = arModel.getValueAt(i, 1).toString();
-                String acId2 = arModel.getValueAt(i, 2).toString();
-                String relType = arModel.getValueAt(i, 3).toString();
-                String relIntent = arModel.getValueAt(i, 4).toString();
-                String dateStamp = dateFormat.format(new Date());
-                arAnnotations.add(new String[]{arId, acId1, acId2, relType, relIntent, userName, dateStamp});
-            }
-
-            // Save ACs results
-            fileName = currEntity + "_" + IOManager.FILE_ARG_COMP;
-            header = new ArrayList<>(Arrays.asList("ac_id", "ac_text", "ac_type", "annotator", "timestamp"));
-            saveResults(fileName, "annotations", header, acAnnotations);
-
-            // Save ARs results
-            fileName = currEntity + "_" + IOManager.FILE_ARG_REL;
-            header = new ArrayList<>(Arrays.asList("ar_id", "ac_id1", "ac_id2", "rel_type", "rel_intent", "annotator", "timestamp"));
-            saveResults(fileName, "annotations", header, arAnnotations);
+        } else if (currTabIndex == 1) {
+            acModel = tblArgComponents1.getModel();
+            arModel = tblArgRelations1.getModel();
         }
+
+        // Loop through the rows
+        for (int i = 0; i < acModel.getRowCount(); i++) {
+            String acId = acModel.getValueAt(i, 0).toString();
+            String acText = acModel.getValueAt(i, 1).toString();
+            String acType = acModel.getValueAt(i, 2).toString();
+            String dateStamp = dateFormat.format(new Date());
+            acAnnotations.add(new String[]{acId, acText, acType, userName, dateStamp});
+        }
+
+        // Loop through the rows
+        for (int i = 0; i < arModel.getRowCount(); i++) {
+            String arId = arModel.getValueAt(i, 0).toString();
+            String acId1 = arModel.getValueAt(i, 1).toString();
+            String acId2 = arModel.getValueAt(i, 2).toString();
+            String relType = arModel.getValueAt(i, 3).toString();
+            String relIntent = arModel.getValueAt(i, 4).toString();
+            String dateStamp = dateFormat.format(new Date());
+            arAnnotations.add(new String[]{arId, acId1, acId2, relType, relIntent, userName, dateStamp});
+        }
+
+        // Save ACs results
+        fileName = currEntity + "_" + IOManager.FILE_ARG_COMP;
+        header = new ArrayList<>(Arrays.asList("ac_id", "ac_text", "ac_type", "annotator", "timestamp"));
+        saveResults(fileName, "annotations", header, acAnnotations);
+
+        // Save ARs results
+        fileName = currEntity + "_" + IOManager.FILE_ARG_REL;
+        header = new ArrayList<>(Arrays.asList("ar_id", "ac_id1", "ac_id2", "rel_type", "rel_intent", "annotator", "timestamp"));
+        saveResults(fileName, "annotations", header, arAnnotations);
     }
 
     /**
      *
      */
     private void saveEvaluationsToFiles() {
+        String fileName;
+        List<String> header;
+        List<String[]> acEvaluations = new ArrayList<>();
+        List<String[]> arEvaluations = new ArrayList<>();
 
-        if (!StringUtils.isEmpty(currEntity)) {
-            String fileName;
-            List<String> header;
-            List<String[]> acEvaluations = new ArrayList<>();
-            List<String[]> arEvaluations = new ArrayList<>();
-
-            // Loop through the rows
-            TableModel acModel = tblEvaComponents.getModel();
-            for (int i = 0; i < acModel.getRowCount(); i++) {
-                if (acModel.getValueAt(i, 3) != null) {
-                    String acId = acModel.getValueAt(i, 0).toString();
-                    String acQuality = acModel.getValueAt(i, 3).toString();
-                    String dateStamp = dateFormat.format(new Date());
-                    acEvaluations.add(new String[]{acId, acQuality, userName, dateStamp});
-                }
+        // Loop through the rows
+        TableModel acModel = tblEvaComponents.getModel();
+        for (int i = 0; i < acModel.getRowCount(); i++) {
+            if (acModel.getValueAt(i, 3) != null) {
+                String acId = acModel.getValueAt(i, 0).toString();
+                String acQuality = acModel.getValueAt(i, 3).toString();
+                String dateStamp = dateFormat.format(new Date());
+                acEvaluations.add(new String[]{acId, acQuality, userName, dateStamp});
             }
-
-            // Loop through the rows
-            TableModel arModel = tblEvaRelations.getModel();
-            for (int i = 0; i < arModel.getRowCount(); i++) {
-                if (arModel.getValueAt(i, 5) != null) {
-                    String arId = arModel.getValueAt(i, 0).toString();
-                    String arQuality = arModel.getValueAt(i, 5).toString();
-                    String dateStamp = dateFormat.format(new Date());
-                    arEvaluations.add(new String[]{arId, arQuality, userName, dateStamp});
-                }
-            }
-
-            // Save ACs results
-            fileName = currEntity + "_" + IOManager.FILE_ARG_COMP;
-            header = new ArrayList<>(Arrays.asList("ac_id", "ac_quality", "evaluator", "timestamp"));
-            saveResults(fileName, "evaluations", header, acEvaluations);
-
-            // Save ARs results
-            fileName = currEntity + "_" + IOManager.FILE_ARG_REL;
-            header = new ArrayList<>(Arrays.asList("ar_id", "ar_quality", "evaluator", "timestamp"));
-            saveResults(fileName, "evaluations", header, arEvaluations);
         }
+
+        // Loop through the rows
+        TableModel arModel = tblEvaRelations.getModel();
+        for (int i = 0; i < arModel.getRowCount(); i++) {
+            if (arModel.getValueAt(i, 5) != null) {
+                String arId = arModel.getValueAt(i, 0).toString();
+                String arQuality = arModel.getValueAt(i, 5).toString();
+                String dateStamp = dateFormat.format(new Date());
+                arEvaluations.add(new String[]{arId, arQuality, userName, dateStamp});
+            }
+        }
+
+        // Save ACs results
+        fileName = currEntity + "_" + IOManager.FILE_ARG_COMP;
+        header = new ArrayList<>(Arrays.asList("ac_id", "ac_quality", "evaluator", "timestamp"));
+        saveResults(fileName, "evaluations", header, acEvaluations);
+
+        // Save ARs results
+        fileName = currEntity + "_" + IOManager.FILE_ARG_REL;
+        header = new ArrayList<>(Arrays.asList("ar_id", "ar_quality", "evaluator", "timestamp"));
+        saveResults(fileName, "evaluations", header, arEvaluations);
     }
 
     /**
@@ -1413,14 +1415,15 @@ public class ArgaelForm extends javax.swing.JFrame {
 
     /**
      *
-     * @param selectedIndex
      */
     private void saveViewData() {
-        if (currTabIndex == 0 || currTabIndex == 1) {
-            saveAnnotationsToFiles();
+        if (!StringUtils.isEmpty(currEntity)) {
+            if (currTabIndex == 0 || currTabIndex == 1) {
+                saveAnnotationsToFiles();
 
-        } else if (currTabIndex == 2) {
-            saveEvaluationsToFiles();
+            } else if (currTabIndex == 2) {
+                saveEvaluationsToFiles();
+            }
         }
     }
 
@@ -1474,12 +1477,12 @@ public class ArgaelForm extends javax.swing.JFrame {
 
         // Argument Quality Selector
         List<String> qualityMetrics = model.getQualityMetrics();
-        JComboBox cmbArgQuality = new JComboBox();
+        javax.swing.JComboBox cmbArgQuality = new javax.swing.JComboBox();
         ArgaelFormUtils.setComboBoxModel(cmbArgQuality, qualityMetrics);
 
         // Default column renderer
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        centerRenderer.setHorizontalAlignment(javax.swing.JLabel.CENTER);
 
         // ComboBox column renderer
         DefaultTableCellRenderer evalRenderer = new DefaultTableCellRenderer();
@@ -1621,24 +1624,21 @@ public class ArgaelForm extends javax.swing.JFrame {
      *
      */
     private void updateViewData() {
-        acSelected.clear();
+        if (!StringUtils.isEmpty(currEntity) && currTabIndex > -1) {
+            System.out.println(" - Refresh data for view: " + tabbedPane.getTitleAt(currTabIndex) + ", and doc: " + currEntity);
 
-        // Refresh data of simple annotation view
-        if (currTabIndex == 0) {
-            updatePanelData(edtSimpleAnnotation, tblArgComponents, tblArgRelations, userName, "");
-            this.txtAnnotationPreview.setText("");
+            // Save last view data
+            if (isDirty) {
+                String msg = "There are unsaved annotations made to the doc: " + currEntity + ".\nDo you want to save the changes?";
+                int result = JOptionPane.showConfirmDialog(this, msg, "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (result == JOptionPane.YES_OPTION) {
+                    saveViewData();
+                }
+            }
+            isDirty = false;
 
-        } else if (currTabIndex == 1) {
-
-            String targetUser = cmbTargetAnnotator1.getSelectedItem().toString();
-            updatePanelData(edtTargetAnnotation, null, tblArgRelations2, targetUser, "");
-            updatePanelData(edtAssistedAnnotation, tblArgComponents1, tblArgRelations1, userName, "");
-
-        } else if (currTabIndex == 2) {
-
-            String targetUser = cmbTargetAnnotator1.getSelectedItem().toString();
-            updatePanelData(null, tblEvaComponents, tblEvaRelations, targetUser, userName);
-            this.txtEvaluationPreview.setText("");
+            // Refresh current view data
+            refreshViewData();
         }
     }
 

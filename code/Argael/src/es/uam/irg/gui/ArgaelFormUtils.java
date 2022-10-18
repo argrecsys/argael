@@ -82,7 +82,7 @@ public class ArgaelFormUtils {
     public static boolean createNewArgumentComponent(JEditorPane editor, JComboBox<String> cmbACType, JTable acTable) {
         boolean result = false;
 
-        String propText = editor.getSelectedText().trim();
+        String propText = editor.getSelectedText();
         if (propText != null) {
             propText = propText.trim();
             String propType = cmbACType.getSelectedItem().toString();
@@ -141,16 +141,17 @@ public class ArgaelFormUtils {
     /**
      *
      * @param tblArgComponents
+     * @param tblArgRelations
      * @return
      */
-    public static boolean deleteArgumentComponent(JTable tblArgComponents) {
+    public static boolean deleteArgumentComponent(JTable tblArgComponents, JTable tblArgRelations) {
         boolean result = false;
         int row = tblArgComponents.getSelectedRow();
 
         if (row >= 0) {
             int acId = Integer.parseInt(tblArgComponents.getModel().getValueAt(row, 0).toString());
 
-            if (!isAcInRelation(tblArgComponents, acId)) {
+            if (!isAcInRelation(tblArgRelations, acId)) {
 
                 // Remove argument component
                 ((DefaultTableModel) tblArgComponents.getModel()).removeRow(row);
