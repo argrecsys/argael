@@ -65,7 +65,7 @@ public class ArgaelFormUtils {
                 String acText2 = acModel.getValueAt(acIndex2, 1).toString();
                 String acType2 = acModel.getValueAt(acIndex2, 2).toString();
                 text = String.format("[<b>%s (%s)</b>: %s] \u2190 [<b>%s (%s)</b>: %s] (<b>relation</b>: \"%s\" and \"%s\")", acType1, acId1, acText1, acType2, acId2, acText2, category, intent);
-                ArgaelFormUtils.selectMultipleTableRows(table, acIndex1, acIndex2);
+                selectMultipleTableRows(table, acIndex1, acIndex2);
             }
         }
 
@@ -238,19 +238,6 @@ public class ArgaelFormUtils {
 
     /**
      *
-     * @param table
-     * @param index1
-     * @param index2
-     */
-    public static void selectMultipleTableRows(JTable table, int index1, int index2) {
-        ListSelectionModel tblModel = table.getSelectionModel();
-        tblModel.clearSelection();
-        tblModel.addSelectionInterval(index1, index1);
-        tblModel.addSelectionInterval(index2, index2);
-    }
-
-    /**
-     *
      * @param cmbTargetAnnotator
      * @param strList
      */
@@ -313,6 +300,19 @@ public class ArgaelFormUtils {
     private static boolean isAcInRelation(JTable tblArgRelations, int acId) {
         TableModel arModel = tblArgRelations.getModel();
         return (getAcIndexFromTable(arModel, acId, 1) >= 0 || getAcIndexFromTable(arModel, acId, 2) >= 0);
+    }
+
+    /**
+     *
+     * @param table
+     * @param index1
+     * @param index2
+     */
+    private static void selectMultipleTableRows(JTable table, int index1, int index2) {
+        ListSelectionModel tblModel = table.getSelectionModel();
+        tblModel.clearSelection();
+        tblModel.addSelectionInterval(index1, index1);
+        tblModel.addSelectionInterval(index2, index2);
     }
 
 }

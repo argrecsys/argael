@@ -436,6 +436,11 @@ public class ArgaelForm extends javax.swing.JFrame {
         scrollPane7.setViewportView(tblArgRelations2);
 
         btnArgRelCopy.setText("Copy");
+        btnArgRelCopy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnArgRelCopyActionPerformed(evt);
+            }
+        });
 
         lblAddArgComp1.setText("Annotate AC:");
 
@@ -860,26 +865,6 @@ public class ArgaelForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void mItemAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemAboutActionPerformed
-        // TODO add your handling code here:
-        String aboutMsg = """
-                          ARGAEL: ARGument Annotation and Evaluation tooL
-                          
-                          Version: 1.4.1
-                          Date: 10/18/2022
-                          Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
-                          License: Apache License 2.0
-                          Web site: https://argrecsys.github.io/argael/
-                          """;
-
-        JOptionPane.showMessageDialog(this, aboutMsg, "About", JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_mItemAboutActionPerformed
-
-    private void mItemCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemCloseActionPerformed
-        // TODO add your handling code here:
-        closeForm();
-    }//GEN-LAST:event_mItemCloseActionPerformed
-
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
         closeForm();
@@ -892,6 +877,12 @@ public class ArgaelForm extends javax.swing.JFrame {
             refreshViewData();
         }
     }//GEN-LAST:event_lstDocsValueChanged
+
+    private void tabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabbedPaneStateChanged
+        // TODO add your handling code here:
+        currTabIndex = tabbedPane.getSelectedIndex();
+        refreshViewData();
+    }//GEN-LAST:event_tabbedPaneStateChanged
 
     private void mItemImportJsonlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemImportJsonlActionPerformed
         // TODO add your handling code here:
@@ -909,6 +900,11 @@ public class ArgaelForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_mItemExportActionPerformed
 
+    private void mItemCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemCloseActionPerformed
+        // TODO add your handling code here:
+        closeForm();
+    }//GEN-LAST:event_mItemCloseActionPerformed
+
     private void mItemSaveAnnotationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemSaveAnnotationActionPerformed
         // TODO add your handling code here:
         saveAnnotationsToFiles();
@@ -919,27 +915,20 @@ public class ArgaelForm extends javax.swing.JFrame {
         saveEvaluationsToFiles();
     }//GEN-LAST:event_mItemSaveEvaluationActionPerformed
 
-    private void tblEvaRelationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEvaRelationsMouseClicked
+    private void mItemAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemAboutActionPerformed
         // TODO add your handling code here:
-        int row = tblEvaRelations.rowAtPoint(evt.getPoint());
-        TableModel acModel = tblEvaComponents.getModel();
-        TableModel arModel = tblEvaRelations.getModel();
-        String relationString = ArgaelFormUtils.createArgumentRelationString(row, tblEvaComponents, acModel, arModel);
-        txtEvaluationPreview.setText(relationString);
-    }//GEN-LAST:event_tblEvaRelationsMouseClicked
+        String aboutMsg = """
+                          ARGAEL: ARGument Annotation and Evaluation tooL
+                          
+                          Version: 1.4.2
+                          Date: 10/18/2022
+                          Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
+                          License: Apache License 2.0
+                          Web site: https://argrecsys.github.io/argael/
+                          """;
 
-    private void tblEvaComponentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEvaComponentsMouseClicked
-        // TODO add your handling code here:
-        int row = tblEvaComponents.rowAtPoint(evt.getPoint());
-
-        if (row >= 0) {
-            TableModel acModel = tblEvaComponents.getModel();
-            String acText = acModel.getValueAt(row, 1).toString();
-            String acType = acModel.getValueAt(row, 2).toString();
-            String text = String.format("[<b>%s</b>: %s]", acType, acText);
-            txtEvaluationPreview.setText(text);
-        }
-    }//GEN-LAST:event_tblEvaComponentsMouseClicked
+        JOptionPane.showMessageDialog(this, aboutMsg, "About", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_mItemAboutActionPerformed
 
     private void btnAddArgumentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddArgumentActionPerformed
         // TODO add your handling code here:
@@ -1034,18 +1023,6 @@ public class ArgaelForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDeleteAR1ActionPerformed
 
-    private void tabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabbedPaneStateChanged
-        // TODO add your handling code here:
-        currTabIndex = tabbedPane.getSelectedIndex();
-        refreshViewData();
-    }//GEN-LAST:event_tabbedPaneStateChanged
-
-    private void cmbTargetAnnotator1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTargetAnnotator1ActionPerformed
-        // TODO add your handling code here:
-        String targetUser = cmbTargetAnnotator1.getSelectedItem().toString();
-        updatePanelData(edtTargetAnnotation, null, tblArgRelations2, targetUser, "");
-    }//GEN-LAST:event_cmbTargetAnnotator1ActionPerformed
-
     private void tblArgComponentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgComponentsMouseClicked
         // TODO add your handling code here:
         int row = tblArgComponents.rowAtPoint(evt.getPoint());
@@ -1070,6 +1047,19 @@ public class ArgaelForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tblArgComponents1MouseClicked
 
+    private void tblEvaComponentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEvaComponentsMouseClicked
+        // TODO add your handling code here:
+        int row = tblEvaComponents.rowAtPoint(evt.getPoint());
+
+        if (row >= 0) {
+            TableModel acModel = tblEvaComponents.getModel();
+            String acText = acModel.getValueAt(row, 1).toString();
+            String acType = acModel.getValueAt(row, 2).toString();
+            String text = String.format("[<b>%s</b>: %s]", acType, acText);
+            txtEvaluationPreview.setText(text);
+        }
+    }//GEN-LAST:event_tblEvaComponentsMouseClicked
+
     private void tblArgRelationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgRelationsMouseClicked
         // TODO add your handling code here:
         int row = tblArgRelations.rowAtPoint(evt.getPoint());
@@ -1082,6 +1072,25 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void tblArgRelations1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgRelations1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_tblArgRelations1MouseClicked
+
+    private void tblEvaRelationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEvaRelationsMouseClicked
+        // TODO add your handling code here:
+        int row = tblEvaRelations.rowAtPoint(evt.getPoint());
+        TableModel acModel = tblEvaComponents.getModel();
+        TableModel arModel = tblEvaRelations.getModel();
+        String relationString = ArgaelFormUtils.createArgumentRelationString(row, tblEvaComponents, acModel, arModel);
+        txtEvaluationPreview.setText(relationString);
+    }//GEN-LAST:event_tblEvaRelationsMouseClicked
+
+    private void cmbTargetAnnotator1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTargetAnnotator1ActionPerformed
+        // TODO add your handling code here:
+        String targetUser = cmbTargetAnnotator1.getSelectedItem().toString();
+        updatePanelData(edtTargetAnnotation, null, tblArgRelations2, targetUser, "");
+    }//GEN-LAST:event_cmbTargetAnnotator1ActionPerformed
+
+    private void btnArgRelCopyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArgRelCopyActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnArgRelCopyActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddArgument;
