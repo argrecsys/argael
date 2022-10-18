@@ -54,7 +54,6 @@ public class ArgaelForm extends javax.swing.JFrame {
     private String currDirectory;
     private String currEntity;
     private int currTabIndex;
-    private boolean isDirty;
     private final DataModel model;
     private final Queue<Integer> acSelected;
     private String fileExtension;
@@ -77,7 +76,6 @@ public class ArgaelForm extends javax.swing.JFrame {
         this.currTabIndex = 0;
         this.currDirectory = dataFolder;
         this.fileExtension = fileExtension;
-        this.isDirty = false;
         this.model = new DataModel(components, relCategories, relIntents, qualityMetrics);
         this.acSelected = new LinkedList<>();
 
@@ -167,9 +165,6 @@ public class ArgaelForm extends javax.swing.JFrame {
         mItemExport = new javax.swing.JMenuItem();
         menuHorzSeparator = new javax.swing.JPopupMenu.Separator();
         mItemClose = new javax.swing.JMenuItem();
-        menuSave = new javax.swing.JMenu();
-        mItemSaveAnnotation = new javax.swing.JMenuItem();
-        mItemSaveEvaluation = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
         mItemAbout = new javax.swing.JMenuItem();
         menuUser = new javax.swing.JMenu();
@@ -796,26 +791,6 @@ public class ArgaelForm extends javax.swing.JFrame {
 
         menuBar.add(menuFile);
 
-        menuSave.setText("Save");
-
-        mItemSaveAnnotation.setText("Annotation");
-        mItemSaveAnnotation.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItemSaveAnnotationActionPerformed(evt);
-            }
-        });
-        menuSave.add(mItemSaveAnnotation);
-
-        mItemSaveEvaluation.setText("Evaluation");
-        mItemSaveEvaluation.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItemSaveEvaluationActionPerformed(evt);
-            }
-        });
-        menuSave.add(mItemSaveEvaluation);
-
-        menuBar.add(menuSave);
-
         menuHelp.setText("Help");
 
         mItemAbout.setText("About");
@@ -903,24 +878,12 @@ public class ArgaelForm extends javax.swing.JFrame {
         closeForm();
     }//GEN-LAST:event_mItemCloseActionPerformed
 
-    private void mItemSaveAnnotationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemSaveAnnotationActionPerformed
-        // TODO add your handling code here:
-        saveViewData();
-        isDirty = false;
-    }//GEN-LAST:event_mItemSaveAnnotationActionPerformed
-
-    private void mItemSaveEvaluationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemSaveEvaluationActionPerformed
-        // TODO add your handling code here:
-        saveViewData();
-        isDirty = false;
-    }//GEN-LAST:event_mItemSaveEvaluationActionPerformed
-
     private void mItemAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemAboutActionPerformed
         // TODO add your handling code here:
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 1.4.3
+                          Version: 1.6.0
                           Date: 10/18/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
@@ -934,9 +897,9 @@ public class ArgaelForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         boolean result = ArgaelFormUtils.createNewArgumentComponent(edtSimpleAnnotation, cmbArgCompType, tblArgComponents);
         if (result) {
+            saveViewData();
             updatePanelData(edtSimpleAnnotation, null, null, userName, "");
             ArgaelFormUtils.updateCounterLabels(lblNumberArguments, tblArgComponents, "components (ACs)");
-            isDirty = true;
         }
     }//GEN-LAST:event_btnAddArgumentActionPerformed
 
@@ -944,9 +907,9 @@ public class ArgaelForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         boolean result = ArgaelFormUtils.createNewArgumentComponent(edtAssistedAnnotation, cmbArgCompType1, tblArgComponents1);
         if (result) {
+            saveViewData();
             updatePanelData(edtAssistedAnnotation, null, null, userName, "");
             ArgaelFormUtils.updateCounterLabels(lblNumberArguments1, tblArgComponents1, "components (ACs)");
-            isDirty = true;
         }
     }//GEN-LAST:event_btnAddArgument1ActionPerformed
 
@@ -955,8 +918,8 @@ public class ArgaelForm extends javax.swing.JFrame {
         if (acSelected.size() == 2) {
             boolean result = ArgaelFormUtils.createNewArgumentRelation(acSelected, tblArgComponents, cmbCategory, cmbIntent, tblArgRelations);
             if (result) {
+                saveViewData();
                 ArgaelFormUtils.updateCounterLabels(lblNumberRelations, tblArgRelations, "relations (ARs)");
-                isDirty = true;
             }
         }
     }//GEN-LAST:event_btnAddRelationActionPerformed
@@ -966,8 +929,8 @@ public class ArgaelForm extends javax.swing.JFrame {
         if (acSelected.size() == 2) {
             boolean result = ArgaelFormUtils.createNewArgumentRelation(acSelected, tblArgComponents1, cmbCategory1, cmbIntent1, tblArgRelations1);
             if (result) {
+                saveViewData();
                 ArgaelFormUtils.updateCounterLabels(lblNumberRelations1, tblArgRelations1, "relations (ARs)");
-                isDirty = true;
             }
         }
     }//GEN-LAST:event_btnAddRelation1ActionPerformed
@@ -977,9 +940,9 @@ public class ArgaelForm extends javax.swing.JFrame {
         if (tblArgComponents.getRowCount() > 0) {
             boolean result = ArgaelFormUtils.deleteArgumentComponent(tblArgComponents, tblArgRelations);
             if (result) {
+                saveViewData();
                 updatePanelData(edtSimpleAnnotation, null, null, userName, "");
                 ArgaelFormUtils.updateCounterLabels(lblNumberArguments, tblArgComponents, "components (ACs)");
-                isDirty = true;
             }
         }
     }//GEN-LAST:event_btnDeleteACActionPerformed
@@ -989,9 +952,9 @@ public class ArgaelForm extends javax.swing.JFrame {
         if (tblArgComponents1.getRowCount() > 0) {
             boolean result = ArgaelFormUtils.deleteArgumentComponent(tblArgComponents1, tblArgRelations1);
             if (result) {
+                saveViewData();
                 updatePanelData(edtAssistedAnnotation, null, null, userName, "");
                 ArgaelFormUtils.updateCounterLabels(lblNumberArguments1, tblArgComponents1, "components (ACs)");
-                isDirty = true;
             }
         }
     }//GEN-LAST:event_btnDeleteAC1ActionPerformed
@@ -1001,9 +964,9 @@ public class ArgaelForm extends javax.swing.JFrame {
         if (tblArgRelations.getRowCount() > 0) {
             boolean result = ArgaelFormUtils.deleteArgumentRelation(tblArgRelations);
             if (result) {
+                saveViewData();
                 ArgaelFormUtils.updateCounterLabels(lblNumberRelations, tblArgRelations, "relations (ARs)");
                 txtAnnotationPreview.setText("");
-                isDirty = true;
             }
         }
     }//GEN-LAST:event_btnDeleteARActionPerformed
@@ -1013,8 +976,8 @@ public class ArgaelForm extends javax.swing.JFrame {
         if (tblArgRelations1.getRowCount() > 0) {
             boolean result = ArgaelFormUtils.deleteArgumentRelation(tblArgRelations1);
             if (result) {
+                saveViewData();
                 ArgaelFormUtils.updateCounterLabels(lblNumberRelations1, tblArgRelations1, "relations (ARs)");
-                isDirty = true;
             }
         }
     }//GEN-LAST:event_btnDeleteAR1ActionPerformed
@@ -1131,13 +1094,10 @@ public class ArgaelForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem mItemExport;
     private javax.swing.JMenuItem mItemImportJsonl;
     private javax.swing.JMenuItem mItemImportText;
-    private javax.swing.JMenuItem mItemSaveAnnotation;
-    private javax.swing.JMenuItem mItemSaveEvaluation;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenu menuHelp;
     private javax.swing.JPopupMenu.Separator menuHorzSeparator;
-    private javax.swing.JMenu menuSave;
     private javax.swing.JMenu menuUser;
     private javax.swing.JPanel pnlAssistedAnnotation;
     private javax.swing.JPanel pnlEvaluation;
@@ -1621,23 +1581,11 @@ public class ArgaelForm extends javax.swing.JFrame {
     }
 
     /**
-     *
+     * Refresh current view data.
      */
     private void updateViewData() {
         if (!StringUtils.isEmpty(currEntity) && currTabIndex > -1) {
             System.out.println(" - Refresh data for view: " + tabbedPane.getTitleAt(currTabIndex) + ", and doc: " + currEntity);
-
-            // Save last view data
-            if (isDirty) {
-                String msg = "There are unsaved annotations made to the doc: " + currEntity + ".\nDo you want to save the changes?";
-                int result = JOptionPane.showConfirmDialog(this, msg, "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (result == JOptionPane.YES_OPTION) {
-                    saveViewData();
-                }
-            }
-            isDirty = false;
-
-            // Refresh current view data
             refreshViewData();
         }
     }

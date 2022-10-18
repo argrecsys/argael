@@ -25,6 +25,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -159,7 +160,7 @@ public class ArgaelFormUtils {
                 result = true;
 
             } else {
-                System.out.println("This AC cannot be eliminated, because it is part of an argumentative relation");
+                JOptionPane.showMessageDialog(null, "This AC cannot be eliminated, because it is part of an argumentative relation", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
 
