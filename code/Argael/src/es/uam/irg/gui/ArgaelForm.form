@@ -774,6 +774,9 @@
                     </Property>
                     <Property name="selectionMode" type="int" value="2"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblArgComponents1MouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -802,6 +805,9 @@
                     </Property>
                     <Property name="selectionMode" type="int" value="0"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblArgRelations1MouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

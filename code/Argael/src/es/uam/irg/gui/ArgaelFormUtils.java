@@ -140,6 +140,50 @@ public class ArgaelFormUtils {
 
     /**
      *
+     * @param tblArgComponents
+     * @return
+     */
+    public static boolean deleteArgumentComponent(JTable tblArgComponents) {
+        boolean result = false;
+        int row = tblArgComponents.getSelectedRow();
+
+        if (row >= 0) {
+            int acId = Integer.parseInt(tblArgComponents.getModel().getValueAt(row, 0).toString());
+
+            if (!isAcInRelation(tblArgComponents, acId)) {
+
+                // Remove argument component
+                ((DefaultTableModel) tblArgComponents.getModel()).removeRow(row);
+
+                result = true;
+
+            } else {
+                System.out.println("This AC cannot be eliminated, because it is part of an argumentative relation");
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     *
+     * @param tblArgRelations
+     * @return
+     */
+    public static boolean deleteArgumentRelation(JTable tblArgRelations) {
+        boolean result = false;
+        int row = tblArgRelations.getSelectedRow();
+
+        if (row >= 0) {
+            ((DefaultTableModel) tblArgRelations.getModel()).removeRow(row);
+            result = true;
+        }
+
+        return result;
+    }
+
+    /**
+     *
      * @param model
      * @param acId
      * @param acIdIx
@@ -259,6 +303,16 @@ public class ArgaelFormUtils {
             propNextId = Integer.parseInt(arTable.getModel().getValueAt(nRows - 1, 0).toString()) + 1;
         }
         return propNextId;
+    }
+
+    /**
+     *
+     * @param acId
+     * @return
+     */
+    private static boolean isAcInRelation(JTable tblArgRelations, int acId) {
+        TableModel arModel = tblArgRelations.getModel();
+        return (getAcIndexFromTable(arModel, acId, 1) >= 0 || getAcIndexFromTable(arModel, acId, 2) >= 0);
     }
 
 }

@@ -501,6 +501,11 @@ public class ArgaelForm extends javax.swing.JFrame {
             }
         });
         tblArgComponents1.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        tblArgComponents1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblArgComponents1MouseClicked(evt);
+            }
+        });
         scrollPane9.setViewportView(tblArgComponents1);
 
         lblNumberArguments2.setText("Number of argument components (ACs): 0");
@@ -529,6 +534,11 @@ public class ArgaelForm extends javax.swing.JFrame {
             }
         });
         tblArgRelations1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblArgRelations1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblArgRelations1MouseClicked(evt);
+            }
+        });
         scrollPane10.setViewportView(tblArgRelations1);
 
         lblNumberRelations2.setText("Number of argument relations (ARs): 0");
@@ -855,7 +865,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 1.4.0
+                          Version: 1.4.1
                           Date: 10/18/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
@@ -931,69 +941,6 @@ public class ArgaelForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tblEvaComponentsMouseClicked
 
-    private void tblArgRelationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgRelationsMouseClicked
-        // TODO add your handling code here:
-        int row = tblArgRelations.rowAtPoint(evt.getPoint());
-        TableModel acModel = tblArgComponents.getModel();
-        TableModel arModel = tblArgRelations.getModel();
-        String relationString = ArgaelFormUtils.createArgumentRelationString(row, tblArgComponents, acModel, arModel);
-        txtAnnotationPreview.setText(relationString);
-    }//GEN-LAST:event_tblArgRelationsMouseClicked
-
-    private void btnDeleteARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteARActionPerformed
-        // TODO add your handling code here:
-        if (tblArgRelations.getRowCount() > 0) {
-            int row = tblArgRelations.getSelectedRow();
-
-            if (row >= 0) {
-                ((DefaultTableModel) tblArgRelations.getModel()).removeRow(row);
-                ((DefaultTableModel) tblEvaRelations.getModel()).removeRow(row);
-                // updateCounterLabels();
-                txtAnnotationPreview.setText("");
-                txtEvaluationPreview.setText("");
-                isDirty = true;
-            }
-        }
-    }//GEN-LAST:event_btnDeleteARActionPerformed
-
-    private void btnDeleteACActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteACActionPerformed
-        // TODO add your handling code here:
-        if (tblArgComponents.getRowCount() > 0) {
-            int row = tblArgComponents.getSelectedRow();
-
-            if (row >= 0) {
-                int acId = Integer.parseInt(tblArgComponents.getModel().getValueAt(row, 0).toString());
-
-                if (!isAcInRelation(acId)) {
-
-                    // Remove argument component
-                    ((DefaultTableModel) tblArgComponents.getModel()).removeRow(row);
-                    ((DefaultTableModel) tblEvaComponents.getModel()).removeRow(row);
-                    // updateCounterLabels();
-
-                    // Update editor report content
-                    // updateEditorReports(currTabIndex); TODO
-                    isDirty = true;
-
-                } else {
-                    JOptionPane.showMessageDialog(this, "This AC cannot be eliminated, because it is part of an argumentative relation", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        }
-    }//GEN-LAST:event_btnDeleteACActionPerformed
-
-    private void tblArgComponentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgComponentsMouseClicked
-        // TODO add your handling code here:
-        int row = tblArgComponents.rowAtPoint(evt.getPoint());
-
-        if (row >= 0) {
-            acSelected.add(row);
-            if (acSelected.size() > 2) {
-                acSelected.poll();
-            }
-        }
-    }//GEN-LAST:event_tblArgComponentsMouseClicked
-
     private void btnAddArgumentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddArgumentActionPerformed
         // TODO add your handling code here:
         boolean result = ArgaelFormUtils.createNewArgumentComponent(edtSimpleAnnotation, cmbArgCompType, tblArgComponents);
@@ -1040,12 +987,51 @@ public class ArgaelForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAddRelation1ActionPerformed
 
+    private void btnDeleteACActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteACActionPerformed
+        // TODO add your handling code here:
+        if (tblArgComponents.getRowCount() > 0) {
+            boolean result = ArgaelFormUtils.deleteArgumentComponent(tblArgComponents);
+            if (result) {
+                updatePanelData(edtSimpleAnnotation, null, null, userName, "");
+                ArgaelFormUtils.updateCounterLabels(lblNumberArguments, tblArgComponents, "components (ACs)");
+                isDirty = true;
+            }
+        }
+    }//GEN-LAST:event_btnDeleteACActionPerformed
+
     private void btnDeleteAC1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteAC1ActionPerformed
         // TODO add your handling code here:
+        if (tblArgComponents1.getRowCount() > 0) {
+            boolean result = ArgaelFormUtils.deleteArgumentComponent(tblArgComponents1);
+            if (result) {
+                updatePanelData(edtAssistedAnnotation, null, null, userName, "");
+                ArgaelFormUtils.updateCounterLabels(lblNumberArguments1, tblArgComponents1, "components (ACs)");
+                isDirty = true;
+            }
+        }
     }//GEN-LAST:event_btnDeleteAC1ActionPerformed
+
+    private void btnDeleteARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteARActionPerformed
+        // TODO add your handling code here:
+        if (tblArgRelations.getRowCount() > 0) {
+            boolean result = ArgaelFormUtils.deleteArgumentRelation(tblArgRelations);
+            if (result) {
+                ArgaelFormUtils.updateCounterLabels(lblNumberRelations, tblArgRelations, "relations (ARs)");
+                txtAnnotationPreview.setText("");
+                isDirty = true;
+            }
+        }
+    }//GEN-LAST:event_btnDeleteARActionPerformed
 
     private void btnDeleteAR1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteAR1ActionPerformed
         // TODO add your handling code here:
+        if (tblArgRelations1.getRowCount() > 0) {
+            boolean result = ArgaelFormUtils.deleteArgumentRelation(tblArgRelations1);
+            if (result) {
+                ArgaelFormUtils.updateCounterLabels(lblNumberRelations1, tblArgRelations1, "relations (ARs)");
+                isDirty = true;
+            }
+        }
     }//GEN-LAST:event_btnDeleteAR1ActionPerformed
 
     private void tabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabbedPaneStateChanged
@@ -1059,6 +1045,43 @@ public class ArgaelForm extends javax.swing.JFrame {
         String targetUser = cmbTargetAnnotator1.getSelectedItem().toString();
         updatePanelData(edtTargetAnnotation, null, tblArgRelations2, targetUser, "");
     }//GEN-LAST:event_cmbTargetAnnotator1ActionPerformed
+
+    private void tblArgComponentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgComponentsMouseClicked
+        // TODO add your handling code here:
+        int row = tblArgComponents.rowAtPoint(evt.getPoint());
+
+        if (row >= 0) {
+            acSelected.add(row);
+            if (acSelected.size() > 2) {
+                acSelected.poll();
+            }
+        }
+    }//GEN-LAST:event_tblArgComponentsMouseClicked
+
+    private void tblArgComponents1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgComponents1MouseClicked
+        // TODO add your handling code here:
+        int row = tblArgComponents1.rowAtPoint(evt.getPoint());
+
+        if (row >= 0) {
+            acSelected.add(row);
+            if (acSelected.size() > 2) {
+                acSelected.poll();
+            }
+        }
+    }//GEN-LAST:event_tblArgComponents1MouseClicked
+
+    private void tblArgRelationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgRelationsMouseClicked
+        // TODO add your handling code here:
+        int row = tblArgRelations.rowAtPoint(evt.getPoint());
+        TableModel acModel = tblArgComponents.getModel();
+        TableModel arModel = tblArgRelations.getModel();
+        String relationString = ArgaelFormUtils.createArgumentRelationString(row, tblArgComponents, acModel, arModel);
+        txtAnnotationPreview.setText(relationString);
+    }//GEN-LAST:event_tblArgRelationsMouseClicked
+
+    private void tblArgRelations1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgRelations1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblArgRelations1MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddArgument;
@@ -1237,16 +1260,6 @@ public class ArgaelForm extends javax.swing.JFrame {
         } else {
             System.out.println(">> Error importing documents/files [" + currDirectory + "]");
         }
-    }
-
-    /**
-     *
-     * @param acId
-     * @return
-     */
-    private boolean isAcInRelation(int acId) {
-        TableModel arModel = tblArgRelations.getModel();
-        return (ArgaelFormUtils.getAcIndexFromTable(arModel, acId, 1) >= 0 || ArgaelFormUtils.getAcIndexFromTable(arModel, acId, 2) >= 0);
     }
 
     /**
