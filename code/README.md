@@ -8,7 +8,11 @@ The ARGAEL JSON configuration file allows configuring (in a simple and readable 
 The input parameters (<a href="https://github.com/argrecsys/argael/blob/main/code/Argael/Resources/config/params.json">params.json</a> file) of the tool are:
 ```json
 {
-    "language": "es",
+    "data": {
+        "folder": "C:/Dev Projects/argael/data/proposals",
+        "extension": "jsonl",
+        "language": "es"
+    },
     "annotation_model": {
         "components": ["major claim", "claim", "premise"],
         "relation_categories": ["addition", "alternative", "comparison", "concession", "conclusion", "condition", "exemplification", "explanation", "goal", "opposition", "precision", "reason", "restatement", "result", "similarity", "summary"],
