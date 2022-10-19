@@ -41,6 +41,40 @@ class ArgaelFormUtils {
 
     /**
      *
+     * @param row
+     * @param table
+     * @param acModel
+     * @param arModel
+     * @return
+     */
+    private static String createArgumentRelationString(int row, JTable table, TableModel acModel, TableModel arModel) {
+        // Collect relation data
+        String text = "";
+
+        if (row >= 0) {
+            int acId1 = Integer.parseInt(arModel.getValueAt(row, 1).toString());
+            int acId2 = Integer.parseInt(arModel.getValueAt(row, 2).toString());
+            String category = arModel.getValueAt(row, 3).toString();
+            String intent = arModel.getValueAt(row, 4).toString();
+            int acIndex1 = ArgaelFormUtils.getAcIndexFromTable(acModel, acId1, 0);
+            int acIndex2 = ArgaelFormUtils.getAcIndexFromTable(acModel, acId2, 0);
+
+            // Show relation
+            if (acIndex1 >= 0 && acIndex2 >= 0) {
+                String acText1 = acModel.getValueAt(acIndex1, 1).toString();
+                String acType1 = acModel.getValueAt(acIndex1, 2).toString();
+                String acText2 = acModel.getValueAt(acIndex2, 1).toString();
+                String acType2 = acModel.getValueAt(acIndex2, 2).toString();
+                text = String.format("[<b>%s (%s)</b>: %s] \u2190 [<b>%s (%s)</b>: %s] (<b>relation</b>: \"%s\" and \"%s\")", acType1, acId1, acText1, acType2, acId2, acText2, category, intent);
+                selectMultipleTableRows(table, acIndex1, acIndex2);
+            }
+        }
+
+        return text;
+    }
+
+    /**
+     *
      * @param acTable
      * @return
      */
@@ -121,42 +155,8 @@ class ArgaelFormUtils {
             ((DefaultTableModel) targetModel).addRow(newRow);
             result = true;
         }
-        
+
         return result;
-    }
-
-    /**
-     *
-     * @param row
-     * @param table
-     * @param acModel
-     * @param arModel
-     * @return
-     */
-    static String createArgumentRelationString(int row, JTable table, TableModel acModel, TableModel arModel) {
-        // Collect relation data
-        String text = "";
-
-        if (row >= 0) {
-            int acId1 = Integer.parseInt(arModel.getValueAt(row, 1).toString());
-            int acId2 = Integer.parseInt(arModel.getValueAt(row, 2).toString());
-            String category = arModel.getValueAt(row, 3).toString();
-            String intent = arModel.getValueAt(row, 4).toString();
-            int acIndex1 = ArgaelFormUtils.getAcIndexFromTable(acModel, acId1, 0);
-            int acIndex2 = ArgaelFormUtils.getAcIndexFromTable(acModel, acId2, 0);
-
-            // Show relation
-            if (acIndex1 >= 0 && acIndex2 >= 0) {
-                String acText1 = acModel.getValueAt(acIndex1, 1).toString();
-                String acType1 = acModel.getValueAt(acIndex1, 2).toString();
-                String acText2 = acModel.getValueAt(acIndex2, 1).toString();
-                String acType2 = acModel.getValueAt(acIndex2, 2).toString();
-                text = String.format("[<b>%s (%s)</b>: %s] \u2190 [<b>%s (%s)</b>: %s] (<b>relation</b>: \"%s\" and \"%s\")", acType1, acId1, acText1, acType2, acId2, acText2, category, intent);
-                selectMultipleTableRows(table, acIndex1, acIndex2);
-            }
-        }
-
-        return text;
     }
 
     /**
@@ -320,6 +320,20 @@ class ArgaelFormUtils {
                 }
             }
         }
+    }
+
+    /**
+     *
+     * @param row
+     * @param tblACs
+     * @param tblARs
+     * @param editor
+     */
+    static void previewArgument(int row, JTable tblACs, JTable tblARs, JEditorPane editor) {
+        TableModel acModel = tblACs.getModel();
+        TableModel arModel = tblARs.getModel();
+        String relationString = createArgumentRelationString(row, tblACs, acModel, arModel);
+        editor.setText(relationString);
     }
 
     /**
