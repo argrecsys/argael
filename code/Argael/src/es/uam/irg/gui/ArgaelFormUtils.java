@@ -18,9 +18,9 @@
 package es.uam.irg.gui;
 
 import es.uam.irg.utils.FunctionUtils;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
@@ -197,11 +197,8 @@ class ArgaelFormUtils {
      * @param arTable
      * @return
      */
-    static boolean createNewArgumentRelation(Queue<Integer> acSelected, JTable acTable, JComboBox<String> cmbCategory, JComboBox<String> cmbIntent, JTable arTable) {
+    static boolean createNewArgumentRelation(Integer[] selected, JTable acTable, JComboBox<String> cmbCategory, JComboBox<String> cmbIntent, JTable arTable) {
         boolean result = false;
-
-        Integer[] selected = new Integer[2];
-        selected = acSelected.toArray(selected);
 
         TableModel acModel = acTable.getModel();
         int acId1 = Integer.parseInt(acModel.getValueAt(selected[0], 0).toString());
@@ -217,7 +214,6 @@ class ArgaelFormUtils {
 
             acTable.clearSelection();
             arTable.clearSelection();
-            acSelected.clear();
 
             result = true;
         }
@@ -283,6 +279,24 @@ class ArgaelFormUtils {
             }
         }
         return ix;
+    }
+
+    /**
+     *
+     * @param tblArgComponents
+     * @return
+     */
+    static List<Integer> getSelectedACIds(JTable tblArgComponents) {
+        List<Integer> acIds = new ArrayList<>();
+        if (tblArgComponents != null) {
+            TableModel model = tblArgComponents.getModel();
+            int[] rows = tblArgComponents.getSelectedRows();
+            for (int row : rows) {
+                int acId = Integer.parseInt(model.getValueAt(row, 0).toString());
+                acIds.add(acId);
+            }
+        }
+        return acIds;
     }
 
     /**

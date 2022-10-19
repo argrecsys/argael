@@ -20,7 +20,6 @@ package es.uam.irg.gui;
 import es.uam.irg.io.IOManager;
 import es.uam.irg.utils.FunctionUtils;
 import es.uam.irg.utils.StringUtils;
-import java.awt.Color;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -36,10 +35,6 @@ import org.json.JSONObject;
 public class ReportFormatter {
 
     // Class constants
-    public static final String APP_URL = "https://www.web.es/";
-    public static final Color HIGHLIGHT_COLOR_CURRENT = new Color(0, 100, 0);
-    public static final Color HIGHLIGHT_COLOR_DEFAULT = Color.BLUE;
-    public static final String MODE_ANNOTATE = "ANNOTATE";
     private static final String REPORTS_PATH = "Resources/views/";
 
     private final DecimalFormat df;
@@ -79,12 +74,20 @@ public class ReportFormatter {
 
     /**
      *
+     * @param num
+     * @return
+     */
+    public String formatNumber(double num) {
+        return df.format(num);
+    }
+
+    /**
+     *
      * @param content
      * @param format
      * @return
      */
     public String getPrettyReport(String content, String format) {
-        String result = "";
         StringBuilder body = new StringBuilder();
         format = format.toUpperCase();
         long start, finish;
@@ -143,7 +146,7 @@ public class ReportFormatter {
         timeElapsed = (int) ((finish - start) / 1000000);
 
         // Update final report
-        result = getProposalsReport(body.toString(), nRows, timeElapsed);
+        String result = getProposalsReport(body.toString(), nRows, timeElapsed);
         System.out.println(" - The results report has been created");
 
         return result;
@@ -160,6 +163,20 @@ public class ReportFormatter {
 
     /**
      *
+     * @param claim
+     * @param bold
+     * @return
+     */
+    public String highlightClaim(String claim, boolean bold) {
+        String hlClaim = highlightClaim(claim);
+        if (bold) {
+            hlClaim = boldSentence(hlClaim);
+        }
+        return hlClaim;
+    }
+
+    /**
+     *
      * @param majorClaim
      * @return
      */
@@ -169,11 +186,48 @@ public class ReportFormatter {
 
     /**
      *
+     * @param majorClaim
+     * @param bold
+     * @return
+     */
+    public String highlightMajorClaim(String majorClaim, boolean bold) {
+        String hlMajorClaim = highlightMajorClaim(majorClaim);
+        if (bold) {
+            hlMajorClaim = boldSentence(hlMajorClaim);
+        }
+        return hlMajorClaim;
+    }
+
+    /**
+     *
      * @param premise
      * @return
      */
     public String highlightPremise(String premise) {
         return "<span style='padding:3px; background-color: #DED7FB;'>" + premise + "</span>";
+    }
+
+    /**
+     *
+     * @param premise
+     * @param bold
+     * @return
+     */
+    public String highlightPremise(String premise, boolean bold) {
+        String hlPremise = highlightPremise(premise);
+        if (bold) {
+            hlPremise = boldSentence(hlPremise);
+        }
+        return hlPremise;
+    }
+
+    /**
+     *
+     * @param hlClaim
+     * @return
+     */
+    private String boldSentence(String text) {
+        return "<i>" + text + "</i>";
     }
 
     /**
