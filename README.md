@@ -1,6 +1,6 @@
 # ARGAEL: ARGument Annotation and Evaluation tooL
-![version](https://img.shields.io/badge/version-1.6.2-blue)
-![last-update](https://img.shields.io/badge/last_update-10/18/2022-orange)
+![version](https://img.shields.io/badge/version-1.7.0-blue)
+![last-update](https://img.shields.io/badge/last_update-10/19/2022-orange)
 ![license](https://img.shields.io/badge/license-Apache_2.0-brightgreen)
 
 **ARGAEL** is an open-source Java desktop application designed to maximize the experience and efficiency of the process of annotating and evaluating arguments in large text corpora.
@@ -9,13 +9,17 @@ Some advantages of our proposed tool are:
 - it is designed to support both annotation and evaluation
 - it supports multiple rich argument models
 - it allows users to define their own argument model (if required)
-- it offers support for multiple annotators
+- it offers support for multiple annotators and evaluators
 - it allows intra- and inter-argument annotations (due to its text-driven annotation view), among others
 
 ## System
-ARGAEL is mainly composed of 2 views, which offer different functionalities and roles to the users.
+ARGAEL is mainly composed of 3 main views, which offer different functionalities and roles to the users.
 
-**Annotator view**. It allows in 3 simple steps, i) the annotation of argumentative components (ACs), ii) the annotation of argumentative relation (ARs), and iii) their initial validation.
+**(Simple) Annotator view**. It allows in 3 simple steps, i) the annotation of argumentative components (ACs), ii) the annotation of argumentative relation (ARs), and iii) their initial validation.
+
+![ARGAEL annotation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-annotation-view.png)
+
+**(Assisted) Annotator view**. It allows in 3 simple steps, i) the annotation of argumentative components (ACs), ii) the annotation of argumentative relation (ARs), and iii) their initial validation.
 
 ![ARGAEL annotation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-annotation-view.png)
 
