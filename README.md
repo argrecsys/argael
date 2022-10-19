@@ -1,5 +1,5 @@
 # ARGAEL: ARGument Annotation and Evaluation tooL
-![version](https://img.shields.io/badge/version-1.7.2-blue)
+![version](https://img.shields.io/badge/version-1.7.3-blue)
 ![last-update](https://img.shields.io/badge/last_update-10/19/2022-orange)
 ![license](https://img.shields.io/badge/license-Apache_2.0-brightgreen)
 

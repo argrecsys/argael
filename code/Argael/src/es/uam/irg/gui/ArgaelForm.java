@@ -21,11 +21,10 @@ import es.uam.irg.io.IOManager;
 import es.uam.irg.utils.FileUtils;
 import es.uam.irg.utils.StringUtils;
 import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -47,16 +46,20 @@ import javax.swing.table.TableModel;
 public class ArgaelForm extends javax.swing.JFrame {
 
     // GUI constants
+    private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private static final String DECIMAL_FORMAT = "0.000";
     private static final String HTML_CONTENT_TYPE = "text/html";
-    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    private static final String USERS_FILEPATH = "Resources/config/users.txt";
 
     // GUI variables
     private String currDirectory;
     private String currEntity;
     private int currTabIndex;
-    private final DataModel model;
     private final Queue<Integer> acSelected;
+    private final ArgumentModel argModel;
+    private final Map<String, String> files;
     private String fileExtension;
+    private final ReportFormatter formatter;
     private String userName;
 
     /**
@@ -72,18 +75,20 @@ public class ArgaelForm extends javax.swing.JFrame {
     public ArgaelForm(String dataFolder, String fileExtension, List<String> components, List<String> relCategories, List<String> relIntents, List<String> qualityMetrics) {
         initComponents();
 
+        this.currDirectory = dataFolder;
         this.currEntity = "";
         this.currTabIndex = 0;
-        this.currDirectory = dataFolder;
-        this.fileExtension = fileExtension;
-        this.model = new DataModel(components, relCategories, relIntents, qualityMetrics);
         this.acSelected = new LinkedList<>();
+        this.argModel = new ArgumentModel(components, relCategories, relIntents, qualityMetrics);
+        this.files = new HashMap<>();
+        this.fileExtension = fileExtension;
+        this.formatter = new ReportFormatter(DECIMAL_FORMAT, DATE_FORMAT);
 
         this.setTablesLookAndFeel();
         this.setComboBoxes();
         this.setVisible(true);
         this.setAppUsers();
-        this.importFilesFromDirectory(false);
+        this.importDocsFromDirectory(false);
     }
 
     /**
@@ -871,13 +876,13 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void mItemImportJsonlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemImportJsonlActionPerformed
         // TODO add your handling code here:
         this.fileExtension = IOManager.DocExt.JSONL.toString();
-        importFilesFromDirectory(true);
+        importDocsFromDirectory(true);
     }//GEN-LAST:event_mItemImportJsonlActionPerformed
 
     private void mItemImportTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemImportTextActionPerformed
         // TODO add your handling code here:
         this.fileExtension = IOManager.DocExt.TXT.toString();
-        importFilesFromDirectory(true);
+        importDocsFromDirectory(true);
     }//GEN-LAST:event_mItemImportTextActionPerformed
 
     private void mItemExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemExportActionPerformed
@@ -894,7 +899,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 1.7.2
+                          Version: 1.7.3
                           Date: 10/19/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
@@ -1033,6 +1038,7 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void tblArgRelationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgRelationsMouseClicked
         // TODO add your handling code here:
         int row = tblArgRelations.rowAtPoint(evt.getPoint());
+        // ArgaelFormUtils.boldArguments(row, edtSimpleAnnotation, tblArgComponents, tblArgRelations);
         ArgaelFormUtils.previewArgument(row, tblArgComponents, tblArgRelations, txtAnnotationPreview);
     }//GEN-LAST:event_tblArgRelationsMouseClicked
 
@@ -1158,6 +1164,29 @@ public class ArgaelForm extends javax.swing.JFrame {
 
     /**
      *
+     * @param filePath
+     * @return
+     */
+    private String getFileReport(String filePath) {
+        String content = "";
+        String fileName = StringUtils.getLastToken(filePath, "\\\\");
+
+        if (!fileName.equals("")) {
+            if (files.containsKey(fileName)) {
+                content = files.get(fileName);
+            } else {
+                String fileType = FileUtils.getFileExtension(filePath);
+                content = IOManager.readTextFile(filePath);
+                content = formatter.getPrettyReport(content, fileType);
+                files.put(fileName, content);
+            }
+        }
+
+        return content;
+    }
+
+    /**
+     *
      * @param user
      * @return
      */
@@ -1195,13 +1224,13 @@ public class ArgaelForm extends javax.swing.JFrame {
 
             switch (acType.toLowerCase()) {
                 case "major claim":
-                    hlText = model.getFormatter().highlightMajorClaim(acText);
+                    hlText = formatter.highlightMajorClaim(acText);
                     break;
                 case "claim":
-                    hlText = model.getFormatter().highlightClaim(acText);
+                    hlText = formatter.highlightClaim(acText);
                     break;
                 default:
-                    hlText = model.getFormatter().highlightPremise(acText);
+                    hlText = formatter.highlightPremise(acText);
                     break;
             }
             report = report.replace(acText, hlText);
@@ -1214,7 +1243,7 @@ public class ArgaelForm extends javax.swing.JFrame {
      *
      * @param fileExt
      */
-    private void importFilesFromDirectory(boolean reload) {
+    private void importDocsFromDirectory(boolean reload) {
 
         // Reload document directory
         if (reload) {
@@ -1232,18 +1261,18 @@ public class ArgaelForm extends javax.swing.JFrame {
         // Import documents/files
         File file = new File(currDirectory);
         if (file.isDirectory() && !StringUtils.isEmpty(fileExtension)) {
-            List<String> files = model.readFilenamesInFolder(currDirectory, fileExtension);
-            System.out.println(String.format(">> Directory: '%s' and number of uploaded files: %d", currDirectory, files.size()));
+            List<String> docList = FileUtils.readFilenamesInFolder(currDirectory, fileExtension);
+            System.out.println(String.format(">> Directory: '%s' and number of uploaded docs: %d", currDirectory, files.size()));
 
             lstDocs.removeAll();
-            if (files.size() > 0) {
+            if (docList.size() > 0) {
                 DefaultListModel listModel = new DefaultListModel();
-                listModel.addAll(files);
+                listModel.addAll(docList);
                 lstDocs.setModel(listModel);
             }
 
         } else {
-            System.out.println(">> Error importing documents/files [" + currDirectory + "]");
+            System.out.println(">> Error importing documents [" + currDirectory + "]");
         }
     }
 
@@ -1303,7 +1332,7 @@ public class ArgaelForm extends javax.swing.JFrame {
             String acId = acModel.getValueAt(i, 0).toString();
             String acText = acModel.getValueAt(i, 1).toString();
             String acType = acModel.getValueAt(i, 2).toString();
-            String dateStamp = dateFormat.format(new Date());
+            String dateStamp = formatter.formatDate(new Date());
             acAnnotations.add(new String[]{acId, acText, acType, userName, dateStamp});
         }
 
@@ -1314,7 +1343,7 @@ public class ArgaelForm extends javax.swing.JFrame {
             String acId2 = arModel.getValueAt(i, 2).toString();
             String relType = arModel.getValueAt(i, 3).toString();
             String relIntent = arModel.getValueAt(i, 4).toString();
-            String dateStamp = dateFormat.format(new Date());
+            String dateStamp = formatter.formatDate(new Date());
             arAnnotations.add(new String[]{arId, acId1, acId2, relType, relIntent, userName, dateStamp});
         }
 
@@ -1345,7 +1374,7 @@ public class ArgaelForm extends javax.swing.JFrame {
             if (acModel.getValueAt(i, 3) != null) {
                 String acId = acModel.getValueAt(i, 0).toString();
                 String acQuality = acModel.getValueAt(i, 3).toString();
-                String dateStamp = dateFormat.format(new Date());
+                String dateStamp = formatter.formatDate(new Date());
                 acEvaluations.add(new String[]{acId, acQuality, userName, dateStamp});
             }
         }
@@ -1356,7 +1385,7 @@ public class ArgaelForm extends javax.swing.JFrame {
             if (arModel.getValueAt(i, 5) != null) {
                 String arId = arModel.getValueAt(i, 0).toString();
                 String arQuality = arModel.getValueAt(i, 5).toString();
-                String dateStamp = dateFormat.format(new Date());
+                String dateStamp = formatter.formatDate(new Date());
                 arEvaluations.add(new String[]{arId, arQuality, userName, dateStamp});
             }
         }
@@ -1415,10 +1444,19 @@ public class ArgaelForm extends javax.swing.JFrame {
     }
 
     /**
+     *
+     * @return
+     */
+    private String[] getUserList() {
+        List<String> annotators = IOManager.readUsers(USERS_FILEPATH);
+        return annotators.toArray(new String[0]);
+    }
+
+    /**
      * Sets the current user of the system.
      */
     private void setAppUsers() {
-        String[] users = model.getUserList();
+        String[] users = getUserList();
         String result = (String) JOptionPane.showInputDialog(this, "Please, select the annotator:", "Selection", JOptionPane.PLAIN_MESSAGE, null, users, "");
 
         if (result != null && result.length() > 0) {
@@ -1439,9 +1477,9 @@ public class ArgaelForm extends javax.swing.JFrame {
      *
      */
     private void setComboBoxes() {
-        List<String> components = model.getArgumentComponents();
-        List<String> relCategories = model.getRelationCategories();
-        List<String> relIntents = model.getRelationIntents();
+        List<String> components = argModel.getArgumentComponents();
+        List<String> relCategories = argModel.getRelationCategories();
+        List<String> relIntents = argModel.getRelationIntents();
 
         components.add(0, "-");
         ArgaelFormUtils.setComboBoxModel(this.cmbACType, components);
@@ -1463,7 +1501,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         TableColumnModel colModel;
 
         // Argument Quality Selector
-        List<String> qualityMetrics = model.getQualityMetrics();
+        List<String> qualityMetrics = argModel.getQualityMetrics();
         javax.swing.JComboBox cmbArgQuality = new javax.swing.JComboBox();
         ArgaelFormUtils.setComboBoxModel(cmbArgQuality, qualityMetrics);
 
@@ -1585,7 +1623,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         // Update editor report
         if (editor != null) {
             String filepath = currDirectory + "\\" + currEntity + "." + fileExtension;
-            String rawReport = this.model.getFileReport(filepath);
+            String rawReport = getFileReport(filepath);
             String report = highlightReport(rawReport, acData);
             ArgaelFormUtils.updateEditorContent(editor, report);
         }
