@@ -35,7 +35,7 @@ import javax.swing.table.TableModel;
  *
  * @author Usuario
  */
-public class ArgaelFormUtils {
+class ArgaelFormUtils {
 
     private static final int PROPOSITION_MIN_SIZE = 3;
 
@@ -47,7 +47,7 @@ public class ArgaelFormUtils {
      * @param arModel
      * @return
      */
-    public static String createArgumentRelationString(int row, JTable table, TableModel acModel, TableModel arModel) {
+    private static String createArgumentRelationString(int row, JTable table, TableModel acModel, TableModel arModel) {
         // Collect relation data
         String text = "";
 
@@ -75,12 +75,98 @@ public class ArgaelFormUtils {
 
     /**
      *
+     * @param acTable
+     * @return
+     */
+    private static int getNextPropositionId(JTable acTable) {
+        int propNextId = 1;
+        int nRows = acTable.getRowCount();
+        if (nRows > 0) {
+            propNextId = Integer.parseInt(acTable.getModel().getValueAt(nRows - 1, 0).toString()) + 1;
+        }
+        return propNextId;
+    }
+
+    /**
+     *
+     * @param arTable
+     * @return
+     */
+    private static int getNextRelationId(JTable arTable) {
+        return getNextRelationId(arTable.getModel());
+    }
+
+    /**
+     *
+     * @param arModel
+     * @return
+     */
+    private static int getNextRelationId(TableModel arModel) {
+        int propNextId = 1;
+        int nRows = arModel.getRowCount();
+        if (nRows > 0) {
+            propNextId = Integer.parseInt(arModel.getValueAt(nRows - 1, 0).toString()) + 1;
+        }
+        return propNextId;
+    }
+
+    /**
+     *
+     * @param tblArgRelations
+     * @param acId
+     * @return
+     */
+    private static boolean isAcInRelation(JTable tblArgRelations, int acId) {
+        TableModel arModel = tblArgRelations.getModel();
+        return (getAcIndexFromTable(arModel, acId, 1) >= 0 || getAcIndexFromTable(arModel, acId, 2) >= 0);
+    }
+
+    /**
+     *
+     * @param table
+     * @param index1
+     * @param index2
+     */
+    private static void selectMultipleTableRows(JTable table, int index1, int index2) {
+        ListSelectionModel tblModel = table.getSelectionModel();
+        tblModel.clearSelection();
+        tblModel.addSelectionInterval(index1, index1);
+        tblModel.addSelectionInterval(index2, index2);
+    }
+
+    /**
+     *
+     * @param sourceRowIx
+     * @param sourceModel
+     * @param targetModel
+     * @return
+     */
+    static boolean cloneRelation(int sourceRowIx, TableModel sourceModel, TableModel targetModel) {
+        boolean result = false;
+        boolean found = false;
+
+        for (int i = 0; i < targetModel.getRowCount() && !found; i++) {
+            found = ((sourceModel.getValueAt(sourceRowIx, 1) == targetModel.getValueAt(i, 1))
+                    && (sourceModel.getValueAt(sourceRowIx, 2) == targetModel.getValueAt(i, 2)));
+        }
+
+        if (!found) {
+            Object[] newRow = new Object[]{getNextRelationId(targetModel), "", "", "", ""};
+            ((DefaultTableModel) targetModel).addRow(newRow);
+            result = true;
+        }
+
+        return result;
+    }
+
+    /**
+     *
      * @param editor
      * @param cmbACType
      * @param acTable
      * @return
      */
-    public static boolean createNewArgumentComponent(JEditorPane editor, JComboBox<String> cmbACType, JTable acTable) {
+    static boolean createNewArgumentComponent(JEditorPane editor, JComboBox<String> cmbACType, JTable acTable) {
         boolean result = false;
 
         String propText = editor.getSelectedText();
@@ -111,7 +197,7 @@ public class ArgaelFormUtils {
      * @param arTable
      * @return
      */
-    public static boolean createNewArgumentRelation(Queue<Integer> acSelected, JTable acTable, JComboBox<String> cmbCategory, JComboBox<String> cmbIntent, JTable arTable) {
+    static boolean createNewArgumentRelation(Queue<Integer> acSelected, JTable acTable, JComboBox<String> cmbCategory, JComboBox<String> cmbIntent, JTable arTable) {
         boolean result = false;
 
         Integer[] selected = new Integer[2];
@@ -145,18 +231,16 @@ public class ArgaelFormUtils {
      * @param tblArgRelations
      * @return
      */
-    public static boolean deleteArgumentComponent(JTable tblArgComponents, JTable tblArgRelations) {
+    static boolean deleteArgumentComponent(JTable tblArgComponents, JTable tblArgRelations) {
         boolean result = false;
         int row = tblArgComponents.getSelectedRow();
 
         if (row >= 0) {
             int acId = Integer.parseInt(tblArgComponents.getModel().getValueAt(row, 0).toString());
 
+            // Remove argument component
             if (!isAcInRelation(tblArgRelations, acId)) {
-
-                // Remove argument component
                 ((DefaultTableModel) tblArgComponents.getModel()).removeRow(row);
-
                 result = true;
 
             } else {
@@ -172,7 +256,7 @@ public class ArgaelFormUtils {
      * @param tblArgRelations
      * @return
      */
-    public static boolean deleteArgumentRelation(JTable tblArgRelations) {
+    static boolean deleteArgumentRelation(JTable tblArgRelations) {
         boolean result = false;
         int row = tblArgRelations.getSelectedRow();
 
@@ -191,7 +275,7 @@ public class ArgaelFormUtils {
      * @param acIdIx
      * @return
      */
-    public static int getAcIndexFromTable(TableModel model, int acId, int acIdIx) {
+    static int getAcIndexFromTable(TableModel model, int acId, int acIdIx) {
         int ix = -1;
         for (int i = 0; i < model.getRowCount() && ix == -1; i++) {
             if (acId == Integer.parseInt(model.getValueAt(i, acIdIx).toString())) {
@@ -206,7 +290,7 @@ public class ArgaelFormUtils {
      * @param table
      * @return
      */
-    public static DefaultTableModel getTableModel(JTable table) {
+    static DefaultTableModel getTableModel(JTable table) {
         if (table != null) {
             DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
             tableModel.setRowCount(0);
@@ -224,7 +308,7 @@ public class ArgaelFormUtils {
      * @param nColumns
      * @throws Exception
      */
-    public static void loadArgTableData(DefaultTableModel tableModel, List<String[]> annotations, Map<Integer, String> evaluations, int nColumns) throws Exception {
+    static void loadArgTableData(DefaultTableModel tableModel, List<String[]> annotations, Map<Integer, String> evaluations, int nColumns) throws Exception {
         if (tableModel != null && annotations != null) {
             for (int i = 0; i < annotations.size(); i++) {
                 String[] rowData = annotations.get(i);
@@ -240,10 +324,24 @@ public class ArgaelFormUtils {
 
     /**
      *
+     * @param row
+     * @param tblACs
+     * @param tblARs
+     * @param editor
+     */
+    static void previewArgument(int row, JTable tblACs, JTable tblARs, JEditorPane editor) {
+        TableModel acModel = tblACs.getModel();
+        TableModel arModel = tblARs.getModel();
+        String relationString = createArgumentRelationString(row, tblACs, acModel, arModel);
+        editor.setText(relationString);
+    }
+
+    /**
+     *
      * @param cmbTargetAnnotator
      * @param strList
      */
-    public static void setComboBoxModel(JComboBox<String> cmbTargetAnnotator, List<String> strList) {
+    static void setComboBoxModel(JComboBox<String> cmbTargetAnnotator, List<String> strList) {
         cmbTargetAnnotator.setModel(new DefaultComboBoxModel(strList.toArray(new String[0])));
     }
 
@@ -253,7 +351,7 @@ public class ArgaelFormUtils {
      * @param table
      * @param unitName
      */
-    public static void updateCounterLabels(JLabel label, JTable table, String unitName) {
+    static void updateCounterLabels(JLabel label, JTable table, String unitName) {
         label.setText("Number of argument " + unitName + ": " + table.getRowCount());
     }
 
@@ -262,59 +360,10 @@ public class ArgaelFormUtils {
      * @param editor
      * @param content
      */
-    public static void updateEditorContent(JEditorPane editor, String content) {
+    static void updateEditorContent(JEditorPane editor, String content) {
         int caretPosition = editor.getCaretPosition();
         editor.setText(content);
         editor.setCaretPosition(caretPosition);
-    }
-
-    /**
-     *
-     * @return
-     */
-    private static int getNextPropositionId(JTable acTable) {
-        int propNextId = 1;
-        int nRows = acTable.getRowCount();
-        if (nRows > 0) {
-            propNextId = Integer.parseInt(acTable.getModel().getValueAt(nRows - 1, 0).toString()) + 1;
-        }
-        return propNextId;
-    }
-
-    /**
-     *
-     * @return
-     */
-    private static int getNextRelationId(JTable arTable) {
-        int propNextId = 1;
-        int nRows = arTable.getRowCount();
-        if (nRows > 0) {
-            propNextId = Integer.parseInt(arTable.getModel().getValueAt(nRows - 1, 0).toString()) + 1;
-        }
-        return propNextId;
-    }
-
-    /**
-     *
-     * @param acId
-     * @return
-     */
-    private static boolean isAcInRelation(JTable tblArgRelations, int acId) {
-        TableModel arModel = tblArgRelations.getModel();
-        return (getAcIndexFromTable(arModel, acId, 1) >= 0 || getAcIndexFromTable(arModel, acId, 2) >= 0);
-    }
-
-    /**
-     *
-     * @param table
-     * @param index1
-     * @param index2
-     */
-    private static void selectMultipleTableRows(JTable table, int index1, int index2) {
-        ListSelectionModel tblModel = table.getSelectionModel();
-        tblModel.clearSelection();
-        tblModel.addSelectionInterval(index1, index1);
-        tblModel.addSelectionInterval(index2, index2);
     }
 
 }

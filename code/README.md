@@ -15,7 +15,7 @@ The input parameters (<a href="https://github.com/argrecsys/argael/blob/main/cod
     },
     "annotation_model": {
         "components": ["major claim", "claim", "premise"],
-        "relation_categories": ["addition", "alternative", "comparison", "concession", "conclusion", "condition", "exemplification", "explanation", "goal", "opposition", "precision", "reason", "restatement", "result", "similarity", "summary"],
+        "relation_categories": ["cause: condition", "cause: reason", "clarification: conclusion", "clarification: exemplification", "clarification: restatement", "clarification: summary", "consequence: explanation", "consequence: goal", "consequence: result", "contrast: alternative", "contrast: comparison", "contrast: concession", "contrast: opposition", "elaboration: addition", "elaboration: precision", "elaboration: similarity"],
         "relation_intents": ["support", "attack"]
     },
     "evaluation_model": {

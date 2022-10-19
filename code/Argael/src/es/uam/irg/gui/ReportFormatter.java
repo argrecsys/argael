@@ -21,9 +21,12 @@ import es.uam.irg.io.IOManager;
 import es.uam.irg.utils.FunctionUtils;
 import es.uam.irg.utils.StringUtils;
 import java.awt.Color;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Map;
 import org.json.JSONObject;
 
@@ -40,6 +43,7 @@ public class ReportFormatter {
     private static final String REPORTS_PATH = "Resources/views/";
 
     private final DecimalFormat df;
+    private final DateFormat dsf;
     private final DateTimeFormatter dtf;
     private Map<String, String> reports;
 
@@ -50,8 +54,27 @@ public class ReportFormatter {
      */
     public ReportFormatter(String decimalFormat, String dateFormat) {
         this.df = new DecimalFormat(decimalFormat);
+        this.dsf = new SimpleDateFormat(dateFormat);
         this.dtf = DateTimeFormatter.ofPattern(dateFormat);
         loadReports();
+    }
+
+    /**
+     *
+     * @param date
+     * @return
+     */
+    public String formatDate(Date date) {
+        return dsf.format(date);
+    }
+
+    /**
+     *
+     * @param now
+     * @return
+     */
+    public String formatDate(LocalDateTime now) {
+        return dtf.format(now);
     }
 
     /**
@@ -164,7 +187,7 @@ public class ReportFormatter {
         String result = reports.get("PROPOSAL_LIST");
         result = result.replace("$N_REPORTS$", "" + nReports);
         result = result.replace("$TIME_ELAPSED$", "" + timeElapsed);
-        result = result.replace("$CURRENT_TIME$", dtf.format(LocalDateTime.now()));
+        result = result.replace("$CURRENT_TIME$", formatDate(LocalDateTime.now()));
         result = result.replace("$CONTENT$", body);
         return result;
     }

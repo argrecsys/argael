@@ -70,7 +70,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="ARGAEL v1.6"/>
+    <Property name="title" type="java.lang.String" value="ARGAEL v1.7"/>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[1111, 500]"/>
     </Property>
@@ -177,56 +177,50 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="lblAddArgComp" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="cmbArgCompType" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnAddArgument" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="scrollPane2" min="-2" pref="700" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblNumberArguments" min="-2" max="-2" attributes="0"/>
-                                  <Component id="scrollPane3" min="-2" pref="350" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="lblAddArgRel" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="cmbCategory" min="-2" pref="124" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="cmbIntent" min="-2" pref="84" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnAddRelation" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
+                              <Component id="scrollPane2" min="-2" pref="700" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="lblNumberRelations" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="208" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      <Component id="lblDelete" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="btnDeleteAC" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="scrollPane3" min="-2" pref="360" max="-2" attributes="0"/>
+                                          <Component id="lblNumberArguments" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnDeleteAR" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="scrollPane4" pref="392" max="32767" attributes="0"/>
+                                          <Group type="102" attributes="0">
+                                              <Component id="lblNumberRelations" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                          </Group>
+                                      </Group>
                                   </Group>
-                                  <Component id="scrollPane4" alignment="0" pref="0" max="32767" attributes="0"/>
+                                  <Component id="scrollPane5" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="lblAddAC" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="scrollPane5" max="32767" attributes="0"/>
-                                  <Component id="lblRelationPreview" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="cmbACType" min="-2" pref="100" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnAddAC" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblAddArgRel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="cmbCategory" min="-2" pref="180" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="cmbIntent" min="-2" pref="80" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnAddAR" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="lblDelete" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="btnDeleteAC" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnDeleteAR" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -238,12 +232,12 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblAddArgComp" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cmbArgCompType" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnAddArgument" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblAddAC" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cmbACType" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnAddAC" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblAddArgRel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cmbCategory" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnAddRelation" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnAddAR" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cmbIntent" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblDelete" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnDeleteAR" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -252,18 +246,16 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="scrollPane3" pref="492" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="scrollPane3" pref="525" max="32767" attributes="0"/>
                                   <Component id="scrollPane4" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lblNumberArguments" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblNumberRelations" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblNumberRelations" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblNumberArguments" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="31" max="32767" attributes="0"/>
-                              <Component id="lblRelationPreview" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="scrollPane5" min="-2" pref="95" max="-2" attributes="0"/>
                           </Group>
                           <Component id="scrollPane2" max="32767" attributes="0"/>
@@ -274,12 +266,12 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="lblAddArgComp">
+            <Component class="javax.swing.JLabel" name="lblAddAC">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Annotate AC:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cmbArgCompType">
+            <Component class="javax.swing.JComboBox" name="cmbACType">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="0"/>
@@ -289,12 +281,12 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="btnAddArgument">
+            <Component class="javax.swing.JButton" name="btnAddAC">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Add"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddArgumentActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddACActionPerformed"/>
               </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="scrollPane2">
@@ -339,12 +331,12 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="btnAddRelation">
+            <Component class="javax.swing.JButton" name="btnAddAR">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Add"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddRelationActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddARActionPerformed"/>
               </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="scrollPane3">
@@ -428,11 +420,6 @@
                 <Property name="text" type="java.lang.String" value="Number of argument relations (ARs): 0"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblRelationPreview">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Relation preview"/>
-              </Properties>
-            </Component>
             <Container class="javax.swing.JScrollPane" name="scrollPane5">
               <Properties>
                 <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
@@ -470,50 +457,48 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="scrollPane6" alignment="0" max="32767" attributes="0"/>
+                          <Component id="scrollPane7" alignment="0" pref="518" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Component id="scrollPane7" pref="0" max="32767" attributes="0"/>
-                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                              <Component id="btnArgRelCopy" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="scrollPane6" alignment="0" min="-2" pref="518" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
                               <Component id="lblTargetAnnotator1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="cmbTargetAnnotator" min="-2" pref="150" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
+                          <Component id="scrollPane14" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="scrollPane8" pref="521" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="lblAddAC1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="scrollPane10" pref="409" max="32767" attributes="0"/>
-                                  <Component id="lblNumberArguments1" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
-                                  <Component id="lblNumberRelations1" min="-2" pref="250" max="-2" attributes="0"/>
-                                  <Component id="scrollPane9" alignment="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblAddArgComp1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="cmbArgCompType1" min="-2" pref="100" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="btnAddArgument1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="cmbACType1" min="-2" pref="100" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnAddAC1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                               <Component id="lblAddArgRel1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="cmbCategory1" min="-2" pref="124" max="-2" attributes="0"/>
+                              <Component id="cmbCategory1" min="-2" pref="180" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="cmbIntent1" min="-2" pref="84" max="-2" attributes="0"/>
+                              <Component id="cmbIntent1" min="-2" pref="80" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnAddRelation1" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnAddAR1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="lblDelete1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnDeleteAC1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnDeleteAR1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="scrollPane8" min="-2" pref="542" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="scrollPane9" alignment="1" pref="392" max="32767" attributes="0"/>
+                                  <Component id="lblNumberArguments1" min="-2" pref="250" max="-2" attributes="0"/>
+                                  <Component id="scrollPane10" alignment="1" pref="0" max="32767" attributes="0"/>
+                                  <Component id="lblNumberRelations1" min="-2" pref="250" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -526,18 +511,18 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                              <Component id="lblAddArgComp1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="cmbArgCompType1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnAddArgument1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblAddArgRel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="cmbCategory1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnAddRelation1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="cmbIntent1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblAddAC1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cmbACType1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnAddAC1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="btnAddAR1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cmbIntent1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblDelete1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnDeleteAR1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btnDeleteAC1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnDeleteAR1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cmbCategory1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblAddArgRel1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="lblTargetAnnotator1" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -548,9 +533,9 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="scrollPane9" min="-2" pref="300" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblNumberArguments1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace pref="18" max="32767" attributes="0"/>
                               <Component id="scrollPane10" min="-2" pref="300" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblNumberRelations1" min="-2" max="-2" attributes="0"/>
@@ -558,11 +543,10 @@
                           <Component id="scrollPane8" alignment="1" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="scrollPane6" max="32767" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="scrollPane7" min="-2" pref="200" max="-2" attributes="0"/>
-                                  <Component id="btnArgRelCopy" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="scrollPane7" min="-2" pref="150" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="scrollPane14" min="-2" pref="95" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -626,43 +610,53 @@
                     </Property>
                     <Property name="selectionMode" type="int" value="0"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblArgRelations2MouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="btnArgRelCopy">
+            <Container class="javax.swing.JScrollPane" name="scrollPane14">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Copy"/>
+                <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnArgRelCopyActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JLabel" name="lblAddArgComp1">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JEditorPane" name="txtAnnotationPreview1">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="contentType" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="HTML_CONTENT_TYPE" type="code"/>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="javax.swing.JLabel" name="lblAddAC1">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Annotate AC:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cmbArgCompType1">
+            <Component class="javax.swing.JComboBox" name="cmbACType1">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
-                  </StringArray>
+                  <StringArray count="0"/>
                 </Property>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="btnAddArgument1">
+            <Component class="javax.swing.JButton" name="btnAddAC1">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Add"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddArgument1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddAC1ActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lblAddArgRel1">
@@ -690,12 +684,12 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="btnAddRelation1">
+            <Component class="javax.swing.JButton" name="btnAddAR1">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Add"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddRelation1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddAR1ActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lblDelete1">
@@ -818,7 +812,7 @@
                               <Component id="lblTargetAnnotator" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="cmbAnnotator" min="-2" pref="150" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnSaveEval" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
@@ -857,10 +851,10 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="scrollPane12" pref="517" max="32767" attributes="0"/>
+                          <Component id="scrollPane12" pref="522" max="32767" attributes="0"/>
                           <Component id="scrollPane11" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="scrollPane13" min="-2" pref="96" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
