@@ -18,6 +18,8 @@
 package es.uam.irg.gui;
 
 import es.uam.irg.io.IOManager;
+import es.uam.irg.struct.ArgumentModel;
+import es.uam.irg.struct.SelectedItems;
 import es.uam.irg.utils.FileUtils;
 import es.uam.irg.utils.StringUtils;
 import java.io.File;
@@ -25,10 +27,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
@@ -39,6 +39,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
+import org.apache.commons.lang3.ArrayUtils;
 
 /**
  * Argument annotation and evaluation form class (main GUI class.)
@@ -55,7 +56,7 @@ public class ArgaelForm extends javax.swing.JFrame {
     private String currDirectory;
     private String currEntity;
     private int currTabIndex;
-    private final Queue<Integer> acSelected;
+    private final SelectedItems acSelected;
     private final ArgumentModel argModel;
     private final Map<String, String> files;
     private String fileExtension;
@@ -78,7 +79,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         this.currDirectory = dataFolder;
         this.currEntity = "";
         this.currTabIndex = 0;
-        this.acSelected = new LinkedList<>();
+        this.acSelected = new SelectedItems();
         this.argModel = new ArgumentModel(components, relCategories, relIntents, qualityMetrics);
         this.files = new HashMap<>();
         this.fileExtension = fileExtension;
@@ -176,7 +177,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         menuUser = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("ARGAEL v1.7");
+        setTitle("ARGAEL v1.8");
         setMinimumSize(new java.awt.Dimension(1111, 500));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -899,7 +900,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 1.7.3
+                          Version: 1.8.0
                           Date: 10/19/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
@@ -914,7 +915,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         boolean result = ArgaelFormUtils.createNewArgumentComponent(edtSimpleAnnotation, cmbACType, tblArgComponents);
         if (result) {
             saveViewData();
-            updatePanelData(edtSimpleAnnotation, null, null, userName, "");
+            updatePanelData(edtSimpleAnnotation, null, null, userName, "", ArgaelFormUtils.getSelectedACIds(tblArgComponents));
             ArgaelFormUtils.updateCounterLabels(lblNumberArguments, tblArgComponents, "components (ACs)");
         }
     }//GEN-LAST:event_btnAddACActionPerformed
@@ -924,7 +925,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         boolean result = ArgaelFormUtils.createNewArgumentComponent(edtAssistedAnnotation, cmbACType1, tblArgComponents1);
         if (result) {
             saveViewData();
-            updatePanelData(edtAssistedAnnotation, null, null, userName, "");
+            updatePanelData(edtAssistedAnnotation, null, null, userName, "", ArgaelFormUtils.getSelectedACIds(tblArgComponents1));
             ArgaelFormUtils.updateCounterLabels(lblNumberArguments1, tblArgComponents1, "components (ACs)");
         }
     }//GEN-LAST:event_btnAddAC1ActionPerformed
@@ -932,10 +933,11 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void btnAddARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddARActionPerformed
         // TODO add your handling code here:
         if (acSelected.size() == 2) {
-            boolean result = ArgaelFormUtils.createNewArgumentRelation(acSelected, tblArgComponents, cmbCategory, cmbIntent, tblArgRelations);
+            boolean result = ArgaelFormUtils.createNewArgumentRelation(acSelected.getValues(), tblArgComponents, cmbCategory, cmbIntent, tblArgRelations);
             if (result) {
                 saveViewData();
                 ArgaelFormUtils.updateCounterLabels(lblNumberRelations, tblArgRelations, "relations (ARs)");
+                acSelected.clear();
             }
         }
     }//GEN-LAST:event_btnAddARActionPerformed
@@ -943,10 +945,11 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void btnAddAR1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAR1ActionPerformed
         // TODO add your handling code here:
         if (acSelected.size() == 2) {
-            boolean result = ArgaelFormUtils.createNewArgumentRelation(acSelected, tblArgComponents1, cmbCategory1, cmbIntent1, tblArgRelations1);
+            boolean result = ArgaelFormUtils.createNewArgumentRelation(acSelected.getValues(), tblArgComponents1, cmbCategory1, cmbIntent1, tblArgRelations1);
             if (result) {
                 saveViewData();
                 ArgaelFormUtils.updateCounterLabels(lblNumberRelations1, tblArgRelations1, "relations (ARs)");
+                acSelected.clear();
             }
         }
     }//GEN-LAST:event_btnAddAR1ActionPerformed
@@ -957,7 +960,7 @@ public class ArgaelForm extends javax.swing.JFrame {
             boolean result = ArgaelFormUtils.deleteArgumentComponent(tblArgComponents, tblArgRelations);
             if (result) {
                 saveViewData();
-                updatePanelData(edtSimpleAnnotation, null, null, userName, "");
+                updatePanelData(edtSimpleAnnotation, null, null, userName, "", ArgaelFormUtils.getSelectedACIds(tblArgComponents));
                 ArgaelFormUtils.updateCounterLabels(lblNumberArguments, tblArgComponents, "components (ACs)");
             }
         }
@@ -969,7 +972,7 @@ public class ArgaelForm extends javax.swing.JFrame {
             boolean result = ArgaelFormUtils.deleteArgumentComponent(tblArgComponents1, tblArgRelations1);
             if (result) {
                 saveViewData();
-                updatePanelData(edtAssistedAnnotation, null, null, userName, "");
+                updatePanelData(edtAssistedAnnotation, null, null, userName, "", ArgaelFormUtils.getSelectedACIds(tblArgComponents1));
                 ArgaelFormUtils.updateCounterLabels(lblNumberArguments2, tblArgComponents1, "components (ACs)");
             }
         }
@@ -1003,10 +1006,8 @@ public class ArgaelForm extends javax.swing.JFrame {
         int row = tblArgComponents.rowAtPoint(evt.getPoint());
 
         if (row >= 0) {
-            acSelected.add(row);
-            if (acSelected.size() > 2) {
-                acSelected.poll();
-            }
+            acSelected.addItem(row);
+            updatePanelData(edtSimpleAnnotation, null, null, userName, "", ArgaelFormUtils.getSelectedACIds(tblArgComponents));
         }
     }//GEN-LAST:event_tblArgComponentsMouseClicked
 
@@ -1015,10 +1016,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         int row = tblArgComponents1.rowAtPoint(evt.getPoint());
 
         if (row >= 0) {
-            acSelected.add(row);
-            if (acSelected.size() > 2) {
-                acSelected.poll();
-            }
+            acSelected.addItem(row);
         }
     }//GEN-LAST:event_tblArgComponents1MouseClicked
 
@@ -1062,7 +1060,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!StringUtils.isEmpty(currEntity)) {
             String targetUser = cmbTargetAnnotator.getSelectedItem().toString();
-            updatePanelData(edtTargetAnnotation, null, tblArgRelations2, targetUser, "");
+            updatePanelData(edtTargetAnnotation, null, tblArgRelations2, targetUser, "", null);
         }
     }//GEN-LAST:event_cmbTargetAnnotatorActionPerformed
 
@@ -1211,26 +1209,28 @@ public class ArgaelForm extends javax.swing.JFrame {
      *
      * @param report
      * @param acList
+     * @param selectedACIds
      * @return
      */
-    private String highlightReport(String report, List<String[]> acList) {
+    private String highlightReport(String report, List<String[]> acList, List<Integer> selectedACIds) {
         String hlText;
-        String acText;
-        String acType;
 
         for (int i = 0; i < acList.size(); i++) {
-            acText = acList.get(i)[1];
-            acType = acList.get(i)[2];
+            String[] row = acList.get(i);
+            int acId = Integer.parseInt(row[0]);
+            String acText = row[1];
+            String acType = row[2];
+            boolean acBold = selectedACIds.contains(acId);
 
             switch (acType.toLowerCase()) {
                 case "major claim":
-                    hlText = formatter.highlightMajorClaim(acText);
+                    hlText = formatter.highlightMajorClaim(acText, acBold);
                     break;
                 case "claim":
-                    hlText = formatter.highlightClaim(acText);
+                    hlText = formatter.highlightClaim(acText, acBold);
                     break;
                 default:
-                    hlText = formatter.highlightPremise(acText);
+                    hlText = formatter.highlightPremise(acText, acBold);
                     break;
             }
             report = report.replace(acText, hlText);
@@ -1284,7 +1284,7 @@ public class ArgaelForm extends javax.swing.JFrame {
 
         // Refresh data of simple annotation view
         if (currTabIndex == 0) {
-            updatePanelData(edtSimpleAnnotation, tblArgComponents, tblArgRelations, userName, "");
+            updatePanelData(edtSimpleAnnotation, tblArgComponents, tblArgRelations, userName, "", ArgaelFormUtils.getSelectedACIds(tblArgComponents));
             ArgaelFormUtils.updateCounterLabels(lblNumberArguments, tblArgComponents, "components (ACs)");
             ArgaelFormUtils.updateCounterLabels(lblNumberRelations, tblArgRelations, "relations (ARs)");
             this.txtAnnotationPreview.setText("");
@@ -1292,15 +1292,15 @@ public class ArgaelForm extends javax.swing.JFrame {
         } else if (currTabIndex == 1) {
 
             String targetUser = cmbTargetAnnotator.getSelectedItem().toString();
-            updatePanelData(edtTargetAnnotation, null, tblArgRelations2, targetUser, "");
-            updatePanelData(edtAssistedAnnotation, tblArgComponents1, tblArgRelations1, userName, "");
+            updatePanelData(edtTargetAnnotation, null, tblArgRelations2, targetUser, "", null);
+            updatePanelData(edtAssistedAnnotation, tblArgComponents1, tblArgRelations1, userName, "", ArgaelFormUtils.getSelectedACIds(tblArgComponents1));
             ArgaelFormUtils.updateCounterLabels(lblNumberArguments1, tblArgComponents1, "components (ACs)");
             ArgaelFormUtils.updateCounterLabels(lblNumberRelations1, tblArgRelations1, "relations (ARs)");
 
         } else if (currTabIndex == 2) {
 
             String targetUser = cmbAnnotator.getSelectedItem().toString();
-            updatePanelData(null, tblEvaComponents, tblEvaRelations, targetUser, userName);
+            updatePanelData(null, tblEvaComponents, tblEvaRelations, targetUser, userName, ArgaelFormUtils.getSelectedACIds(tblEvaComponents));
             ArgaelFormUtils.updateCounterLabels(lblNumberArguments2, tblEvaComponents, "components (ACs)");
             ArgaelFormUtils.updateCounterLabels(lblNumberRelations2, tblEvaRelations, "relations (ARs)");
             this.txtEvaluationPreview.setText("");
@@ -1604,7 +1604,7 @@ public class ArgaelForm extends javax.swing.JFrame {
      * @param dataUser
      * @param evalUser
      */
-    private void updatePanelData(javax.swing.JEditorPane editor, javax.swing.JTable acTable, javax.swing.JTable arTable, String dataUser, String evalUser) {
+    private void updatePanelData(javax.swing.JEditorPane editor, javax.swing.JTable acTable, javax.swing.JTable arTable, String dataUser, String evalUser, List<Integer> selectedACIds) {
 
         // Get annotation data
         Map<String, List<String[]>> annotations = getSavedAnnotationData(dataUser);
@@ -1624,7 +1624,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         if (editor != null) {
             String filepath = currDirectory + "\\" + currEntity + "." + fileExtension;
             String rawReport = getFileReport(filepath);
-            String report = highlightReport(rawReport, acData);
+            String report = highlightReport(rawReport, acData, selectedACIds);
             ArgaelFormUtils.updateEditorContent(editor, report);
         }
 
