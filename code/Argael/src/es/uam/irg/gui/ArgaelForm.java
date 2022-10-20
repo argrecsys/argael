@@ -176,7 +176,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         menuUser = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("ARGAEL v1.8");
+        setTitle("ARGAEL v1.9");
         setMinimumSize(new java.awt.Dimension(1111, 500));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -899,7 +899,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 1.8.3
+                          Version: 1.9.0
                           Date: 10/20/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
@@ -1035,23 +1035,27 @@ public class ArgaelForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         int row = tblArgRelations.rowAtPoint(evt.getPoint());
         ArgaelFormUtils.previewArgument(row, tblArgComponents, tblArgRelations, txtAnnotationPreview);
+        updatePanelData(edtSimpleAnnotation, null, null, userName, "", ArgaelFormUtils.getSelectedACIds(tblArgComponents));
     }//GEN-LAST:event_tblArgRelationsMouseClicked
 
     private void tblArgRelations1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgRelations1MouseClicked
         // TODO add your handling code here:
         int row = tblArgRelations1.rowAtPoint(evt.getPoint());
         ArgaelFormUtils.previewArgument(row, tblArgComponents1, tblArgRelations1, null);
+        updatePanelData(edtAssistedAnnotation, null, null, userName, "", ArgaelFormUtils.getSelectedACIds(tblArgComponents1));
     }//GEN-LAST:event_tblArgRelations1MouseClicked
 
     private void tblArgRelations2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgRelations2MouseClicked
         // TODO add your handling code here:
-
+        int row = tblArgRelations2.rowAtPoint(evt.getPoint());
     }//GEN-LAST:event_tblArgRelations2MouseClicked
 
     private void tblEvalRelationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEvalRelationsMouseClicked
         // TODO add your handling code here:
         int row = tblEvalRelations.rowAtPoint(evt.getPoint());
+        String targetUser = cmbAnnotator.getSelectedItem().toString();
         ArgaelFormUtils.previewArgument(row, tblEvalComponents, tblEvalRelations, txtEvaluationPreview);
+        updatePanelData(edtEvalAnnotation, null, null, targetUser, "", ArgaelFormUtils.getSelectedACIds(tblEvalComponents));
     }//GEN-LAST:event_tblEvalRelationsMouseClicked
 
     private void cmbTargetAnnotatorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTargetAnnotatorActionPerformed

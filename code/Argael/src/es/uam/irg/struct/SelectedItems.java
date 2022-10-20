@@ -48,6 +48,16 @@ public class SelectedItems {
     }
 
     /**
+     *
+     * @param values
+     */
+    public void addItems(int[] values) {
+        for (int value : values) {
+            addItem(value);
+        }
+    }
+
+    /**
      * *
      *
      */
