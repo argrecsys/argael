@@ -132,8 +132,6 @@ public class ArgaelForm extends javax.swing.JFrame {
         edtTargetAnnotation = new javax.swing.JEditorPane();
         scrollPane7 = new javax.swing.JScrollPane();
         tblArgRelations2 = new javax.swing.JTable();
-        scrollPane14 = new javax.swing.JScrollPane();
-        txtAnnotationPreview1 = new javax.swing.JEditorPane();
         lblAddAC1 = new javax.swing.JLabel();
         cmbACType1 = new javax.swing.JComboBox<>();
         btnAddAC1 = new javax.swing.JButton();
@@ -434,12 +432,6 @@ public class ArgaelForm extends javax.swing.JFrame {
         });
         scrollPane7.setViewportView(tblArgRelations2);
 
-        scrollPane14.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-        txtAnnotationPreview1.setEditable(false);
-        txtAnnotationPreview1.setContentType(HTML_CONTENT_TYPE);
-        scrollPane14.setViewportView(txtAnnotationPreview1);
-
         lblAddAC1.setText("Annotate AC:");
 
         btnAddAC1.setText("Add");
@@ -557,7 +549,6 @@ public class ArgaelForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cmbTargetAnnotator, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(scrollPane14)
                     .addComponent(scrollPane6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlAssistedAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -625,9 +616,7 @@ public class ArgaelForm extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlAssistedAnnotationLayout.createSequentialGroup()
                         .addComponent(scrollPane6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(scrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(scrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(scrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -910,7 +899,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 1.8.2
+                          Version: 1.8.3
                           Date: 10/20/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
@@ -1027,6 +1016,7 @@ public class ArgaelForm extends javax.swing.JFrame {
 
         if (row >= 0) {
             acSelected.addItem(row);
+            updatePanelData(edtAssistedAnnotation, null, null, userName, "", ArgaelFormUtils.getSelectedACIds(tblArgComponents1));
         }
     }//GEN-LAST:event_tblArgComponents1MouseClicked
 
@@ -1035,11 +1025,9 @@ public class ArgaelForm extends javax.swing.JFrame {
         int row = tblEvalComponents.rowAtPoint(evt.getPoint());
 
         if (row >= 0) {
-            TableModel acModel = tblEvalComponents.getModel();
-            String acText = acModel.getValueAt(row, 1).toString();
-            String acType = acModel.getValueAt(row, 2).toString();
-            String text = String.format("[<b>%s</b>: %s]", acType, acText);
-            txtEvaluationPreview.setText(text);
+            acSelected.addItem(row);
+            String targetUser = cmbAnnotator.getSelectedItem().toString();
+            updatePanelData(edtEvalAnnotation, null, null, targetUser, "", ArgaelFormUtils.getSelectedACIds(tblEvalComponents));
         }
     }//GEN-LAST:event_tblEvalComponentsMouseClicked
 
@@ -1051,12 +1039,13 @@ public class ArgaelForm extends javax.swing.JFrame {
 
     private void tblArgRelations1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgRelations1MouseClicked
         // TODO add your handling code here:
+        int row = tblArgRelations1.rowAtPoint(evt.getPoint());
+        ArgaelFormUtils.previewArgument(row, tblArgComponents1, tblArgRelations1, null);
     }//GEN-LAST:event_tblArgRelations1MouseClicked
 
     private void tblArgRelations2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArgRelations2MouseClicked
         // TODO add your handling code here:
-        int row = tblArgRelations.rowAtPoint(evt.getPoint());
-        //ArgaelFormUtils.previewArgument(row, tblArgComponents1, tblArgRelations, txtAnnotationPreview);
+
     }//GEN-LAST:event_tblArgRelations2MouseClicked
 
     private void tblEvalRelationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEvalRelationsMouseClicked
@@ -1069,7 +1058,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!StringUtils.isEmpty(currEntity)) {
             String targetUser = cmbTargetAnnotator.getSelectedItem().toString();
-            updatePanelData(edtTargetAnnotation, null, tblArgRelations2, targetUser, "", null);
+            updatePanelData(edtTargetAnnotation, null, tblArgRelations2, targetUser);
         }
     }//GEN-LAST:event_cmbTargetAnnotatorActionPerformed
 
@@ -1139,7 +1128,6 @@ public class ArgaelForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane scrollPane11;
     private javax.swing.JScrollPane scrollPane12;
     private javax.swing.JScrollPane scrollPane13;
-    private javax.swing.JScrollPane scrollPane14;
     private javax.swing.JScrollPane scrollPane15;
     private javax.swing.JScrollPane scrollPane2;
     private javax.swing.JScrollPane scrollPane3;
@@ -1158,7 +1146,6 @@ public class ArgaelForm extends javax.swing.JFrame {
     private javax.swing.JTable tblEvalComponents;
     private javax.swing.JTable tblEvalRelations;
     private javax.swing.JEditorPane txtAnnotationPreview;
-    private javax.swing.JEditorPane txtAnnotationPreview1;
     private javax.swing.JEditorPane txtEvaluationPreview;
     // End of variables declaration//GEN-END:variables
 
@@ -1303,7 +1290,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         } else if (currTabIndex == 1) {
 
             String targetUser = cmbTargetAnnotator.getSelectedItem().toString();
-            updatePanelData(edtTargetAnnotation, null, tblArgRelations2, targetUser, "", null);
+            updatePanelData(edtTargetAnnotation, null, tblArgRelations2, targetUser);
             updatePanelData(edtAssistedAnnotation, tblArgComponents1, tblArgRelations1, userName, "", ArgaelFormUtils.getSelectedACIds(tblArgComponents1));
             ArgaelFormUtils.updateCounterLabels(lblNumberArguments1, tblArgComponents1, "components (ACs)");
             ArgaelFormUtils.updateCounterLabels(lblNumberRelations1, tblArgRelations1, "relations (ARs)");
@@ -1541,7 +1528,6 @@ public class ArgaelForm extends javax.swing.JFrame {
         colModel.getColumn(2).setPreferredWidth(50);
         colModel.getColumn(2).setCellRenderer(centerRenderer);
         colModel.getColumn(3).setPreferredWidth(110);
-        colModel.getColumn(3).setCellRenderer(centerRenderer);
         colModel.getColumn(4).setPreferredWidth(90);
         colModel.getColumn(4).setCellRenderer(centerRenderer);
 
@@ -1554,7 +1540,6 @@ public class ArgaelForm extends javax.swing.JFrame {
         colModel.getColumn(2).setPreferredWidth(60);
         colModel.getColumn(2).setCellRenderer(centerRenderer);
         colModel.getColumn(3).setPreferredWidth(238);
-        colModel.getColumn(3).setCellRenderer(centerRenderer);
         colModel.getColumn(4).setPreferredWidth(100);
         colModel.getColumn(4).setCellRenderer(centerRenderer);
 
@@ -1574,8 +1559,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         colModel.getColumn(1).setCellRenderer(centerRenderer);
         colModel.getColumn(2).setPreferredWidth(50);
         colModel.getColumn(2).setCellRenderer(centerRenderer);
-        colModel.getColumn(3).setPreferredWidth(159);
-        colModel.getColumn(3).setCellRenderer(centerRenderer);
+        colModel.getColumn(3).setPreferredWidth(150);
         colModel.getColumn(4).setPreferredWidth(100);
         colModel.getColumn(4).setCellRenderer(centerRenderer);
 
@@ -1598,13 +1582,23 @@ public class ArgaelForm extends javax.swing.JFrame {
         colModel.getColumn(1).setCellRenderer(centerRenderer);
         colModel.getColumn(2).setPreferredWidth(50);
         colModel.getColumn(2).setCellRenderer(centerRenderer);
-        colModel.getColumn(3).setPreferredWidth(115);
-        colModel.getColumn(3).setCellRenderer(centerRenderer);
-        colModel.getColumn(4).setPreferredWidth(115);
+        colModel.getColumn(3).setPreferredWidth(120);
+        colModel.getColumn(4).setPreferredWidth(110);
         colModel.getColumn(4).setCellRenderer(centerRenderer);
         colModel.getColumn(5).setPreferredWidth(120);
         colModel.getColumn(5).setCellRenderer(evalRenderer);
         colModel.getColumn(5).setCellEditor(new DefaultCellEditor(cmbArgQuality));
+    }
+
+    /**
+     *
+     * @param editor
+     * @param acTable
+     * @param arTable
+     * @param dataUser
+     */
+    private void updatePanelData(javax.swing.JEditorPane editor, javax.swing.JTable acTable, javax.swing.JTable arTable, String dataUser) {
+        updatePanelData(editor, acTable, arTable, dataUser, "", new ArrayList<>());
     }
 
     /**

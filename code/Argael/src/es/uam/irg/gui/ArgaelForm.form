@@ -464,7 +464,6 @@
                               <Component id="cmbTargetAnnotator" min="-2" pref="150" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="scrollPane14" alignment="0" max="32767" attributes="0"/>
                           <Component id="scrollPane6" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -544,9 +543,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="scrollPane6" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="scrollPane7" min="-2" pref="150" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="scrollPane14" min="-2" pref="95" max="-2" attributes="0"/>
+                              <Component id="scrollPane7" min="-2" pref="200" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -613,26 +610,6 @@
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblArgRelations2MouseClicked"/>
                   </Events>
-                </Component>
-              </SubComponents>
-            </Container>
-            <Container class="javax.swing.JScrollPane" name="scrollPane14">
-              <Properties>
-                <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-              </AuxValues>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JEditorPane" name="txtAnnotationPreview1">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="false"/>
-                    <Property name="contentType" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="HTML_CONTENT_TYPE" type="code"/>
-                    </Property>
-                  </Properties>
                 </Component>
               </SubComponents>
             </Container>

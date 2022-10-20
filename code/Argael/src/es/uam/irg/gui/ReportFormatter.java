@@ -227,7 +227,7 @@ public class ReportFormatter {
      * @return
      */
     private String boldSentence(String text) {
-        return "<i>" + text + "</i>";
+        return "<b><i>" + text + "</i></b>";
     }
 
     /**
