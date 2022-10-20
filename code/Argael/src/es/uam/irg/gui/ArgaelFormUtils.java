@@ -36,7 +36,7 @@ import javax.swing.table.TableModel;
  * @author Usuario
  */
 class ArgaelFormUtils {
-
+    
     private static final int PROPOSITION_MIN_SIZE = 3;
 
     /**
@@ -50,7 +50,7 @@ class ArgaelFormUtils {
     private static String createArgumentRelationString(int row, JTable table, TableModel acModel, TableModel arModel) {
         // Collect relation data
         String text = "";
-
+        
         if (row >= 0) {
             int acId1 = Integer.parseInt(arModel.getValueAt(row, 1).toString());
             int acId2 = Integer.parseInt(arModel.getValueAt(row, 2).toString());
@@ -69,7 +69,7 @@ class ArgaelFormUtils {
                 selectMultipleTableRows(table, acIndex1, acIndex2);
             }
         }
-
+        
         return text;
     }
 
@@ -144,18 +144,18 @@ class ArgaelFormUtils {
     static boolean cloneRelation(int sourceRowIx, TableModel sourceModel, TableModel targetModel) {
         boolean result = false;
         boolean found = false;
-
+        
         for (int i = 0; i < targetModel.getRowCount() && !found; i++) {
             found = ((sourceModel.getValueAt(sourceRowIx, 1) == targetModel.getValueAt(i, 1))
                     && (sourceModel.getValueAt(sourceRowIx, 2) == targetModel.getValueAt(i, 2)));
         }
-
+        
         if (!found) {
             Object[] newRow = new Object[]{getNextRelationId(targetModel), "", "", "", ""};
             ((DefaultTableModel) targetModel).addRow(newRow);
             result = true;
         }
-
+        
         return result;
     }
 
@@ -168,23 +168,23 @@ class ArgaelFormUtils {
      */
     static boolean createNewArgumentComponent(JEditorPane editor, JComboBox<String> cmbACType, JTable acTable) {
         boolean result = false;
-
+        
         String propText = editor.getSelectedText();
         if (propText != null) {
             propText = propText.trim();
             String propType = cmbACType.getSelectedItem().toString();
-
+            
             if (propText.length() > PROPOSITION_MIN_SIZE && !propType.equals("-")) {
 
                 // Add new argument component
                 int propId = getNextPropositionId(acTable);
                 Object[] newRow = new Object[]{propId, propText, propType};
                 ((DefaultTableModel) acTable.getModel()).addRow(newRow);
-
+                
                 result = true;
             }
         }
-
+        
         return result;
     }
 
@@ -199,25 +199,25 @@ class ArgaelFormUtils {
      */
     static boolean createNewArgumentRelation(Integer[] selected, JTable acTable, JComboBox<String> cmbCategory, JComboBox<String> cmbIntent, JTable arTable) {
         boolean result = false;
-
+        
         TableModel acModel = acTable.getModel();
         int acId1 = Integer.parseInt(acModel.getValueAt(selected[0], 0).toString());
         int acId2 = Integer.parseInt(acModel.getValueAt(selected[1], 0).toString());
-
+        
         if (cmbCategory.getSelectedIndex() > 0 && cmbIntent.getSelectedIndex() > 0) {
             int arId = getNextRelationId(arTable);
             String category = cmbCategory.getSelectedItem().toString();
             String intent = cmbIntent.getSelectedItem().toString();
-
+            
             Object[] newRow = new Object[]{arId, acId1, acId2, category, intent};
             ((DefaultTableModel) arTable.getModel()).addRow(newRow);
-
+            
             acTable.clearSelection();
             arTable.clearSelection();
-
+            
             result = true;
         }
-
+        
         return result;
     }
 
@@ -230,7 +230,7 @@ class ArgaelFormUtils {
     static boolean deleteArgumentComponent(JTable tblArgComponents, JTable tblArgRelations) {
         boolean result = false;
         int row = tblArgComponents.getSelectedRow();
-
+        
         if (row >= 0) {
             int acId = Integer.parseInt(tblArgComponents.getModel().getValueAt(row, 0).toString());
 
@@ -238,12 +238,12 @@ class ArgaelFormUtils {
             if (!isAcInRelation(tblArgRelations, acId)) {
                 ((DefaultTableModel) tblArgComponents.getModel()).removeRow(row);
                 result = true;
-
+                
             } else {
                 JOptionPane.showMessageDialog(null, "This AC cannot be eliminated, because it is part of an argumentative relation", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-
+        
         return result;
     }
 
@@ -255,12 +255,12 @@ class ArgaelFormUtils {
     static boolean deleteArgumentRelation(JTable tblArgRelations) {
         boolean result = false;
         int row = tblArgRelations.getSelectedRow();
-
+        
         if (row >= 0) {
             ((DefaultTableModel) tblArgRelations.getModel()).removeRow(row);
             result = true;
         }
-
+        
         return result;
     }
 
@@ -327,7 +327,7 @@ class ArgaelFormUtils {
             for (int i = 0; i < annotations.size(); i++) {
                 String[] rowData = annotations.get(i);
                 int rowId = Integer.parseInt(rowData[0]);
-
+                
                 tableModel.addRow(FunctionUtils.getSubArray(rowData, 0, nColumns));
                 if (evaluations != null && evaluations.containsKey(rowId)) {
                     tableModel.setValueAt(evaluations.get(rowId), i, nColumns);
@@ -347,7 +347,10 @@ class ArgaelFormUtils {
         TableModel acModel = tblACs.getModel();
         TableModel arModel = tblARs.getModel();
         String relationString = createArgumentRelationString(row, tblACs, acModel, arModel);
-        editor.setText(relationString);
+        if (editor != null) {
+            editor.setText(relationString);
+            editor.setCaretPosition(0);
+        }
     }
 
     /**
@@ -379,5 +382,5 @@ class ArgaelFormUtils {
         editor.setText(content);
         editor.setCaretPosition(caretPosition);
     }
-
+    
 }
