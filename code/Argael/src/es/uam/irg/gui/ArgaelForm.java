@@ -155,17 +155,17 @@ public class ArgaelForm extends javax.swing.JFrame {
         pnlEvaluation = new javax.swing.JPanel();
         lblTargetAnnotator = new javax.swing.JLabel();
         cmbAnnotator = new javax.swing.JComboBox<>();
-        lblNumberArguments2 = new javax.swing.JLabel();
-        lblNumberRelations2 = new javax.swing.JLabel();
-        scrollPane11 = new javax.swing.JScrollPane();
-        tblEvalComponents = new javax.swing.JTable();
-        scrollPane12 = new javax.swing.JScrollPane();
-        tblEvalRelations = new javax.swing.JTable();
-        scrollPane13 = new javax.swing.JScrollPane();
-        txtEvaluationPreview = new javax.swing.JEditorPane();
         btnSaveEval = new javax.swing.JButton();
         scrollPane15 = new javax.swing.JScrollPane();
         edtEvalAnnotation = new javax.swing.JEditorPane();
+        scrollPane11 = new javax.swing.JScrollPane();
+        tblEvalComponents = new javax.swing.JTable();
+        lblNumberArguments2 = new javax.swing.JLabel();
+        scrollPane12 = new javax.swing.JScrollPane();
+        tblEvalRelations = new javax.swing.JTable();
+        lblNumberRelations2 = new javax.swing.JLabel();
+        scrollPane13 = new javax.swing.JScrollPane();
+        txtEvaluationPreview = new javax.swing.JEditorPane();
         menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         mItemImportJsonl = new javax.swing.JMenuItem();
@@ -377,7 +377,7 @@ public class ArgaelForm extends javax.swing.JFrame {
                 .addGroup(pnlIndependentAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlIndependentAnnotationLayout.createSequentialGroup()
                         .addGroup(pnlIndependentAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(scrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
+                            .addComponent(scrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
                             .addComponent(scrollPane4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlIndependentAnnotationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -617,7 +617,7 @@ public class ArgaelForm extends javax.swing.JFrame {
                         .addComponent(scrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblNumberArguments1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                         .addComponent(scrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblNumberRelations1))
@@ -641,9 +641,16 @@ public class ArgaelForm extends javax.swing.JFrame {
             }
         });
 
-        lblNumberArguments2.setText("Argument components (ACs)");
+        btnSaveEval.setText("Save");
+        btnSaveEval.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveEvalActionPerformed(evt);
+            }
+        });
 
-        lblNumberRelations2.setText("Argument relations (ARs)");
+        edtEvalAnnotation.setEditable(false);
+        edtEvalAnnotation.setContentType(HTML_CONTENT_TYPE);
+        scrollPane15.setViewportView(edtEvalAnnotation);
 
         tblEvalComponents.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -676,6 +683,8 @@ public class ArgaelForm extends javax.swing.JFrame {
         });
         scrollPane11.setViewportView(tblEvalComponents);
 
+        lblNumberArguments2.setText("Argument components (ACs)");
+
         tblEvalRelations.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -707,48 +716,41 @@ public class ArgaelForm extends javax.swing.JFrame {
         });
         scrollPane12.setViewportView(tblEvalRelations);
 
+        lblNumberRelations2.setText("Argument relations (ARs)");
+
         scrollPane13.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         txtEvaluationPreview.setEditable(false);
         txtEvaluationPreview.setContentType(HTML_CONTENT_TYPE);
         scrollPane13.setViewportView(txtEvaluationPreview);
 
-        btnSaveEval.setText("Save");
-        btnSaveEval.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveEvalActionPerformed(evt);
-            }
-        });
-
-        edtEvalAnnotation.setEditable(false);
-        edtEvalAnnotation.setContentType(HTML_CONTENT_TYPE);
-        scrollPane15.setViewportView(edtEvalAnnotation);
-
         javax.swing.GroupLayout pnlEvaluationLayout = new javax.swing.GroupLayout(pnlEvaluation);
         pnlEvaluation.setLayout(pnlEvaluationLayout);
         pnlEvaluationLayout.setHorizontalGroup(
             pnlEvaluationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlEvaluationLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEvaluationLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlEvaluationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrollPane13)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEvaluationLayout.createSequentialGroup()
-                        .addGroup(pnlEvaluationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlEvaluationLayout.createSequentialGroup()
-                                .addComponent(lblTargetAnnotator)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cmbAnnotator, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnSaveEval))
-                            .addComponent(scrollPane15, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(pnlEvaluationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNumberArguments2)
-                            .addComponent(scrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlEvaluationLayout.createSequentialGroup()
+                        .addComponent(lblTargetAnnotator)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cmbAnnotator, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSaveEval))
+                    .addComponent(scrollPane15, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlEvaluationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlEvaluationLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(scrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlEvaluationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(scrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNumberRelations2))))
+                            .addComponent(lblNumberRelations2)))
+                    .addGroup(pnlEvaluationLayout.createSequentialGroup()
+                        .addComponent(lblNumberArguments2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(scrollPane13, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         pnlEvaluationLayout.setVerticalGroup(
@@ -758,16 +760,20 @@ public class ArgaelForm extends javax.swing.JFrame {
                 .addGroup(pnlEvaluationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTargetAnnotator)
                     .addComponent(cmbAnnotator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSaveEval)
-                    .addComponent(lblNumberArguments2)
-                    .addComponent(lblNumberRelations2))
+                    .addComponent(btnSaveEval))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlEvaluationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
-                    .addComponent(scrollPane15, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(scrollPane12, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlEvaluationLayout.createSequentialGroup()
+                        .addGroup(pnlEvaluationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(scrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
+                            .addComponent(scrollPane12))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(pnlEvaluationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNumberArguments2)
+                            .addComponent(lblNumberRelations2))
+                        .addGap(18, 18, 18)
+                        .addComponent(scrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(scrollPane15))
                 .addContainerGap())
         );
 
@@ -904,7 +910,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 1.8.1
+                          Version: 1.8.2
                           Date: 10/20/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0

@@ -247,7 +247,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="scrollPane3" pref="525" max="32767" attributes="0"/>
+                                  <Component id="scrollPane3" pref="526" max="32767" attributes="0"/>
                                   <Component id="scrollPane4" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -535,7 +535,7 @@
                               <Component id="scrollPane9" min="-2" pref="300" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblNumberArguments1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="18" max="32767" attributes="0"/>
+                              <EmptySpace pref="19" max="32767" attributes="0"/>
                               <Component id="scrollPane10" min="-2" pref="300" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblNumberRelations1" min="-2" max="-2" attributes="0"/>
@@ -804,32 +804,34 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="scrollPane13" max="32767" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="lblTargetAnnotator" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="cmbAnnotator" min="-2" pref="150" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnSaveEval" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="scrollPane15" min="-2" pref="501" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblNumberArguments2" min="-2" max="-2" attributes="0"/>
-                                  <Component id="scrollPane11" min="-2" pref="500" max="-2" attributes="0"/>
-                              </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="lblTargetAnnotator" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="cmbAnnotator" min="-2" pref="150" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnSaveEval" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="scrollPane15" min="-2" pref="501" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="scrollPane11" min="-2" pref="500" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="scrollPane12" min="-2" pref="500" max="-2" attributes="0"/>
                                   <Component id="lblNumberRelations2" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblNumberArguments2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Component id="scrollPane13" alignment="1" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -843,17 +845,24 @@
                           <Component id="lblTargetAnnotator" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cmbAnnotator" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnSaveEval" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNumberArguments2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNumberRelations2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="scrollPane11" pref="556" max="32767" attributes="0"/>
-                          <Component id="scrollPane15" alignment="1" max="32767" attributes="0"/>
-                          <Component id="scrollPane12" alignment="1" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="scrollPane11" pref="525" max="32767" attributes="0"/>
+                                  <Component id="scrollPane12" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblNumberArguments2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblNumberRelations2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="scrollPane13" min="-2" pref="96" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="scrollPane15" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="scrollPane13" min="-2" pref="96" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -881,16 +890,31 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblNumberArguments2">
+            <Component class="javax.swing.JButton" name="btnSaveEval">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Argument components (ACs)"/>
+                <Property name="text" type="java.lang.String" value="Save"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveEvalActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblNumberRelations2">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Argument relations (ARs)"/>
-              </Properties>
-            </Component>
+            <Container class="javax.swing.JScrollPane" name="scrollPane15">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JEditorPane" name="edtEvalAnnotation">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="contentType" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="HTML_CONTENT_TYPE" type="code"/>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
             <Container class="javax.swing.JScrollPane" name="scrollPane11">
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -916,6 +940,11 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JLabel" name="lblNumberArguments2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Argument components (ACs)"/>
+              </Properties>
+            </Component>
             <Container class="javax.swing.JScrollPane" name="scrollPane12">
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -943,6 +972,11 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JLabel" name="lblNumberRelations2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Argument relations (ARs)"/>
+              </Properties>
+            </Component>
             <Container class="javax.swing.JScrollPane" name="scrollPane13">
               <Properties>
                 <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
@@ -954,31 +988,6 @@
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
                 <Component class="javax.swing.JEditorPane" name="txtEvaluationPreview">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="false"/>
-                    <Property name="contentType" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="HTML_CONTENT_TYPE" type="code"/>
-                    </Property>
-                  </Properties>
-                </Component>
-              </SubComponents>
-            </Container>
-            <Component class="javax.swing.JButton" name="btnSaveEval">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Save"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveEvalActionPerformed"/>
-              </Events>
-            </Component>
-            <Container class="javax.swing.JScrollPane" name="scrollPane15">
-              <AuxValues>
-                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-              </AuxValues>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JEditorPane" name="edtEvalAnnotation">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="contentType" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
