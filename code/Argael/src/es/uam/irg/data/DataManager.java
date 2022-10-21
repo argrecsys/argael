@@ -26,6 +26,9 @@ import java.util.Map;
  */
 public class DataManager {
 
+    public static final String ANNOTATIONS = "annotations";
+    public static final String EVALUATIONS = "evaluations";
+    
     // Class members
     private String directory;
     private final DataType type;
@@ -63,7 +66,7 @@ public class DataManager {
 
         if (this.type == DataType.CSV) {
 
-            String folderPath = directory + "/" + userName + "/annotations/";
+            String folderPath = directory + "/" + userName + "/" + ANNOTATIONS;
             result = IOManager.readAnnotationData(folderPath, entity);
 
         } else if (this.type == DataType.DATABASE) {
@@ -85,7 +88,7 @@ public class DataManager {
         Map<String, Map<Integer, String>> result = null;
 
         if (this.type == DataType.CSV) {
-            String folderPath = directory + "/" + userName + "/evaluations/" + evalName + "/";
+            String folderPath = directory + "/" + userName + "/" + EVALUATIONS +"/" + evalName + "/";
             result = IOManager.readEvaluationData(folderPath, entity);
 
         } else if (this.type == DataType.DATABASE) {
@@ -106,7 +109,7 @@ public class DataManager {
         boolean result = false;
 
         if (this.type == DataType.CSV) {
-            String filePath = createFilepath(userName, "annotation", entity, IOManager.FILE_ARG_COMP);
+            String filePath = createFilepath(userName, ANNOTATIONS, entity, IOManager.FILE_ARG_COMP);
             String[] header = new String[]{"ac_id", "ac_text", "ac_type", "annotator", "timestamp"};
             result = IOManager.saveAnnotationData(filePath, header, rows);
 
@@ -129,7 +132,7 @@ public class DataManager {
         boolean result = false;
 
         if (this.type == DataType.CSV) {
-            String filePath = createFilepath(userName, "evaluations/" + targetUser, entity, IOManager.FILE_ARG_COMP);
+            String filePath = createFilepath(userName, EVALUATIONS + "/" + targetUser, entity, IOManager.FILE_ARG_COMP);
             String[] header = new String[]{"ac_id", "ac_quality", "evaluator", "timestamp"};
             result = IOManager.saveAnnotationData(filePath, header, rows);
 
@@ -151,7 +154,7 @@ public class DataManager {
         boolean result = false;
 
         if (this.type == DataType.CSV) {
-            String filePath = createFilepath(userName, "annotation", entity, IOManager.FILE_ARG_REL);
+            String filePath = createFilepath(userName, ANNOTATIONS, entity, IOManager.FILE_ARG_REL);
             String[] header = new String[]{"ar_id", "ac_id1", "ac_id2", "rel_type", "rel_intent", "annotator", "timestamp"};
             result = IOManager.saveAnnotationData(filePath, header, rows);
 
@@ -174,7 +177,7 @@ public class DataManager {
         boolean result = false;
 
         if (this.type == DataType.CSV) {
-            String filePath = createFilepath(userName, "evaluations/" + targetUser, entity, IOManager.FILE_ARG_REL);
+            String filePath = createFilepath(userName, EVALUATIONS + "/" + targetUser, entity, IOManager.FILE_ARG_REL);
             String[] header = new String[]{"ac_id", "ac_quality", "evaluator", "timestamp"};
             result = IOManager.saveAnnotationData(filePath, header, rows);
 

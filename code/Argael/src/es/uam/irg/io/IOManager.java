@@ -47,7 +47,7 @@ public class IOManager {
         String[] argFileTypes = new String[]{FILE_ARG_COMP, FILE_ARG_REL};
 
         for (String fileType : argFileTypes) {
-            String filePath = directory + currFile + "_" + fileType + ".csv";
+            String filePath = directory + "/" + currFile + "_" + fileType + ".csv";
             List<String[]> data = FileUtils.readCsvFile(filePath, false);
             annotations.put(fileType, data);
         }
