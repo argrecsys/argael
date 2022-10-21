@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * Data model class.
  */
-public class DataModel {
+public class DataManager {
 
     // Class members
     private String directory;
@@ -35,7 +35,7 @@ public class DataModel {
      *
      * @param directory
      */
-    public DataModel(String directory) {
+    public DataManager(String directory) {
         this.type = DataType.CSV;
         this.directory = directory;
     }
@@ -48,7 +48,7 @@ public class DataModel {
      * @param user
      * @param pwd
      */
-    public DataModel(String server, String instance, String user, String pwd) {
+    public DataManager(String server, String instance, String user, String pwd) {
         this.type = DataType.DATABASE;
     }
 

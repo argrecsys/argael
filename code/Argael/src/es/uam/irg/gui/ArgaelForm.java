@@ -18,7 +18,7 @@
 package es.uam.irg.gui;
 
 import es.uam.irg.data.ArgumentModel;
-import es.uam.irg.data.DataModel;
+import es.uam.irg.data.DataManager;
 import es.uam.irg.data.SelectedItems;
 import es.uam.irg.io.IOManager;
 import es.uam.irg.utils.FileUtils;
@@ -58,7 +58,7 @@ public class ArgaelForm extends javax.swing.JFrame {
     private int currTabIndex;
     private final SelectedItems acSelected;
     private final ArgumentModel argModel;
-    private final DataModel dataModel;
+    private final DataManager dataModel;
     private final Map<String, String> files;
     private String fileExtension;
     private final ReportFormatter formatter;
@@ -83,7 +83,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         this.currTabIndex = 0;
         this.acSelected = new SelectedItems();
         this.argModel = new ArgumentModel(components, relCategories, relIntents, qualityMetrics);
-        this.dataModel = new DataModel(resultFolder);
+        this.dataModel = new DataManager(resultFolder);
         this.files = new HashMap<>();
         this.fileExtension = fileExtension;
         this.formatter = new ReportFormatter(DECIMAL_FORMAT, DATE_FORMAT);
@@ -903,7 +903,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 1.9.1
+                          Version: 1.9.2
                           Date: 10/21/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
