@@ -1,5 +1,5 @@
 # ARGAEL: ARGument Annotation and Evaluation tooL
-![version](https://img.shields.io/badge/version-1.9.5-blue)
+![version](https://img.shields.io/badge/version-2.0-blue)
 ![last-update](https://img.shields.io/badge/last_update-10/21/2022-orange)
 ![license](https://img.shields.io/badge/license-Apache_2.0-brightgreen)
 
@@ -10,22 +10,22 @@ Some advantages of our proposed tool are:
 - it supports multiple rich argument models
 - it allows users to define their own argument model (if required)
 - it offers support for multiple annotators and evaluators
-- it allows intra- and inter-argument annotations (due to its text-driven annotation view), among others
+- it allows intra- and inter-argument annotations (due to its text-driven annotation view)
 
 ## System
-ARGAEL is mainly composed of 3 main views, which offer different functionalities and roles to the users.
+ARGAEL is mainly composed of 3 views, which offer different functionalities and roles to the users.
 
-**(Simple) Annotator view**. It allows in 3 simple steps, i) the annotation of argumentative components (ACs), ii) the annotation of argumentative relation (ARs), and iii) their initial validation.
+**(Simple) Annotator view**. It allows in 3 simple steps, i) the annotation of argumentative components (ACs), ii) the annotation of argumentative relation (ARs), and iii) their initial visual validation.
 
-![ARGAEL annotation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-annotation-view.png)
+![ARGAEL simple annotation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-view-annotation-simple.png)
 
-**(Assisted) Annotator view**. It allows in 3 simple steps, i) the annotation of argumentative components (ACs), ii) the annotation of argumentative relation (ARs), and iii) their initial validation.
+**(Assisted) Annotator view**. It allows in an assisted way (from previous annotations), i) the annotation of argumentative components (ACs), ii) the annotation of argumentative relation (ARs), and iii) their initial visual validation.
 
-![ARGAEL annotation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-annotation-view.png)
+![ARGAEL assisted annotation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-view-annotation-assisted.png)
 
 **Evaluator view**. It allows (in a simple, but straightforward way) the manual assessment of the argument units (both components and relations) annotated by other users.
 
-![ARGAEL evaluation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-evaluation-view.png)
+![ARGAEL cross evaluation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-view-evaluation-cross.png)
 
 ## Demo video
 In the following link you can see a demo video of the tool.
