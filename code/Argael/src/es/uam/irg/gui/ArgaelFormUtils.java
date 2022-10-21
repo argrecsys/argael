@@ -286,16 +286,44 @@ class ArgaelFormUtils {
      * @param tblArgComponents
      * @return
      */
-    static List<Integer> getSelectedACIds(JTable tblArgComponents) {
+    static List<Integer> getSelectedACIdsFromCompTable(JTable tblArgComponents) {
         List<Integer> acIds = new ArrayList<>();
+
         if (tblArgComponents != null) {
-            TableModel model = tblArgComponents.getModel();
             int[] rows = tblArgComponents.getSelectedRows();
-            for (int row : rows) {
-                int acId = Integer.parseInt(model.getValueAt(row, 0).toString());
-                acIds.add(acId);
+
+            if (rows.length >= 0) {
+                TableModel model = tblArgComponents.getModel();
+                for (int row : rows) {
+                    int acId = Integer.parseInt(model.getValueAt(row, 0).toString());
+                    acIds.add(acId);
+                }
             }
         }
+
+        return acIds;
+    }
+
+    /**
+     *
+     * @param tblArgRelations
+     * @return
+     */
+    static List<Integer> getSelectedACIdsFromRelTable(JTable tblArgRelations) {
+        List<Integer> acIds = new ArrayList<>();
+
+        if (tblArgRelations != null) {
+            int row = tblArgRelations.getSelectedRow();
+
+            if (row >= 0) {
+                TableModel model = tblArgRelations.getModel();
+                int acId1 = Integer.parseInt(model.getValueAt(row, 1).toString());
+                int acId2 = Integer.parseInt(model.getValueAt(row, 2).toString());
+                acIds.add(acId1);
+                acIds.add(acId2);
+            }
+        }
+
         return acIds;
     }
 
