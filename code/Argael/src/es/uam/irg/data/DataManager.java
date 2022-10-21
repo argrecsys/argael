@@ -28,7 +28,7 @@ public class DataManager {
 
     public static final String ANNOTATIONS = "annotations";
     public static final String EVALUATIONS = "evaluations";
-    
+
     // Class members
     private String directory;
     private final DataType type;
@@ -88,7 +88,7 @@ public class DataManager {
         Map<String, Map<Integer, String>> result = null;
 
         if (this.type == DataType.CSV) {
-            String folderPath = directory + "/" + evalName + "/" + EVALUATIONS +"/" + userName + "/";
+            String folderPath = directory + "/" + evalName + "/" + EVALUATIONS + "/" + userName + "/";
             result = IOManager.readEvaluationData(folderPath, entity);
 
         } else if (this.type == DataType.DATABASE) {
