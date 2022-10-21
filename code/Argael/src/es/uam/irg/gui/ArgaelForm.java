@@ -903,7 +903,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 1.9.2
+                          Version: 1.9.4
                           Date: 10/21/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
@@ -1430,7 +1430,7 @@ public class ArgaelForm extends javax.swing.JFrame {
      */
     private void setAppUsers() {
         String[] users = getUserList();
-        String result = (String) JOptionPane.showInputDialog(this, "Please, select the annotator:", "Selection", JOptionPane.PLAIN_MESSAGE, null, users, "");
+        String result = (String) JOptionPane.showInputDialog(this, "Annotator:", "Select", JOptionPane.PLAIN_MESSAGE, null, users, "");
 
         if (result != null && result.length() > 0) {
             userName = result;
