@@ -88,7 +88,7 @@ public class DataManager {
         Map<String, Map<Integer, String>> result = null;
 
         if (this.type == DataType.CSV) {
-            String folderPath = directory + "/" + userName + "/" + EVALUATIONS +"/" + evalName + "/";
+            String folderPath = directory + "/" + evalName + "/" + EVALUATIONS +"/" + userName + "/";
             result = IOManager.readEvaluationData(folderPath, entity);
 
         } else if (this.type == DataType.DATABASE) {
