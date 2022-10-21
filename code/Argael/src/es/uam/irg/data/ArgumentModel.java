@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU General Public License along with
  * the current software. If not, see <http://www.gnu.org/licenses/>.
  */
-package es.uam.irg.struct;
+package es.uam.irg.data;
 
 import java.util.List;
 
 /**
- * Argument annotator tool data model class.
+ * Argument model class.
  */
 public class ArgumentModel {
 

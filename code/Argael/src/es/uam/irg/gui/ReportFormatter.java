@@ -40,7 +40,7 @@ public class ReportFormatter {
     private final DecimalFormat df;
     private final DateFormat dsf;
     private final DateTimeFormatter dtf;
-    private Map<String, String> reports;
+    private Map<String, String> templates;
 
     /**
      *
@@ -51,7 +51,7 @@ public class ReportFormatter {
         this.df = new DecimalFormat(decimalFormat);
         this.dsf = new SimpleDateFormat(dateFormat);
         this.dtf = DateTimeFormatter.ofPattern(dateFormat);
-        loadReports();
+        loadReportTemplates();
     }
 
     /**
@@ -99,8 +99,8 @@ public class ReportFormatter {
         // 1. Create user report from JSONL source
         start = System.nanoTime();
         if (format.equals("JSONL")) {
-            String report = reports.get("PROPOSAL_INFO");
-            String comment = reports.get("COMMENT_INFO");
+            String report = templates.get("PROPOSAL_INFO");
+            String comment = templates.get("COMMENT_INFO");
             String tagType;
             String textValue;
             StringBuilder commentList = new StringBuilder();
@@ -238,7 +238,7 @@ public class ReportFormatter {
      * @return
      */
     private String getProposalsReport(String body, int nReports, int timeElapsed) {
-        String result = reports.get("PROPOSAL_LIST");
+        String result = templates.get("PROPOSAL_LIST");
         result = result.replace("$N_REPORTS$", "" + nReports);
         result = result.replace("$TIME_ELAPSED$", "" + timeElapsed);
         result = result.replace("$CURRENT_TIME$", formatDate(LocalDateTime.now()));
@@ -249,8 +249,8 @@ public class ReportFormatter {
     /**
      * Loads all available reports into memory from disk.
      */
-    private void loadReports() {
-        reports = IOManager.readHtmlReports(REPORTS_PATH);
+    private void loadReportTemplates() {
+        templates = IOManager.readReportFiles(REPORTS_PATH);
     }
 
 }
