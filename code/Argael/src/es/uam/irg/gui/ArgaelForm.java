@@ -17,9 +17,10 @@
  */
 package es.uam.irg.gui;
 
+import es.uam.irg.data.ArgumentModel;
+import es.uam.irg.data.DataManager;
+import es.uam.irg.data.SelectedItems;
 import es.uam.irg.io.IOManager;
-import es.uam.irg.struct.ArgumentModel;
-import es.uam.irg.struct.SelectedItems;
 import es.uam.irg.utils.FileUtils;
 import es.uam.irg.utils.StringUtils;
 import java.io.File;
@@ -52,11 +53,12 @@ public class ArgaelForm extends javax.swing.JFrame {
     private static final String USERS_FILEPATH = "Resources/config/users.txt";
 
     // GUI variables
-    private String currDirectory;
+    private String currDataFolder;
     private String currEntity;
     private int currTabIndex;
     private final SelectedItems acSelected;
     private final ArgumentModel argModel;
+    private final DataManager dataModel;
     private final Map<String, String> files;
     private String fileExtension;
     private final ReportFormatter formatter;
@@ -66,20 +68,22 @@ public class ArgaelForm extends javax.swing.JFrame {
      * Creates new ARGAEL form.
      *
      * @param dataFolder
+     * @param resultFolder
      * @param fileExtension
      * @param components
      * @param relCategories
      * @param relIntents
      * @param qualityMetrics
      */
-    public ArgaelForm(String dataFolder, String fileExtension, List<String> components, List<String> relCategories, List<String> relIntents, List<String> qualityMetrics) {
+    public ArgaelForm(String dataFolder, String resultFolder, String fileExtension, List<String> components, List<String> relCategories, List<String> relIntents, List<String> qualityMetrics) {
         initComponents();
 
-        this.currDirectory = dataFolder;
+        this.currDataFolder = "";
         this.currEntity = "";
         this.currTabIndex = 0;
         this.acSelected = new SelectedItems();
         this.argModel = new ArgumentModel(components, relCategories, relIntents, qualityMetrics);
+        this.dataModel = new DataManager(resultFolder);
         this.files = new HashMap<>();
         this.fileExtension = fileExtension;
         this.formatter = new ReportFormatter(DECIMAL_FORMAT, DATE_FORMAT);
@@ -88,7 +92,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         this.setComboBoxes();
         this.setVisible(true);
         this.setAppUsers();
-        this.importDocsFromDirectory(false);
+        this.importDocsFromDirectory(dataFolder);
     }
 
     /**
@@ -876,13 +880,13 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void mItemImportJsonlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemImportJsonlActionPerformed
         // TODO add your handling code here:
         this.fileExtension = IOManager.DocExt.JSONL.toString();
-        importDocsFromDirectory(true);
+        importDocsFromDirectory();
     }//GEN-LAST:event_mItemImportJsonlActionPerformed
 
     private void mItemImportTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemImportTextActionPerformed
         // TODO add your handling code here:
         this.fileExtension = IOManager.DocExt.TXT.toString();
-        importDocsFromDirectory(true);
+        importDocsFromDirectory();
     }//GEN-LAST:event_mItemImportTextActionPerformed
 
     private void mItemExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemExportActionPerformed
@@ -899,8 +903,8 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 1.9.0
-                          Date: 10/20/2022
+                          Version: 1.9.2
+                          Date: 10/21/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
                           Web site: https://argrecsys.github.io/argael/
@@ -1164,19 +1168,19 @@ public class ArgaelForm extends javax.swing.JFrame {
 
     /**
      *
-     * @param filePath
      * @return
      */
-    private String getFileReport(String filePath) {
+    private String getCurrentReport() {
         String content = "";
-        String fileName = StringUtils.getLastToken(filePath, "\\\\");
+        String filepath = currDataFolder + "\\" + currEntity + "." + fileExtension;
+        String fileName = StringUtils.getLastToken(filepath, "\\\\");
 
         if (!fileName.equals("")) {
             if (files.containsKey(fileName)) {
                 content = files.get(fileName);
             } else {
-                String fileType = FileUtils.getFileExtension(filePath);
-                content = IOManager.readTextFile(filePath);
+                String fileType = FileUtils.getFileExtension(filepath);
+                content = IOManager.readTextFile(filepath);
                 content = formatter.getPrettyReport(content, fileType);
                 files.put(fileName, content);
             }
@@ -1190,21 +1194,27 @@ public class ArgaelForm extends javax.swing.JFrame {
      * @param user
      * @return
      */
-    private Map<String, List<String[]>> getSavedAnnotationData(String user) {
-        String directory = currDirectory + "\\..\\results\\" + user + "\\annotations\\";
-        String currFile = currEntity;
-        return IOManager.readAnnotationData(directory, currFile);
+    private Map<String, List<String[]>> getUserAnnotations(String dataUser) {
+        return dataModel.getUserAnnotations(currEntity, dataUser);
     }
 
     /**
      *
-     * @param user
+     * @param dataUser
+     * @param evalUser
      * @return
      */
-    private Map<String, Map<Integer, String>> getSavedEvaluationData(String dataUser, String evalUser) {
-        String directory = currDirectory + "\\..\\results\\" + evalUser + "\\evaluations\\" + dataUser + "\\";
-        String currFile = currEntity;
-        return IOManager.readEvaluationData(directory, currFile);
+    private Map<String, Map<Integer, String>> getUserEvaluations(String dataUser, String evalUser) {
+        return dataModel.getUserEvaluations(currEntity, dataUser, evalUser);
+    }
+
+    /**
+     *
+     * @return
+     */
+    private String[] getUserList() {
+        List<String> annotators = IOManager.readUsers(USERS_FILEPATH);
+        return annotators.toArray(new String[0]);
     }
 
     /**
@@ -1243,12 +1253,20 @@ public class ArgaelForm extends javax.swing.JFrame {
 
     /**
      *
+     */
+    private void importDocsFromDirectory() {
+        importDocsFromDirectory("");
+    }
+
+    /**
+     *
      * @param fileExt
      */
-    private void importDocsFromDirectory(boolean reload) {
+    private void importDocsFromDirectory(String dataFolder) {
 
-        // Reload document directory
-        if (reload) {
+        if (StringUtils.isEmpty(dataFolder)) {
+
+            // Load document directory
             JFileChooser jfc = new JFileChooser();
             jfc.setCurrentDirectory(new java.io.File("."));
             jfc.setDialogTitle("Select folder");
@@ -1256,15 +1274,17 @@ public class ArgaelForm extends javax.swing.JFrame {
             jfc.setAcceptAllFileFilterUsed(false);
 
             if (jfc.showOpenDialog(ArgaelForm.this) == JFileChooser.APPROVE_OPTION) {
-                currDirectory = jfc.getSelectedFile().toString();
+                currDataFolder = jfc.getSelectedFile().toString();
             }
+        } else {
+            currDataFolder = dataFolder;
         }
 
         // Import documents/files
-        File file = new File(currDirectory);
+        File file = new File(currDataFolder);
         if (file.isDirectory() && !StringUtils.isEmpty(fileExtension)) {
-            List<String> docList = FileUtils.readFilenamesInFolder(currDirectory, fileExtension);
-            System.out.println(String.format(">> Directory: '%s' and number of uploaded docs: %d", currDirectory, files.size()));
+            List<String> docList = FileUtils.readFilenamesInFolder(currDataFolder, fileExtension);
+            System.out.println(String.format(">> Directory: '%s' and number of uploaded docs: %d", currDataFolder, files.size()));
 
             lstDocs.removeAll();
             if (docList.size() > 0) {
@@ -1274,7 +1294,7 @@ public class ArgaelForm extends javax.swing.JFrame {
             }
 
         } else {
-            System.out.println(">> Error importing documents [" + currDirectory + "]");
+            System.out.println(">> Error importing documents [" + currDataFolder + "]");
         }
     }
 
@@ -1310,15 +1330,13 @@ public class ArgaelForm extends javax.swing.JFrame {
     }
 
     /**
-     *
+     * Saves user annotations.
      */
-    private void saveAnnotationsToFiles() {
+    private void saveUserAnnotations() {
         TableModel acModel = null;
         TableModel arModel = null;
         List<String[]> acAnnotations = new ArrayList<>();
         List<String[]> arAnnotations = new ArrayList<>();
-        String fileName;
-        List<String> header;
 
         if (currTabIndex == 0) {
             acModel = tblArgComponents.getModel();
@@ -1350,23 +1368,17 @@ public class ArgaelForm extends javax.swing.JFrame {
         }
 
         // Save ACs results
-        fileName = currEntity + "_" + IOManager.FILE_ARG_COMP;
-        header = new ArrayList<>(Arrays.asList("ac_id", "ac_text", "ac_type", "annotator", "timestamp"));
-        saveResults(fileName, "annotations", header, acAnnotations);
+        dataModel.saveArgCompAnnotations(currEntity, userName, acAnnotations);
 
         // Save ARs results
-        fileName = currEntity + "_" + IOManager.FILE_ARG_REL;
-        header = new ArrayList<>(Arrays.asList("ar_id", "ac_id1", "ac_id2", "rel_type", "rel_intent", "annotator", "timestamp"));
-        saveResults(fileName, "annotations", header, arAnnotations);
+        dataModel.saveArgRelAnnotations(currEntity, userName, arAnnotations);
     }
 
     /**
-     *
+     * Saves user evaluations.
      */
-    private void saveEvaluationsToFiles() {
+    private void saveUserEvaluations() {
         String targetUser = cmbAnnotator.getSelectedItem().toString();
-        String fileName;
-        List<String> header;
         List<String[]> acEvaluations = new ArrayList<>();
         List<String[]> arEvaluations = new ArrayList<>();
 
@@ -1393,42 +1405,10 @@ public class ArgaelForm extends javax.swing.JFrame {
         }
 
         // Save ACs results
-        fileName = targetUser + "\\" + currEntity + "_" + IOManager.FILE_ARG_COMP;
-        header = new ArrayList<>(Arrays.asList("ac_id", "ac_quality", "evaluator", "timestamp"));
-        saveResults(fileName, "evaluations", header, acEvaluations);
+        dataModel.saveArgCompEvaluations(currEntity, userName, targetUser, acEvaluations);
 
         // Save ARs results
-        fileName = targetUser + "\\" + currEntity + "_" + IOManager.FILE_ARG_REL;
-        header = new ArrayList<>(Arrays.asList("ar_id", "ar_quality", "evaluator", "timestamp"));
-        saveResults(fileName, "evaluations", header, arEvaluations);
-    }
-
-    /**
-     *
-     * @param fileName
-     * @param fileType
-     * @param header
-     * @param rows
-     * @return
-     */
-    private boolean saveResults(String fileName, String fileType, List<String> header, List<String[]> rows) {
-        boolean result;
-
-        String directory = currDirectory + "\\..\\results\\" + userName + "\\" + fileType;
-        String filePath = directory + "\\" + fileName + ".csv";
-        List<String[]> data = new ArrayList<>();
-        data.add(header.toArray(new String[header.size()]));
-        data.addAll(rows);
-
-        result = FileUtils.createDirectory(FileUtils.getDirectory(filePath));
-        if (result) {
-            result = FileUtils.saveCsvFile(filePath, data);
-            if (result) {
-                System.out.println(">> Data saved correctly (" + fileType + ").");
-            }
-        }
-
-        return result;
+        dataModel.saveArgRelEvaluations(currEntity, userName, targetUser, arEvaluations);
     }
 
     /**
@@ -1437,21 +1417,12 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void saveViewData() {
         if (!StringUtils.isEmpty(currEntity)) {
             if (currTabIndex == 0 || currTabIndex == 1) {
-                saveAnnotationsToFiles();
+                saveUserAnnotations();
 
             } else if (currTabIndex == 2) {
-                saveEvaluationsToFiles();
+                saveUserEvaluations();
             }
         }
-    }
-
-    /**
-     *
-     * @return
-     */
-    private String[] getUserList() {
-        List<String> annotators = IOManager.readUsers(USERS_FILEPATH);
-        return annotators.toArray(new String[0]);
     }
 
     /**
@@ -1616,7 +1587,7 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void updatePanelData(javax.swing.JEditorPane editor, javax.swing.JTable acTable, javax.swing.JTable arTable, String dataUser, String evalUser, List<Integer> selectedACIds) {
 
         // Get annotation data
-        Map<String, List<String[]>> annotations = getSavedAnnotationData(dataUser);
+        Map<String, List<String[]>> annotations = getUserAnnotations(dataUser);
         List<String[]> acData = annotations.get(IOManager.FILE_ARG_COMP);
         List<String[]> arData = annotations.get(IOManager.FILE_ARG_REL);
 
@@ -1624,15 +1595,14 @@ public class ArgaelForm extends javax.swing.JFrame {
         Map<Integer, String> acEval = null;
         Map<Integer, String> arEval = null;
         if (!StringUtils.isEmpty(evalUser)) {
-            Map<String, Map<Integer, String>> evaluations = getSavedEvaluationData(dataUser, evalUser);
+            Map<String, Map<Integer, String>> evaluations = getUserEvaluations(dataUser, evalUser);
             acEval = evaluations.get(IOManager.FILE_ARG_COMP);
             arEval = evaluations.get(IOManager.FILE_ARG_REL);
         }
 
         // Update editor report
         if (editor != null) {
-            String filepath = currDirectory + "\\" + currEntity + "." + fileExtension;
-            String rawReport = getFileReport(filepath);
+            String rawReport = getCurrentReport();
             String report = highlightReport(rawReport, acData, selectedACIds);
             ArgaelFormUtils.updateEditorContent(editor, report);
         }

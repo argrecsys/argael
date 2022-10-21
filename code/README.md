@@ -9,9 +9,10 @@ The input parameters (<a href="https://github.com/argrecsys/argael/blob/main/cod
 ```json
 {
     "data": {
-        "folder": "C:/Dev Projects/argael/data/proposals",
-        "extension": "jsonl",
-        "language": "es"
+        "fileExtension": "jsonl",
+        "language": "es",
+        "source": "C:/Dev Projects/argael/data/proposals",
+        "result": "C:/Dev Projects/argael/data/results"
     },
     "annotation_model": {
         "components": ["major claim", "claim", "premise"],

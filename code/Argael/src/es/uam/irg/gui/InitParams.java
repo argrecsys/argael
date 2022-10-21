@@ -47,9 +47,10 @@ public class InitParams {
                 // General parameters
                 data = json.getJSONObject("data");
                 Map<String, Object> documents = new HashMap<>();
-                documents.put("folder", data.getString("folder"));
-                documents.put("extension", data.getString("extension"));
+                documents.put("source", data.getString("source"));
+                documents.put("fileExtension", data.getString("fileExtension"));
                 documents.put("language", data.getString("language"));
+                documents.put("result", data.getString("result"));
                 params.put("data", documents);
 
                 // Annotation model parameters

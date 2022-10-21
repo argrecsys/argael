@@ -85,7 +85,7 @@ public class IOManager {
      * @param folderPath
      * @return
      */
-    public static Map<String, String> readHtmlReports(String folderPath) {
+    public static Map<String, String> readReportFiles(String folderPath) {
         Map<String, String> reports = new HashMap<>();
         File folder = new File(folderPath);
 
@@ -132,6 +132,27 @@ public class IOManager {
         }
 
         return users;
+    }
+
+    /**
+     *
+     * @param filePath
+     * @param header
+     * @param rows
+     * @return
+     */
+    public static boolean saveAnnotationData(String filePath, String[] header, List<String[]> rows) {
+        boolean result = FileUtils.createDirectory(FileUtils.getDirectory(filePath));
+
+        if (result) {
+            List<String[]> data = new ArrayList<>();
+            data.add(header);
+            data.addAll(rows);
+
+            result = FileUtils.saveCsvFile(filePath, data);
+        }
+
+        return result;
     }
 
     /**
