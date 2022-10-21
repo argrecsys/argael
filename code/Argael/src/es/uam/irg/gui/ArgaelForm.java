@@ -180,7 +180,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         menuUser = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("ARGAEL v1.9");
+        setTitle("ARGAEL v2.0");
         setMinimumSize(new java.awt.Dimension(1111, 500));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -903,7 +903,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 1.9.5
+                          Version: 2.0.0
                           Date: 10/21/2022
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
