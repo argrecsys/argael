@@ -5,27 +5,16 @@
 
 **ARGAEL** is an open-source Java desktop application designed to maximize the experience and efficiency of the process of annotating and evaluating arguments in large text corpora.
 
-Some advantages of our proposed tool are:
-- it is designed to support both annotation and evaluation
-- it supports multiple rich argument models
-- it allows users to define their own argument model (if required)
-- it offers a collaborative, real-time environment with support for multiple annotators and multiple evaluators
-- it allows intra- and inter-argument annotations (due to its text-driven annotation view)
+ARGAEL presents a number of novelties and advantages:
+- It allows using configurable, user-defined argument models.
+- it supports both the generation and evaluation of annotations by multiple users.
+- it provides a visual interface designed to overcome particular needs and difficulties of argumentative annotation processes, such as the exploration of the (textual) context in which an argument is given.
 
-## System interface
-ARGAEL is mainly composed of 3 views, which offer different functionalities and roles to the users.
+## System architecture
 
-**(Simple) Annotator view**. It allows in 3 simple steps, i) the annotation of argumentative components (ACs), ii) the annotation of argumentative relation (ARs), and iii) their initial visual validation.
+![ARGAEL simple annotation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-architecture.png)
 
-![ARGAEL simple annotation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-view-annotation-simple.png)
-
-**(Assisted) Annotator view**. It allows in an assisted way (from previous annotations), i) the annotation of argumentative components (ACs), ii) the annotation of argumentative relation (ARs), and iii) their initial visual validation.
-
-![ARGAEL assisted annotation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-view-annotation-assisted.png)
-
-**Evaluator view**. It allows (in a simple, but straightforward way) the manual assessment of the argument units (both components and relations) annotated by other users.
-
-![ARGAEL cross evaluation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-view-evaluation-cross.png)
+The tool is composed of several internal modules, receives a number of files as inputs, and allows the user to generate annotations and their evaluations as outputs.
 
 ## Demo video
 In the following link you can see a demo video of the tool.
@@ -33,7 +22,7 @@ In the following link you can see a demo video of the tool.
 [![ARGAEL demo video](https://img.youtube.com/vi/8Kfca5YVlE8/default.jpg)](https://youtu.be/8Kfca5YVlE8)
 
 ## Documentation
-More documentation on ARGAEL can be found at the following <a href="https://github.com/argrecsys/argael/blob/main/code/README.md">link</a>.
+More documentation on ARGAEL can be found at the following <a href="https://argrecsys.github.io/argael/docs/">link</a>.
 
 ## Authors
 Created on Jun 29, 2022  
