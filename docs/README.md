@@ -51,17 +51,17 @@ The ARGAEL interface offers two views for the annotation generation task, namely
 ### Simple Annotation View
 This view, available in the *Independent Annotation* tab, allows the user to identify and annotate argumentative components and their respective relations independently, i.e., without taking into account previous annotations from other people on the same document. This view is recommended for expert or senior annotators.
 
-![ARGAEL simple annotation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-view-annotation-simple.png)
+![ARGAEL simple annotation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-view-annotation-simple.jpg)
 
 ### Assisted Annotation View
 This view, available in the *Assisted Annotation* tab, allows the user to identify and annotate argumentative components and relations in an assisted way, i.e., it can be based on previous annotations of other users. This view is recommended for junior annotators or in cases where there is little time available for annotation.
 
-![ARGAEL assisted annotation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-view-annotation-assisted.png)
+![ARGAEL assisted annotation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-view-annotation-assisted.jpg)
 
 ### Annotation Evaluation View
 The evaluator view, available in the *Evaluation* tab, allows --in a simple, but straightforward way-- the manual assessment of the argument units (both components and relations) annotated by other users, based on the evaluation metrics configured in the *config.JSON* file.
 
-![ARGAEL cross evaluation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-view-evaluation-colab.png)
+![ARGAEL cross evaluation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-view-evaluation-colab.jpg)
 
 ## Execution and use
 The project has an executable package in the `\jar` folder, called `Argael.jar`. To run the tool from the Command Prompt (CMD), execute the following commands:
