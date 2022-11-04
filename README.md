@@ -1,9 +1,9 @@
 # ARGAEL: ARGument Annotation and Evaluation tooL
 ![version](https://img.shields.io/badge/version-2.0-blue)
-![last-update](https://img.shields.io/badge/last_update-10/28/2022-orange)
+![last-update](https://img.shields.io/badge/last_update-11/04/2022-orange)
 ![license](https://img.shields.io/badge/license-Apache_2.0-brightgreen)
 
-**ARGAEL** is an open-source Java desktop application designed to maximize the experience and efficiency of the process of annotating and evaluating arguments in large text corpora.
+**ARGAEL** is an open-source Java desktop application designed to provide flexibility and efficiency on the manual labeling and assessing of argumentative information at scale.
 
 ARGAEL presents a number of novelties and advantages:
 - It allows using configurable, user-defined argument models.
