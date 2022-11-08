@@ -22,7 +22,7 @@ The implemented solution depends on or make use of the following libraries:
 - Snake YAML 1.9
 
 ## Configuration
-The JSON configuration file allows configuring (in a simple and readable way) the argument model to be used during the annotation (*annotation_model* key), the quality metrics to be used during the evaluation (*evaluation_model* key), as well as some characteristics of the text documents to be used (*data* key).
+The JSON configuration file allows configuring, in a simple and readable way, the argument model to be used during the annotation (*annotation_model* key), the metrics to be used during the evaluation (*evaluation_model* key), as well as some characteristics of the text documents to be used (*data* key).
 
 The input parameters (<a href="https://github.com/argrecsys/argael/blob/main/code/Argael/Resources/config/params.json">params.json</a> file) of the tool are:
 ```json
@@ -44,8 +44,9 @@ The input parameters (<a href="https://github.com/argrecsys/argael/blob/main/cod
 }
 ```
 
-## System Interface
+The  users registered in ARGAEL are allowed to both generate and evaluate annotations. Their usernames are stored as a list in a plain text (TXT) file.
 
+## System Interface
 The ARGAEL interface offers two views for the annotation generation task, namely the *simple view* and the *assisted view*. Both of them allow the user to: i) identify and manually annotate ACs on a given text, ii) annotate ARs between pairs of identified ACs, and iii) interactively validate the created annotations.
 
 ### Simple Annotation View
@@ -63,13 +64,15 @@ The evaluator view, available in the *Evaluation* tab, allows --in a simple, but
 
 ![ARGAEL cross evaluation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-view-evaluation-colab.jpg)
 
-## Execution and use
+## Execution and Use
 The project has an executable package in the `\jar` folder, called `Argael.jar`. To run the tool from the Command Prompt (CMD), execute the following commands:
 
 ``` console
   cd "argael\jar\"
   java -jar Argael.jar
 ```
+
+More information on how to run ARGAEL can be found <a href="https://github.com/argrecsys/argael/tree/main/jar" target="_blank">here</a>.
 
 ## Authors
 Created on Jun 29, 2022  
