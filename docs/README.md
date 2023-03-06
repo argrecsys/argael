@@ -38,8 +38,8 @@ The input parameters (<a href="https://github.com/argrecsys/argael/blob/main/cod
     "data": {
         "fileExtension": "jsonl",
         "language": "es",
-        "source": "C:/Dev Projects/argael/data/proposals",
-        "result": "C:/Dev Projects/argael/data/results"
+        "source": "C:/argael/data/proposals",
+        "result": "C:/argael/data/results"
     }
 }
 ```
@@ -54,15 +54,42 @@ This view, available in the *Independent Annotation* tab, allows the user to ide
 
 ![ARGAEL simple annotation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-view-annotation-simple.jpg)
 
+Next, we describe the graphical controls available in this view, following their numeration in previous figure:
+
+1. *Main annotation panel*. It displays the selected document text along with the argument components annotated by the current user. It supports particular text highlighting of each component type.
+2. *Annotator toolbar*. It provides graphical controls for creating and deleting argument components and relations. It offers as options the elements configured in the argument model.
+3. *Argument components (ACs) table*. It displays the argument components annotated by the current user, by means of three fields: AC id, AC text, and AC type.
+4. *Argument relations (ARs) table*. It displays the argument relations annotated by the current user, by means of five fields: AR id, AC id 1, AC id 2, AR type, and AR intent.
+5. *Argument textarea*. It displays the selected argument in a user-friendly way. Its text is shown when selecting an argument relation in the ARs table.
+
 ### Assisted Annotation View
 This view, available in the *Assisted Annotation* tab, allows the user to identify and annotate argumentative components and relations in an assisted way, i.e., it can be based on previous annotations of other users. This view is recommended for junior annotators or in cases where there is little time available for annotation.
 
 ![ARGAEL assisted annotation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-view-annotation-assisted.jpg)
 
+Next, we describe the graphical controls available in this view, following their numeration in previous figure:
+
+1. *Drop-down list of target (reference) annotators*. It contains the set of other annotators registered into the system. By choosing one of these annotators, the current user specifies that she is interested in accessing such annotator's work on a selected document.
+2. *Assisted annotation panel*. It displays the annotations made by the chosen target annotator on a selected document. These annotations serve as a guide for the current user to annotated the document by herself.
+3. *Main annotation panel*. It displays the selected document text along with the argument components annotated by the current user. It supports particular text highlighting of each component type.
+4. *Annotator toolbar*. It provides graphical controls for creating and deleting argument components and relations. It offers as options the elements configured in the argument model.
+5. *Argument components (ACs) table*. It displays the argument components annotated by the current user, by means of three fields: AC id, AC text, and AC type.
+6. *Argument relations (ARs) table*. It displays the argument relations annotated by the current user, by means of five fields: AR id, AC id 1, AC id 2, AR type, and AR intent.
+
 ### Annotation Evaluation View
-The evaluator view, available in the *Evaluation* tab, allows --in a simple, but straightforward way-- the manual assessment of the argument units (both components and relations) annotated by other users, based on the evaluation metrics configured in the *config.JSON* file.
+The evaluator view, available in the *Evaluation* tab, allows (in a simple, but straightforward way) the manual assessment of the argument units (both components and relations) annotated by other users, based on the evaluation metrics configured in the *config.JSON* file.
+
+One of the benefits of ARGAEL is the fact that it offers support for multiple annotators and evaluators for an input text document. Hence, each document can be annotated by several users and, at the end of the collaborative process, one can measure the average agreement between annotators or evaluators, and obtain consensual argument annotations.
 
 ![ARGAEL cross evaluation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-view-evaluation-colab.jpg)
+
+Next, we describe the graphical controls available in this view, following their numeration in previous figure:
+
+1. *Drop-down list of target (reference) annotators*. It contains the set of other annotators registered into the system. By choosing one of these annotators, the current user specifies that she is interested in accessing such annotator’s work on a selected document.
+2. *Annotation panel*. It displays the annotations made by the chosen target annotator on a selected document. %It facilitates the visualization of the context of the annotated arguments.
+3. *Argument components (ACs) table3. Its rows show the argument components annotated by the target user. For each row, the control allows the assessment of such components by selecting one of the values of a drop-down list in the *evaluation* column of the table.
+4. *Argument relations (ARs) table*. Its rows show the argument relations annotated by the target user. For each row, the control allows the assessment of such relations by selecting one of the values of a drop-down list in the *evaluation* column of the table.
+5. *Argument textarea*. It displays the selected argument in a user-friendly way. The text is shown when selecting an argument relation in the ARs table.
 
 ## Execution and Use
 The project has an executable package in the `\jar` folder, called `Argael.jar`. To run the tool from the Command Prompt (CMD), execute the following commands:
