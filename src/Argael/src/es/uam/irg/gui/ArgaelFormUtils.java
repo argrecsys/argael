@@ -354,11 +354,13 @@ class ArgaelFormUtils {
         if (tableModel != null && annotations != null) {
             for (int i = 0; i < annotations.size(); i++) {
                 String[] rowData = annotations.get(i);
-                int rowId = Integer.parseInt(rowData[0]);
 
-                tableModel.addRow(FunctionUtils.getSubArray(rowData, 0, nColumns));
-                if (evaluations != null && evaluations.containsKey(rowId)) {
-                    tableModel.setValueAt(evaluations.get(rowId), i, nColumns);
+                if (rowData.length > 0) {
+                    int rowId = Integer.parseInt(rowData[0]);
+                    tableModel.addRow(FunctionUtils.getSubArray(rowData, 0, nColumns));
+                    if (evaluations != null && evaluations.containsKey(rowId)) {
+                        tableModel.setValueAt(evaluations.get(rowId), i, nColumns);
+                    }
                 }
             }
         }
