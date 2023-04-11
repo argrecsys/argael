@@ -8,15 +8,15 @@
 | --- | --- | --- |
 | C1  | Current code version | v1.0 |
 | C2  | Permanent link to code/repository used for this code version | https://github.com/argrecsys/argael |
-| C3  | Permanent link to Reproducible Capsule | https://github.com/argrecsys/argael/tree/main/jar |
+| C3  | Permanent link to Reproducible Capsule | https://github.com/argrecsys/argael/tree/main/exec |
 | C4  | Legal Code License | Apache License 2.0 |
 | C5  | Code versioning system used | git |
 | C6  | Software code languages, tools, and services used | Java |
-| C7  | Compilation requirements, operating environments and dependencies | JDK 16 |
+| C7  | Compilation requirements, operating environments and dependencies | JDK 17 |
 
 ## All Dependencies
 The implemented solution depends on or make use of the following libraries:
-- JDK 16
+- JDK 17
 - JSON Java 20210307
 - OpenCSV 4.1
 - Snake YAML 1.9
@@ -92,7 +92,9 @@ Next, we describe the graphical controls available in this view, following their
 5. *Argument textarea*. It displays the selected argument in a user-friendly way. The text is shown when selecting an argument relation in the ARs table.
 
 ## Execution and Use
-The project has an executable package in the `\jar` folder, called `Argael.jar`. To run the tool from the Command Prompt (CMD), execute the following commands:
+To edit the ARGAEL source code and also, to run the executable .JAR file, you need a version greater than or equal to JDK 17. In the following <a href="https://www.oracle.com/java/technologies/downloads/"  target="_blank">link</a>, you can download the latest version of JDK for Windows, Linux and macOS, from Oracle's website.
+
+The executable file of ARGAEL is located in the folder `\exec`, called `Argael.jar`. Once JDK 17 is installed, you can run the Argael tool by double-clicking on the .jar file or from the Command Prompt (CMD) by executing the following commands:
 
 ``` console
   cd "argael\jar\"
@@ -100,6 +102,10 @@ The project has an executable package in the `\jar` folder, called `Argael.jar`.
 ```
 
 More information on how to run ARGAEL can be found <a href="https://github.com/argrecsys/argael/tree/main/jar" target="_blank">here</a>.
+
+**Final note**: Before attempting to run Argael, make sure that the environment variable that references the java.exe file exists. The following image is an example for the Windows operating system.
+
+![Java environment variable](https://raw.githubusercontent.com/argrecsys/argael/main/images/java-env-variable.jpg)
 
 ## Authors
 Created on Jun 29, 2022  
