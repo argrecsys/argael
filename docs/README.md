@@ -24,7 +24,7 @@ The implemented solution depends on or make use of the following libraries:
 ## Configuration
 The JSON configuration file allows configuring, in a simple and readable way, the argument model to be used during the annotation (*annotation_model* key), the metrics to be used during the evaluation (*evaluation_model* key), as well as some characteristics of the text documents to be used (*data* key).
 
-The input parameters (<a href="https://github.com/argrecsys/argael/blob/main/code/Argael/Resources/config/params.json">params.json</a> file) of the tool are:
+The input parameters (<a href="https://github.com/argrecsys/argael/blob/main/src/Argael/Resources/config/params.json">params.json</a> file) of the tool are:
 ```json
 {
     "annotation_model": {
@@ -94,16 +94,16 @@ Next, we describe the graphical controls available in this view, following their
 ## Execution and Use
 To edit the ARGAEL source code and also, to run the executable .JAR file, you need a version greater than or equal to JDK 17. In the following <a href="https://www.oracle.com/java/technologies/downloads/"  target="_blank">link</a>, you can download the latest version of JDK for Windows, Linux and macOS, from Oracle's website.
 
-The executable file of ARGAEL is located in the folder `\exec`, called `Argael.jar`. Once JDK 17 is installed, you can run the Argael tool by double-clicking on the .jar file or from the Command Prompt (CMD) by executing the following commands:
+The ARGAEL executable file with its dependencies (lib and resources folders) are located in the `\exec` folder. Specifically, the name of the executable file is `Argael.jar`. Once JDK 17 is installed, you can run the ARGAEL tool by double-clicking on the .jar file or from the Command Prompt (CMD) by executing the following commands:
 
 ``` console
   cd "argael\jar\"
   java -jar Argael.jar
 ```
 
-More information on how to run ARGAEL can be found <a href="https://github.com/argrecsys/argael/tree/main/jar" target="_blank">here</a>.
+More information on how to manually run ARGAEL can be found <a href="https://github.com/argrecsys/argael/tree/main/exec" target="_blank">here</a>.
 
-**Final note**: Before attempting to run Argael, make sure that the environment variable that references the java.exe file exists. The following image is an example for the Windows operating system.
+**Final note**: Before attempting to run ARGAEL, make sure that the environment variable that references the java.exe file exists. The following image is an example for the Windows operating system.
 
 ![Java environment variable](https://raw.githubusercontent.com/argrecsys/argael/main/images/java-env-variable.jpg)
 
