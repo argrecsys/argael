@@ -904,7 +904,7 @@ public class ArgaelForm extends javax.swing.JFrame {
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
                           Version: 1.0.0
-                          Date: 12/01/2022
+                          Date: 04/17/2023
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
                           Web site: https://argrecsys.github.io/argael/
