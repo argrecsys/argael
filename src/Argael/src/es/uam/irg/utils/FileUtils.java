@@ -26,6 +26,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -40,8 +41,6 @@ import org.yaml.snakeyaml.Yaml;
  * Class with a set of static utility functions.
  */
 public class FileUtils {
-
-    public static final String FILE_ENCODING = "UTF-8";
 
     /**
      *
@@ -107,7 +106,7 @@ public class FileUtils {
 
         if (file.exists()) {
             try {
-                InputStreamReader inputFile = new InputStreamReader(new FileInputStream(filepath), FILE_ENCODING);
+                InputStreamReader inputFile = new InputStreamReader(new FileInputStream(filepath), StandardCharsets.UTF_8);
                 try ( CSVReader reader = new CSVReader(inputFile)) {
                     if (!withHeader) {
                         reader.readNext();
@@ -213,7 +212,7 @@ public class FileUtils {
     public static boolean saveCsvFile(String filepath, List<String[]> data) {
         boolean result = false;
 
-        try ( CSVWriter writer = new CSVWriter(new FileWriter(filepath))) {
+        try ( CSVWriter writer = new CSVWriter(new FileWriter(filepath, StandardCharsets.UTF_8, false))) {
             writer.writeAll(data);
             result = true;
 
