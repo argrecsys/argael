@@ -904,7 +904,7 @@ public class ArgaelForm extends javax.swing.JFrame {
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
                           Version: 1.0.0
-                          Date: 04/17/2023
+                          Date: 04/20/2023
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
                           Web site: https://argrecsys.github.io/argael/
@@ -1474,6 +1474,10 @@ public class ArgaelForm extends javax.swing.JFrame {
         relIntents.add(0, "-");
         ArgaelFormUtils.setComboBoxModel(this.cmbIntent, relIntents);
         ArgaelFormUtils.setComboBoxModel(this.cmbIntent1, relIntents);
+        
+        // Change vertical size of combo-boxes when they are open
+        this.cmbCategory.setMaximumRowCount(this.cmbCategory.getModel().getSize());
+        this.cmbCategory1.setMaximumRowCount(this.cmbCategory1.getModel().getSize());
     }
 
     /**
