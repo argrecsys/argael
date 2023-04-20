@@ -94,18 +94,20 @@ Next, we describe the graphical controls available in this view, following their
 ## Execution and Use
 To edit the ARGAEL source code and also, to run the executable .JAR file, you need a version greater than or equal to JDK 17. In the following <a href="https://www.oracle.com/java/technologies/downloads/"  target="_blank">link</a>, you can download the latest version of JDK for Windows, Linux and macOS, from Oracle's website.
 
-The ARGAEL executable file with its dependencies (lib and resources folders) are located in the `\exec` folder. Specifically, the name of the executable file is `Argael.jar`. Once JDK 17 is installed, you can run the ARGAEL tool by double-clicking on the .jar file or from the Command Prompt (CMD) by executing the following commands:
+The ARGAEL executable file with its dependencies (i.e., lib and resources folders) are located in the `\exec` folder. Specifically, the name of the executable file is `Argael.jar`. Once JDK 17 is installed, you can run the ARGAEL tool by double-clicking on the .jar file or from the Command Prompt (CMD) by executing the following commands:
 
 ``` console
-  cd "argael\jar\"
+  cd "argael\exec\"
   java -jar Argael.jar
 ```
 
 More information on how to manually run ARGAEL can be found <a href="https://github.com/argrecsys/argael/tree/main/exec" target="_blank">here</a>.
 
-**Final note**: Before attempting to run ARGAEL, make sure that the environment variable that references the java.exe file exists. The following image is an example for the Windows operating system.
+Before attempting to run ARGAEL, make sure that the environment variable that references the java.exe file exists. The following image is an example for the Windows operating system.
 
 ![Java environment variable](https://raw.githubusercontent.com/argrecsys/argael/main/images/java-env-variable.jpg)
+
+**Final note**: The minimum screen resolution required to run ARGAEL correctly is 1680 x 1050.
 
 ## Authors
 Created on Jun 29, 2022  
