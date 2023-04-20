@@ -984,10 +984,11 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void btnDeleteARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteARActionPerformed
         // TODO add your handling code here:
         if (tblArgRelations.getRowCount() > 0) {
-            boolean result = ArgaelFormUtils.deleteArgumentRelation(tblArgRelations);
+            boolean result = ArgaelFormUtils.deleteArgumentRelation(tblArgRelations, tblArgComponents);
             if (result) {
                 saveViewData();
                 ArgaelFormUtils.updateCounterLabels(lblNumberRelations, tblArgRelations, "relations (ARs)");
+                acSelected.clear();
                 txtAnnotationPreview.setText("");
             }
         }
@@ -996,10 +997,11 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void btnDeleteAR1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteAR1ActionPerformed
         // TODO add your handling code here:
         if (tblArgRelations1.getRowCount() > 0) {
-            boolean result = ArgaelFormUtils.deleteArgumentRelation(tblArgRelations1);
+            boolean result = ArgaelFormUtils.deleteArgumentRelation(tblArgRelations1, tblArgComponents1);
             if (result) {
                 saveViewData();
                 ArgaelFormUtils.updateCounterLabels(lblNumberRelations2, tblArgRelations1, "relations (ARs)");
+                acSelected.clear();
             }
         }
     }//GEN-LAST:event_btnDeleteAR1ActionPerformed
