@@ -248,16 +248,18 @@ class ArgaelFormUtils {
     }
 
     /**
-     *
+     * 
      * @param tblArgRelations
-     * @return
+     * @param tblArgComponents
+     * @return 
      */
-    static boolean deleteArgumentRelation(JTable tblArgRelations) {
+    static boolean deleteArgumentRelation(JTable tblArgRelations, JTable tblArgComponents) {
         boolean result = false;
         int row = tblArgRelations.getSelectedRow();
 
         if (row >= 0) {
             ((DefaultTableModel) tblArgRelations.getModel()).removeRow(row);
+            tblArgComponents.clearSelection();
             result = true;
         }
 

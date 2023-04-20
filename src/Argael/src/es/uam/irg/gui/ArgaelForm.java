@@ -904,7 +904,7 @@ public class ArgaelForm extends javax.swing.JFrame {
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
                           Version: 1.0.0
-                          Date: 04/17/2023
+                          Date: 04/20/2023
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
                           Web site: https://argrecsys.github.io/argael/
@@ -984,10 +984,11 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void btnDeleteARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteARActionPerformed
         // TODO add your handling code here:
         if (tblArgRelations.getRowCount() > 0) {
-            boolean result = ArgaelFormUtils.deleteArgumentRelation(tblArgRelations);
+            boolean result = ArgaelFormUtils.deleteArgumentRelation(tblArgRelations, tblArgComponents);
             if (result) {
                 saveViewData();
                 ArgaelFormUtils.updateCounterLabels(lblNumberRelations, tblArgRelations, "relations (ARs)");
+                acSelected.clear();
                 txtAnnotationPreview.setText("");
             }
         }
@@ -996,10 +997,11 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void btnDeleteAR1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteAR1ActionPerformed
         // TODO add your handling code here:
         if (tblArgRelations1.getRowCount() > 0) {
-            boolean result = ArgaelFormUtils.deleteArgumentRelation(tblArgRelations1);
+            boolean result = ArgaelFormUtils.deleteArgumentRelation(tblArgRelations1, tblArgComponents1);
             if (result) {
                 saveViewData();
                 ArgaelFormUtils.updateCounterLabels(lblNumberRelations2, tblArgRelations1, "relations (ARs)");
+                acSelected.clear();
             }
         }
     }//GEN-LAST:event_btnDeleteAR1ActionPerformed
@@ -1474,6 +1476,10 @@ public class ArgaelForm extends javax.swing.JFrame {
         relIntents.add(0, "-");
         ArgaelFormUtils.setComboBoxModel(this.cmbIntent, relIntents);
         ArgaelFormUtils.setComboBoxModel(this.cmbIntent1, relIntents);
+        
+        // Change vertical size of combo-boxes when they are open
+        this.cmbCategory.setMaximumRowCount(this.cmbCategory.getModel().getSize());
+        this.cmbCategory1.setMaximumRowCount(this.cmbCategory1.getModel().getSize());
     }
 
     /**
