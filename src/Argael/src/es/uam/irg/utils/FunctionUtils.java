@@ -63,6 +63,23 @@ public class FunctionUtils {
     }
 
     /**
+     * Create a deep copy of the original list.
+     * 
+     * @param originalList
+     * @return 
+     */
+    public static List<String[]> cloneListOfStrings(List<String[]> originalList) {
+        List<String[]> deepCopy = new ArrayList<>();
+        
+        for (String[] originalArray : originalList) {
+            String[] newArray = Arrays.copyOf(originalArray, originalArray.length);
+            deepCopy.add(newArray);
+        }
+
+        return deepCopy;
+    }
+
+    /**
      *
      * @param color
      * @return

@@ -22,10 +22,13 @@ import es.uam.irg.data.DataManager;
 import es.uam.irg.data.SelectedItems;
 import es.uam.irg.io.IOManager;
 import es.uam.irg.utils.FileUtils;
+import es.uam.irg.utils.FunctionUtils;
 import es.uam.irg.utils.StringUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -904,7 +907,7 @@ public class ArgaelForm extends javax.swing.JFrame {
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
                           Version: 1.0.0
-                          Date: 04/20/2023
+                          Date: 05/15/2023
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
                           Web site: https://argrecsys.github.io/argael/
@@ -1231,8 +1234,12 @@ public class ArgaelForm extends javax.swing.JFrame {
     private String highlightReport(String report, List<String[]> acList, List<Integer> selectedACIds) {
         String hlText;
 
-        for (int i = 0; i < acList.size(); i++) {
-            String[] row = acList.get(i);
+        // Sort the list based on the length of the second column (index 1)
+        List<String[]> acListCopy = FunctionUtils.cloneListOfStrings(acList);
+        Collections.sort(acListCopy, new ColumnLengthComparator(1).reversed());
+
+        for (int i = 0; i < acListCopy.size(); i++) {
+            String[] row = acListCopy.get(i);
             int acId = Integer.parseInt(row[0]);
             String acText = row[1];
             String acType = row[2];
@@ -1476,7 +1483,7 @@ public class ArgaelForm extends javax.swing.JFrame {
         relIntents.add(0, "-");
         ArgaelFormUtils.setComboBoxModel(this.cmbIntent, relIntents);
         ArgaelFormUtils.setComboBoxModel(this.cmbIntent1, relIntents);
-        
+
         // Change vertical size of combo-boxes when they are open
         this.cmbCategory.setMaximumRowCount(this.cmbCategory.getModel().getSize());
         this.cmbCategory1.setMaximumRowCount(this.cmbCategory1.getModel().getSize());
@@ -1488,7 +1495,7 @@ public class ArgaelForm extends javax.swing.JFrame {
     private void setTablesLookAndFeel() {
         TableColumnModel colModel;
 
-        // Argument Quality Selector
+        // Argument quality selector
         List<String> qualityMetrics = argModel.getQualityMetrics();
         javax.swing.JComboBox cmbArgQuality = new javax.swing.JComboBox();
         ArgaelFormUtils.setComboBoxModel(cmbArgQuality, qualityMetrics);
@@ -1646,6 +1653,23 @@ public class ArgaelForm extends javax.swing.JFrame {
         if (!StringUtils.isEmpty(currEntity) && currTabIndex > -1) {
             System.out.println(" - Refresh data for view: " + tabbedPane.getTitleAt(currTabIndex) + ", and doc: " + currEntity);
             refreshViewData();
+        }
+    }
+
+    // We create a custom Comparator called ColumnLengthComparator that compares two elements based on the length of the specified column
+    class ColumnLengthComparator implements Comparator<String[]> {
+
+        private final int columnIndex;
+
+        public ColumnLengthComparator(int columnIndex) {
+            this.columnIndex = columnIndex;
+        }
+
+        @Override
+        public int compare(String[] o1, String[] o2) {
+            String column1 = o1[columnIndex];
+            String column2 = o2[columnIndex];
+            return Integer.compare(column1.length(), column2.length());
         }
     }
 
