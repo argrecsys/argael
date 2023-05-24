@@ -10,6 +10,12 @@ ARGAEL presents a number of novelties and advantages:
 - it supports both the generation and evaluation of annotations by multiple users.
 - it provides a visual interface designed to overcome particular needs and difficulties of argumentative annotation processes, such as the exploration of the (textual) context in which an argument is given.
 
+## Paper
+
+This work has been published in the journal SoftwareX, Volume 23, 2023, 101410, ISSN 2352-7110, https://doi.org/10.1016/j.softx.2023.101410. Click <a href="https://www.sciencedirect.com/science/article/pii/S2352711023001061" target="_blank">here</a> to access the latest version of the paper.
+
+**Keywords**: Text annotation; Annotation software; Annotation evaluation; Argument extraction; Argument mining
+
 ## System architecture
 
 ![ARGAEL simple annotation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-architecture.png)
