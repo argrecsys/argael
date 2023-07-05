@@ -82,72 +82,79 @@ public class ReportFormatter {
     }
 
     /**
+     * Applies a pretty format to the content of a report.
      *
      * @param content
      * @param format
      * @return
      */
     public String getPrettyReport(String content, String format) {
-        StringBuilder body = new StringBuilder();
-        format = format.toUpperCase();
-        long start, finish;
-        int timeElapsed;
-        String[] components = content.split("\n");
-        int nRows = components.length;
-        System.out.println(" - Number of sentences: " + nRows);
+        String result = "";
 
-        // 1. Create user report from JSONL source
-        start = System.nanoTime();
-        if (format.equals("JSONL")) {
-            String report = templates.get("PROPOSAL_INFO");
-            String comment = templates.get("COMMENT_INFO");
-            String tagType;
-            String textValue;
-            StringBuilder commentList = new StringBuilder();
+        if (!StringUtils.isEmpty(content)) {
+            String[] components = content.split("\n");
+            int nRows = components.length;
+            System.out.println(" - Number of sentences: " + nRows);
+            System.out.println(content);
 
-            // Create report
-            for (int i = 0; i < nRows; i++) {
-                JSONObject json = new JSONObject(components[i]);
-                textValue = json.getString("text");
+            StringBuilder body = new StringBuilder();
+            format = format.toUpperCase();
+            long start, finish;
+            int timeElapsed;
 
-                if (FunctionUtils.jsonContainsKey(json, "proposal_id")) {
-                    tagType = json.getString("info");
+            // 1. Create user report from JSONL source
+            start = System.nanoTime();
+            if (format.equals("JSONL")) {
+                String report = templates.get("PROPOSAL_INFO");
+                String comment = templates.get("COMMENT_INFO");
+                String tagType;
+                String textValue;
+                StringBuilder commentList = new StringBuilder();
 
-                    switch (tagType) {
-                        case "title":
-                            report = report.replace("$CODE$", json.getString("proposal_id"));
-                            report = report.replace("$TITLE$", textValue);
-                            break;
-                        case "summary":
-                            report = report.replace("$SUMMARY$", textValue);
-                            break;
-                        case "text":
-                            report = report.replace("$TEXT$", textValue);
-                            break;
-                        default:
-                            break;
-                    }
+                // Create report
+                for (int i = 0; i < nRows; i++) {
+                    JSONObject json = new JSONObject(components[i]);
+                    textValue = json.getString("text");
 
-                } else {
+                    if (FunctionUtils.jsonContainsKey(json, "proposal_id")) {
+                        tagType = json.getString("info");
 
-                    if (!StringUtils.isEmpty(textValue)) {
-                        commentList.append(comment.replace("$TEXT$", textValue));
+                        switch (tagType) {
+                            case "title":
+                                report = report.replace("$CODE$", json.getString("proposal_id"));
+                                report = report.replace("$TITLE$", textValue);
+                                break;
+                            case "summary":
+                                report = report.replace("$SUMMARY$", textValue);
+                                break;
+                            case "text":
+                                report = report.replace("$TEXT$", textValue);
+                                break;
+                            default:
+                                break;
+                        }
+
+                    } else {
+
+                        if (!StringUtils.isEmpty(textValue)) {
+                            commentList.append(comment.replace("$TEXT$", textValue));
+                        }
                     }
                 }
+
+                report = report.replace("$COMMENTS$", commentList.toString());
+                body.append(report);
+
+            } else if (format.equals("TXT")) {
+                body.append(content);
             }
+            finish = System.nanoTime();
+            timeElapsed = (int) ((finish - start) / 1000000);
 
-            report = report.replace("$COMMENTS$", commentList.toString());
-            body.append(report);
-
-        } else if (format.equals("TXT")) {
-            body.append(content);
+            // Update final report
+            result = getProposalsReport(body.toString(), nRows, timeElapsed);
+            System.out.println(" - The results report has been created");
         }
-        finish = System.nanoTime();
-        timeElapsed = (int) ((finish - start) / 1000000);
-
-        // Update final report
-        String result = getProposalsReport(body.toString(), nRows, timeElapsed);
-        System.out.println(" - The results report has been created");
 
         return result;
     }
