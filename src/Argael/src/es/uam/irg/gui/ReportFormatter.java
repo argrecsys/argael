@@ -86,16 +86,16 @@ public class ReportFormatter {
      *
      * @param content
      * @param format
+     * @param commentLevel
      * @return
      */
-    public String getPrettyReport(String content, String format) {
+    public String getPrettyReport(String content, String format, Map<Integer, Integer> commentLevel) {
         String result = "";
 
         if (!StringUtils.isEmpty(content)) {
             String[] components = content.split("\n");
             int nRows = components.length;
             System.out.println(" - Number of sentences: " + nRows);
-            System.out.println(content);
 
             StringBuilder body = new StringBuilder();
             format = format.toUpperCase();
@@ -112,8 +112,8 @@ public class ReportFormatter {
                 StringBuilder commentList = new StringBuilder();
 
                 // Create report
-                for (int i = 0; i < nRows; i++) {
-                    JSONObject json = new JSONObject(components[i]);
+                for (String component : components) {
+                    JSONObject json = new JSONObject(component);
                     textValue = json.getString("text");
 
                     if (FunctionUtils.jsonContainsKey(json, "proposal_id")) {
@@ -137,7 +137,14 @@ public class ReportFormatter {
                     } else {
 
                         if (!StringUtils.isEmpty(textValue)) {
-                            commentList.append(comment.replace("$TEXT$", textValue));
+                            int commentId = Integer.parseInt(json.getString("comment_id"));
+                            String leftPadding = "0";
+                            if (commentLevel.containsKey(commentId)) {
+                                leftPadding = Integer.toString(commentLevel.get(commentId) * 10);
+                            }
+                            String currComment = comment.replace("$TEXT$", textValue);
+                            currComment = currComment.replace("PADDING-LEFT", leftPadding);
+                            commentList.append(currComment);
                         }
                     }
                 }

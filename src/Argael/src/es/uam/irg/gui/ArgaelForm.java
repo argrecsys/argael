@@ -63,6 +63,7 @@ public class ArgaelForm extends javax.swing.JFrame {
     private final ArgumentModel argModel;
     private final DataManager dataModel;
     private final Map<String, String> files;
+    // private final Map<Integer, > hierarchy;
     private String fileExtension;
     private final ReportFormatter formatter;
     private String userName;
@@ -1187,8 +1188,9 @@ public class ArgaelForm extends javax.swing.JFrame {
                 content = files.get(fileName);
             } else {
                 String fileType = FileUtils.getFileExtension(filepath);
+                Map<Integer, Integer> hierarchy = new HashMap<>();
                 content = IOManager.readTextFile(filepath);
-                content = formatter.getPrettyReport(content, fileType);
+                content = formatter.getPrettyReport(content, fileType, hierarchy);
                 files.put(fileName, content);
             }
         }
