@@ -20,6 +20,7 @@ package es.uam.irg.gui;
 import es.uam.irg.data.ArgumentModel;
 import es.uam.irg.data.DataManager;
 import es.uam.irg.data.SelectedItems;
+import es.uam.irg.data.TreeNode;
 import es.uam.irg.io.IOManager;
 import es.uam.irg.utils.FileUtils;
 import es.uam.irg.utils.FunctionUtils;
@@ -63,6 +64,7 @@ public class ArgaelForm extends javax.swing.JFrame {
     private final ArgumentModel argModel;
     private final DataManager dataModel;
     private final Map<String, String> files;
+    private Map<String, Integer> commentDepthList;
     private String fileExtension;
     private final ReportFormatter formatter;
     private String userName;
@@ -906,8 +908,8 @@ public class ArgaelForm extends javax.swing.JFrame {
         String aboutMsg = """
                           ARGAEL: ARGument Annotation and Evaluation tooL
                           
-                          Version: 1.0.0
-                          Date: 05/15/2023
+                          Version: 1.1.0
+                          Date: 07/06/2023
                           Created by: Andr\u00e9s Segura-Tinoco & Iv\u00e1n Cantador 
                           License: Apache License 2.0
                           Web site: https://argrecsys.github.io/argael/
@@ -1188,7 +1190,7 @@ public class ArgaelForm extends javax.swing.JFrame {
             } else {
                 String fileType = FileUtils.getFileExtension(filepath);
                 content = IOManager.readTextFile(filepath);
-                content = formatter.getPrettyReport(content, fileType);
+                content = formatter.getPrettyReport(content, fileType, commentDepthList);
                 files.put(fileName, content);
             }
         }
@@ -1299,13 +1301,33 @@ public class ArgaelForm extends javax.swing.JFrame {
 
             lstDocs.removeAll();
             if (docList.size() > 0) {
+                // Read documents
                 DefaultListModel listModel = new DefaultListModel();
                 listModel.addAll(docList);
                 lstDocs.setModel(listModel);
+
+                // Read the comment tree with its node depth
+                TreeNode commentTree = FileUtils.readPostHierarchy(currDataFolder);
+                commentDepthList = new HashMap<>();
+                populateCommentDepth(commentTree);
             }
 
         } else {
             System.out.println(">> Error importing documents [" + currDataFolder + "]");
+        }
+    }
+
+    /**
+     *
+     * @param node
+     */
+    private void populateCommentDepth(TreeNode node) {
+        String nodeId = node.getValue();
+        int nodeDepth = node.getDepth();
+        commentDepthList.put(nodeId, nodeDepth);
+
+        for (TreeNode child : node.getChildren()) {
+            populateCommentDepth(child);
         }
     }
 
