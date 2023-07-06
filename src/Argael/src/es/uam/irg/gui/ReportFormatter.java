@@ -86,10 +86,10 @@ public class ReportFormatter {
      *
      * @param content
      * @param format
-     * @param commentLevel
+     * @param commentDepthList
      * @return
      */
-    public String getPrettyReport(String content, String format, Map<Integer, Integer> commentLevel) {
+    public String getPrettyReport(String content, String format, Map<String, Integer> commentDepthList) {
         String result = "";
 
         if (!StringUtils.isEmpty(content)) {
@@ -137,11 +137,12 @@ public class ReportFormatter {
                     } else {
 
                         if (!StringUtils.isEmpty(textValue)) {
-                            int commentId = Integer.parseInt(json.getString("comment_id"));
-                            String leftPadding = "0";
-                            if (commentLevel.containsKey(commentId)) {
-                                leftPadding = Integer.toString(commentLevel.get(commentId) * 10);
+                            String commentId = json.getString("comment_id");
+                            int depth = 0;
+                            if (commentDepthList.containsKey(commentId)) {
+                                depth = commentDepthList.get(commentId) - 1;
                             }
+                            String leftPadding = Integer.toString(depth * 10);
                             String currComment = comment.replace("$TEXT$", textValue);
                             currComment = currComment.replace("PADDING-LEFT", leftPadding);
                             commentList.append(currComment);

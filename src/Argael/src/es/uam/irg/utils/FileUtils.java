@@ -19,9 +19,12 @@ package es.uam.irg.utils;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
+import es.uam.irg.data.TreeNode;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,6 +34,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -175,6 +179,63 @@ public class FileUtils {
         }
 
         return fileNames;
+    }
+
+    /**
+     *
+     * @param directory
+     * @return
+     */
+    public static TreeNode readPostHierarchy(String directory) {
+        TreeNode root = null;
+        Map<String, TreeNode> nodes = new HashMap<>();
+        String filename = directory + "/comment_hierarchy.csv";
+        System.out.println(filename);
+        String header = "proposalId,commendId,parentId";
+        String line;
+        String csvSplitBy = ",";
+
+        try ( BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            while ((line = br.readLine()) != null) {
+                if (!line.equals(header)) {
+                    String[] data = line.split(csvSplitBy);
+
+                    String categoryId = data[0];
+                    String nodeId = data[1];
+                    String parentId = data[2];
+                    if (parentId.equals("-1")) {
+                        parentId = categoryId;
+                    }
+
+                    TreeNode parentNode = nodes.get(parentId);
+                    TreeNode childNode = nodes.get(nodeId);
+
+                    if (parentNode == null) {
+                        parentNode = new TreeNode(parentId, 0); // Root has depth 0
+                        nodes.put(parentId, parentNode);
+                    }
+
+                    if (childNode == null) {
+                        int parentDepth = parentNode.getDepth();
+                        childNode = new TreeNode(nodeId, parentDepth + 1);
+                        nodes.put(nodeId, childNode);
+                    }
+
+                    parentNode.addChild(childNode);
+
+                    if (root == null) {
+                        root = parentNode;
+                    }
+                }
+            }
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FileUtils.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FileUtils.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return root;
     }
 
     /**
