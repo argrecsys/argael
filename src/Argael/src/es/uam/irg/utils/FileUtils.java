@@ -189,50 +189,39 @@ public class FileUtils {
     public static TreeNode readPostHierarchy(String directory) {
         TreeNode root = null;
         Map<String, TreeNode> nodes = new HashMap<>();
+
+        // Read CSV data
         String filename = directory + "/comment_hierarchy.csv";
-        System.out.println(filename);
-        String header = "proposalId,commendId,parentId";
-        String line;
-        String csvSplitBy = ",";
+        List<String[]> csvData = readCsvFile(filename, false);
 
-        try ( BufferedReader br = new BufferedReader(new FileReader(filename))) {
-            while ((line = br.readLine()) != null) {
-                if (!line.equals(header)) {
-                    String[] data = line.split(csvSplitBy);
-
-                    String categoryId = data[0];
-                    String nodeId = data[1];
-                    String parentId = data[2];
-                    if (parentId.equals("-1")) {
-                        parentId = categoryId;
-                    }
-
-                    TreeNode parentNode = nodes.get(parentId);
-                    TreeNode childNode = nodes.get(nodeId);
-
-                    if (parentNode == null) {
-                        parentNode = new TreeNode(parentId, 0); // Root has depth 0
-                        nodes.put(parentId, parentNode);
-                    }
-
-                    if (childNode == null) {
-                        int parentDepth = parentNode.getDepth();
-                        childNode = new TreeNode(nodeId, parentDepth + 1);
-                        nodes.put(nodeId, childNode);
-                    }
-
-                    parentNode.addChild(childNode);
-
-                    if (root == null) {
-                        root = parentNode;
-                    }
-                }
+        // Create tree
+        for (String[] data : csvData) {
+            String categoryId = data[0];
+            String nodeId = data[1];
+            String parentId = data[2];
+            if (parentId.equals("-1")) {
+                parentId = categoryId;
             }
 
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(FileUtils.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(FileUtils.class.getName()).log(Level.SEVERE, null, ex);
+            TreeNode parentNode = nodes.get(parentId);
+            TreeNode childNode = nodes.get(nodeId);
+
+            if (parentNode == null) {
+                parentNode = new TreeNode(parentId, 0);
+                nodes.put(parentId, parentNode);
+            }
+
+            if (childNode == null) {
+                int parentDepth = parentNode.getDepth();
+                childNode = new TreeNode(nodeId, parentDepth + 1);
+                nodes.put(nodeId, childNode);
+            }
+
+            parentNode.addChild(childNode);
+
+            if (root == null) {
+                root = parentNode;
+            }
         }
 
         return root;
