@@ -107,7 +107,7 @@ Before attempting to run ARGAEL, make sure that the environment variable that re
 
 ![Java environment variable](https://raw.githubusercontent.com/argrecsys/argael/main/images/java-env-variable.jpg)
 
-**Final note**: The minimum screen resolution required to run ARGAEL correctly is 1680 x 1050.
+**Final note**: The minimum screen resolution required to run ARGAEL correctly is 1680 x 1050 (with 100% scaling).
 
 ## Authors
 Created on Jun 29, 2022  

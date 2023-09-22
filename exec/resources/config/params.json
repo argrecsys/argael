@@ -1,9 +1,9 @@
 {
     "data": {
         "fileExtension": "jsonl",
-        "language": "es",
-        "source": "C:/Dev Projects/argael/data/proposals",
-        "result": "C:/Dev Projects/argael/data/results"
+        "language": "en",
+        "source": "data/proposals",
+        "result": "data/results"
     },
     "annotation_model": {
         "components": ["major claim", "claim", "premise"],
