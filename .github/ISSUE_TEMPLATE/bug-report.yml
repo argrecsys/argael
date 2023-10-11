@@ -53,7 +53,7 @@ body:
     id: steps-to-reproduce
     attributes:
       label: Steps to reproduce
-      description: Please provide how we reproduce your reported bugs. If possible, it is highly recommended to provide the reproducible example codes. Note that pickle files will not be accepted due to possible [security issues](https://docs.python.org/3/library/pickle.html).
+      description: Please provide how we reproduce your reported bugs. If possible, it is highly recommended to provide the reproducible example codes.
       value: |
         1. Go to '...'
         2. Click on '....'
