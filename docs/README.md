@@ -6,7 +6,7 @@
 
 | Nr. | Code metadata description | Value |
 | --- | --- | --- |
-| C1  | Current code version | v1.0 |
+| C1  | Current code version | v1.1 |
 | C2  | Permanent link to code/repository used for this code version | https://github.com/argrecsys/argael |
 | C3  | Permanent link to Reproducible Capsule | https://github.com/argrecsys/argael/tree/main/exec |
 | C4  | Legal Code License | Apache License 2.0 |
