@@ -1,6 +1,6 @@
 # ARGAEL: ARGument Annotation and Evaluation tooL
 ![version](https://img.shields.io/badge/version-1.1-blue)
-![last-update](https://img.shields.io/badge/last_update-10/11/2023-orange)
+![last-update](https://img.shields.io/badge/last_update-10/12/2023-orange)
 ![license](https://img.shields.io/badge/license-Apache_2.0-brightgreen)
 
 **ARGAEL** is an open-source Java desktop application designed to provide flexibility and efficiency on the manual labeling and assessing of argumentative information at scale.
@@ -18,12 +18,12 @@ This work has been published in the journal SoftwareX, Volume 23, 2023, 101410, 
 
 ## System architecture
 
-![ARGAEL simple annotation view](https://raw.githubusercontent.com/argrecsys/argael/main/images/argael-architecture.png)
+![ARGAEL simple annotation view](images/argael-architecture.png)
 
 The tool is composed of several internal modules, receives a number of files as inputs, and allows the user to generate annotations and their evaluations as outputs.
 
 ## Documentation
-Please read the [contributing](docs/CONTRIBUTING.md) and [code of conduct](docs/CODE_OF_CONDUCT.md) documentation.
+Please read the [contributing](https://github.com/argrecsys/argael/blob/main/docs/CONTRIBUTING.md) and [code of conduct](https://github.com/argrecsys/argael/blob/main/docs/CODE_OF_CONDUCT.md) documentation.
 
 More documentation on ARGAEL can be found at the following <a href="https://argrecsys.github.io/argael/docs/">link</a>.
 
