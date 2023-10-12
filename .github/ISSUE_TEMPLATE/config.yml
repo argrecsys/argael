@@ -1,1 +1,6 @@
 blank_issues_enabled: false
+
+contact_links:
+  - name: "\U00002753Questions"
+    url: "https://github.com/argrecsys/argael/discussions"
+    about: "Use the GitHub Discussions to ask support questions."
