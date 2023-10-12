@@ -23,6 +23,8 @@ This work has been published in the journal SoftwareX, Volume 23, 2023, 101410, 
 The tool is composed of several internal modules, receives a number of files as inputs, and allows the user to generate annotations and their evaluations as outputs.
 
 ## Documentation
+Please read the [contributing](docs/CONTRIBUTING.md) and [code of conduct](docs/CODE_OF_CONDUCT.md) documentation.
+
 More documentation on ARGAEL can be found at the following <a href="https://argrecsys.github.io/argael/docs/">link</a>.
 
 ## Authors
