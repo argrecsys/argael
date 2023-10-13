@@ -32,4 +32,4 @@ Please include the following with each issue:
     > Example: Please upgrade the vehicle from 30mph to 60mph. Context: budget is $5000.
 
 # Thank You!
-Your contributions to inner source, large or small, make great projects like this possible. Thank you for taking the time to contribute!
+Your contributions to ARGAEL, large or small, make great projects like this possible. Thank you for taking the time to contribute!
