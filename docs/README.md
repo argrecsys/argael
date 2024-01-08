@@ -6,7 +6,7 @@
 
 | Nr. | Code metadata description | Value |
 | --- | --- | --- |
-| C1  | Current code version | v1.1 |
+| C1  | Current code version | v1.2 |
 | C2  | Permanent link to code/repository used for this code version | https://github.com/argrecsys/argael |
 | C3  | Permanent link to Reproducible Capsule | https://github.com/argrecsys/argael/tree/main/exec |
 | C4  | Legal Code License | Apache License 2.0 |
@@ -16,7 +16,7 @@
 
 ## All Dependencies
 The implemented solution depends on or make use of the following libraries:
-- JDK 17
+- <a href="https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html" target="_blank">JDK 17</a>
 - JSON Java 20210307
 - OpenCSV 4.1
 - Snake YAML 1.9

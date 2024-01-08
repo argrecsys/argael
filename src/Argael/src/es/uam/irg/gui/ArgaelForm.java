@@ -18,6 +18,7 @@
 package es.uam.irg.gui;
 
 import es.uam.irg.data.ArgumentModel;
+import es.uam.irg.data.ArgumentNode;
 import es.uam.irg.data.DataManager;
 import es.uam.irg.data.SelectedItems;
 import es.uam.irg.data.TreeNode;
@@ -173,6 +174,9 @@ public class ArgaelForm extends javax.swing.JFrame {
         lblNumberRelations2 = new javax.swing.JLabel();
         scrollPane13 = new javax.swing.JScrollPane();
         txtEvaluationPreview = new javax.swing.JEditorPane();
+        pnlArgumentTree = new javax.swing.JPanel();
+        scrollPane14 = new javax.swing.JScrollPane();
+        edtArgumentTree = new javax.swing.JEditorPane();
         menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         mItemImportJsonl = new javax.swing.JMenuItem();
@@ -779,6 +783,29 @@ public class ArgaelForm extends javax.swing.JFrame {
 
         tabbedPane.addTab("Evaluation", pnlEvaluation);
 
+        edtArgumentTree.setEditable(false);
+        edtArgumentTree.setContentType(HTML_CONTENT_TYPE);
+        scrollPane14.setViewportView(edtArgumentTree);
+
+        javax.swing.GroupLayout pnlArgumentTreeLayout = new javax.swing.GroupLayout(pnlArgumentTree);
+        pnlArgumentTree.setLayout(pnlArgumentTreeLayout);
+        pnlArgumentTreeLayout.setHorizontalGroup(
+            pnlArgumentTreeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlArgumentTreeLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(scrollPane14, javax.swing.GroupLayout.DEFAULT_SIZE, 1513, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        pnlArgumentTreeLayout.setVerticalGroup(
+            pnlArgumentTreeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlArgumentTreeLayout.createSequentialGroup()
+                .addContainerGap(43, Short.MAX_VALUE)
+                .addComponent(scrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 661, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        tabbedPane.addTab("Argument Tree", pnlArgumentTree);
+
         menuFile.setText("Docs");
 
         mItemImportJsonl.setText("Import from Jsonl");
@@ -1107,6 +1134,7 @@ public class ArgaelForm extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbIntent;
     private javax.swing.JComboBox<String> cmbIntent1;
     private javax.swing.JComboBox<String> cmbTargetAnnotator;
+    private javax.swing.JEditorPane edtArgumentTree;
     private javax.swing.JEditorPane edtAssistedAnnotation;
     private javax.swing.JEditorPane edtEvalAnnotation;
     private javax.swing.JEditorPane edtSimpleAnnotation;
@@ -1137,6 +1165,7 @@ public class ArgaelForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuHelp;
     private javax.swing.JPopupMenu.Separator menuHorzSeparator;
     private javax.swing.JMenu menuUser;
+    private javax.swing.JPanel pnlArgumentTree;
     private javax.swing.JPanel pnlAssistedAnnotation;
     private javax.swing.JPanel pnlEvaluation;
     private javax.swing.JPanel pnlIndependentAnnotation;
@@ -1145,6 +1174,7 @@ public class ArgaelForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane scrollPane11;
     private javax.swing.JScrollPane scrollPane12;
     private javax.swing.JScrollPane scrollPane13;
+    private javax.swing.JScrollPane scrollPane14;
     private javax.swing.JScrollPane scrollPane15;
     private javax.swing.JScrollPane scrollPane2;
     private javax.swing.JScrollPane scrollPane3;
@@ -1200,6 +1230,14 @@ public class ArgaelForm extends javax.swing.JFrame {
 
     /**
      *
+     * @return
+     */
+    private List<ArgumentNode> getLlmArguments() {
+        return dataModel.getLlmArguments(currEntity);
+    }
+
+    /**
+     *
      * @param user
      * @return
      */
@@ -1236,31 +1274,55 @@ public class ArgaelForm extends javax.swing.JFrame {
     private String highlightReport(String report, List<String[]> acList, List<Integer> selectedACIds) {
         String hlText;
 
-        // Sort the list based on the length of the second column (index 1)
-        List<String[]> acListCopy = FunctionUtils.cloneListOfStrings(acList);
-        Collections.sort(acListCopy, new ColumnLengthComparator(1).reversed());
+        if (acList != null && selectedACIds != null) {
+            // Sort the list based on the length of the second column (index 1)
+            List<String[]> acListCopy = FunctionUtils.cloneListOfStrings(acList);
+            Collections.sort(acListCopy, new ColumnLengthComparator(1).reversed());
 
-        for (int i = 0; i < acListCopy.size(); i++) {
-            String[] row = acListCopy.get(i);
-            int acId = Integer.parseInt(row[0]);
-            String acText = row[1];
-            String acType = row[2];
-            boolean acBold = selectedACIds.contains(acId);
+            for (int i = 0; i < acListCopy.size(); i++) {
+                String[] row = acListCopy.get(i);
+                int acId = Integer.parseInt(row[0]);
+                String acText = row[1];
+                String acType = row[2];
+                boolean acBold = selectedACIds.contains(acId);
 
-            switch (acType.toLowerCase()) {
-                case "major claim":
-                    hlText = formatter.highlightMajorClaim(acText, acBold);
-                    break;
-                case "claim":
-                    hlText = formatter.highlightClaim(acText, acBold);
-                    break;
-                default:
-                    hlText = formatter.highlightPremise(acText, acBold);
-                    break;
+                switch (acType.toLowerCase()) {
+                    case "major claim":
+                        hlText = formatter.highlightMajorClaim(acText, acBold);
+                        break;
+                    case "claim":
+                        hlText = formatter.highlightClaim(acText, acBold);
+                        break;
+                    default:
+                        hlText = formatter.highlightPremise(acText, acBold);
+                        break;
+                }
+                report = report.replace(acText, hlText);
             }
-            report = report.replace(acText, hlText);
         }
 
+        return report;
+    }
+
+    /**
+     *
+     * @param report
+     * @param arguments
+     * @return
+     */
+    private String highlightReport(String report, List<ArgumentNode> arguments) {
+        if (arguments != null) {
+
+            for (ArgumentNode argument : arguments) {
+                String argText = argument.getArgument();
+                String argType = argument.getArgumentType().toUpperCase();
+                String aspect = argument.getAspectName().toUpperCase();
+                String color = (argType.equals("SUPPORT") ? "#A3D9A5" : "#FF9999");
+                String template = "<span style='background-color:%s;'><span style='font-weight: bold;'>[%s]</span> %s</span>";
+                String hlText = String.format(template, color, aspect, argText);
+                report = report.replace(argText, hlText);
+            }
+        }
         return report;
     }
 
@@ -1300,7 +1362,7 @@ public class ArgaelForm extends javax.swing.JFrame {
             System.out.println(String.format(">> Directory: '%s' and number of uploaded docs: %d", currDataFolder, files.size()));
 
             lstDocs.removeAll();
-            if (docList.size() > 0) {
+            if (!docList.isEmpty()) {
                 // Read documents
                 DefaultListModel listModel = new DefaultListModel();
                 listModel.addAll(docList);
@@ -1338,34 +1400,43 @@ public class ArgaelForm extends javax.swing.JFrame {
         acSelected.clear();
 
         // Refresh data of simple annotation view
-        if (currTabIndex == 0) {
-            tblArgComponents.clearSelection();
-            tblArgRelations.clearSelection();
-            updatePanelData(edtSimpleAnnotation, tblArgComponents, tblArgRelations, userName, "", ArgaelFormUtils.getSelectedACIdsFromCompTable(tblArgComponents));
-            ArgaelFormUtils.updateCounterLabels(lblNumberArguments, tblArgComponents, "components (ACs)");
-            ArgaelFormUtils.updateCounterLabels(lblNumberRelations, tblArgRelations, "relations (ARs)");
-            this.txtAnnotationPreview.setText("");
+        switch (currTabIndex) {
+            case 0 -> {
+                tblArgComponents.clearSelection();
+                tblArgRelations.clearSelection();
+                updatePanelData(edtSimpleAnnotation, tblArgComponents, tblArgRelations, userName, "", ArgaelFormUtils.getSelectedACIdsFromCompTable(tblArgComponents));
+                ArgaelFormUtils.updateCounterLabels(lblNumberArguments, tblArgComponents, "components (ACs)");
+                ArgaelFormUtils.updateCounterLabels(lblNumberRelations, tblArgRelations, "relations (ARs)");
+                this.txtAnnotationPreview.setText("");
+            }
+            case 1 -> {
+                tblArgRelations1.clearSelection();
+                tblArgComponents1.clearSelection();
+                tblArgRelations2.clearSelection();
+                String targetUser = cmbTargetAnnotator.getSelectedItem().toString();
+                updatePanelData(edtTargetAnnotation, null, tblArgRelations2, targetUser);
+                updatePanelData(edtAssistedAnnotation, tblArgComponents1, tblArgRelations1, userName, "", ArgaelFormUtils.getSelectedACIdsFromCompTable(tblArgComponents1));
+                ArgaelFormUtils.updateCounterLabels(lblNumberArguments1, tblArgComponents1, "components (ACs)");
+                ArgaelFormUtils.updateCounterLabels(lblNumberRelations1, tblArgRelations1, "relations (ARs)");
+            }
+            case 2 -> {
+                tblEvalRelations.clearSelection();
+                tblEvalComponents.clearSelection();
+                String targetUser = cmbAnnotator.getSelectedItem().toString();
+                updatePanelData(edtEvalAnnotation, tblEvalComponents, tblEvalRelations, targetUser, userName, ArgaelFormUtils.getSelectedACIdsFromCompTable(tblEvalComponents));
+                ArgaelFormUtils.updateCounterLabels(lblNumberArguments2, tblEvalComponents, "components (ACs)");
+                ArgaelFormUtils.updateCounterLabels(lblNumberRelations2, tblEvalRelations, "relations (ARs)");
+                this.txtEvaluationPreview.setText("");
+            }
+            case 3 -> {
+                List<ArgumentNode> arguments = getLlmArguments();
+                String rawReport = getCurrentReport();
+                String report = highlightReport(rawReport, arguments);
+                ArgaelFormUtils.updateEditorContent(edtArgumentTree, report);
 
-        } else if (currTabIndex == 1) {
-
-            tblArgRelations1.clearSelection();
-            tblArgComponents1.clearSelection();
-            tblArgRelations2.clearSelection();
-            String targetUser = cmbTargetAnnotator.getSelectedItem().toString();
-            updatePanelData(edtTargetAnnotation, null, tblArgRelations2, targetUser);
-            updatePanelData(edtAssistedAnnotation, tblArgComponents1, tblArgRelations1, userName, "", ArgaelFormUtils.getSelectedACIdsFromCompTable(tblArgComponents1));
-            ArgaelFormUtils.updateCounterLabels(lblNumberArguments1, tblArgComponents1, "components (ACs)");
-            ArgaelFormUtils.updateCounterLabels(lblNumberRelations1, tblArgRelations1, "relations (ARs)");
-
-        } else if (currTabIndex == 2) {
-
-            tblEvalRelations.clearSelection();
-            tblEvalComponents.clearSelection();
-            String targetUser = cmbAnnotator.getSelectedItem().toString();
-            updatePanelData(edtEvalAnnotation, tblEvalComponents, tblEvalRelations, targetUser, userName, ArgaelFormUtils.getSelectedACIdsFromCompTable(tblEvalComponents));
-            ArgaelFormUtils.updateCounterLabels(lblNumberArguments2, tblEvalComponents, "components (ACs)");
-            ArgaelFormUtils.updateCounterLabels(lblNumberRelations2, tblEvalRelations, "relations (ARs)");
-            this.txtEvaluationPreview.setText("");
+            }
+            default -> {
+            }
         }
     }
 
@@ -1652,19 +1723,23 @@ public class ArgaelForm extends javax.swing.JFrame {
         }
 
         // Update arguments components table
-        try {
-            DefaultTableModel acModel = ArgaelFormUtils.getTableModel(acTable);
-            ArgaelFormUtils.loadArgTableData(acModel, acData, acEval, 3);
-        } catch (Exception ex) {
-            Logger.getLogger(ArgaelForm.class.getName()).log(Level.SEVERE, null, ex);
+        if (acTable != null) {
+            try {
+                DefaultTableModel acModel = ArgaelFormUtils.getTableModel(acTable);
+                ArgaelFormUtils.loadArgTableData(acModel, acData, acEval, 3);
+            } catch (Exception ex) {
+                Logger.getLogger(ArgaelForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         // Update arguments relations table
-        try {
-            DefaultTableModel arModel = ArgaelFormUtils.getTableModel(arTable);
-            ArgaelFormUtils.loadArgTableData(arModel, arData, arEval, 5);
-        } catch (Exception ex) {
-            Logger.getLogger(ArgaelForm.class.getName()).log(Level.SEVERE, null, ex);
+        if (arTable != null) {
+            try {
+                DefaultTableModel arModel = ArgaelFormUtils.getTableModel(arTable);
+                ArgaelFormUtils.loadArgTableData(arModel, arData, arEval, 5);
+            } catch (Exception ex) {
+                Logger.getLogger(ArgaelForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

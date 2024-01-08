@@ -17,6 +17,7 @@
  */
 package es.uam.irg.io;
 
+import es.uam.irg.data.ArgumentNode;
 import es.uam.irg.utils.FileUtils;
 import es.uam.irg.utils.StringUtils;
 import java.io.File;
@@ -78,6 +79,27 @@ public class IOManager {
         }
 
         return evaluations;
+    }
+
+    /**
+     *
+     * @param filePath
+     * @return
+     */
+    public static Map<String, List<ArgumentNode>> readLlmArguments(String filePath) {
+        Map<String, List<ArgumentNode>> argumentList = new HashMap<>();
+        List<String[]> data = FileUtils.readCsvFile(filePath, false);
+
+        for (String[] row : data) {
+            ArgumentNode node = new ArgumentNode(row);
+            String proposalId = node.getProposalIdString();
+            if (!argumentList.containsKey(proposalId)) {
+                argumentList.put(proposalId, new ArrayList<>());
+            }
+            argumentList.get(proposalId).add(node);
+        }
+
+        return argumentList;
     }
 
     /**

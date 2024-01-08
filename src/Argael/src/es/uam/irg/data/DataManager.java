@@ -18,6 +18,7 @@
 package es.uam.irg.data;
 
 import es.uam.irg.io.IOManager;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +54,17 @@ public class DataManager {
      */
     public DataManager(String server, String instance, String user, String pwd) {
         this.type = DataType.DATABASE;
+    }
+
+    public List<ArgumentNode> getLlmArguments(String currEntity) {
+        String filePath = directory + "/../arguments/arguments.csv";
+        Map<String, List<ArgumentNode>> argumentList = IOManager.readLlmArguments(filePath);
+        List<ArgumentNode> arguments = new ArrayList<>();
+        if (argumentList.containsKey(currEntity)) {
+            arguments = argumentList.get(currEntity);
+        }
+
+        return arguments;
     }
 
     /**
