@@ -18,6 +18,7 @@
 package es.uam.irg.gui;
 
 import es.uam.irg.data.ArgumentModel;
+import es.uam.irg.data.ArgumentNode;
 import es.uam.irg.data.DataManager;
 import es.uam.irg.data.SelectedItems;
 import es.uam.irg.data.TreeNode;
@@ -1229,6 +1230,14 @@ public class ArgaelForm extends javax.swing.JFrame {
 
     /**
      *
+     * @return
+     */
+    private List<ArgumentNode> getLlmArguments() {
+        return dataModel.getLlmArguments(currEntity);
+    }
+
+    /**
+     *
      * @param user
      * @return
      */
@@ -1297,6 +1306,28 @@ public class ArgaelForm extends javax.swing.JFrame {
 
     /**
      *
+     * @param report
+     * @param arguments
+     * @return
+     */
+    private String highlightReport(String report, List<ArgumentNode> arguments) {
+        if (arguments != null) {
+
+            for (ArgumentNode argument : arguments) {
+                String argText = argument.getArgument();
+                String argType = argument.getArgumentType().toUpperCase();
+                String aspect = argument.getAspectName();
+                String color = (argType.equals("SUPPORT") ? "#5CA066" : "#CC6666");
+                String template = "<span><span style='font-weight: bold;'>[<span style='color:%s'>%s</span> - <span>%s</span>]</span> \"%s\"</span>";
+                String hlText = String.format(template, color, argType, aspect, argText);
+                report = report.replace(argText, hlText);
+            }
+        }
+        return report;
+    }
+
+    /**
+     *
      */
     private void importDocsFromDirectory() {
         importDocsFromDirectory("");
@@ -1331,7 +1362,7 @@ public class ArgaelForm extends javax.swing.JFrame {
             System.out.println(String.format(">> Directory: '%s' and number of uploaded docs: %d", currDataFolder, files.size()));
 
             lstDocs.removeAll();
-            if (docList.size() > 0) {
+            if (!docList.isEmpty()) {
                 // Read documents
                 DefaultListModel listModel = new DefaultListModel();
                 listModel.addAll(docList);
@@ -1398,7 +1429,11 @@ public class ArgaelForm extends javax.swing.JFrame {
                 this.txtEvaluationPreview.setText("");
             }
             case 3 -> {
-                updatePanelData(edtArgumentTree, null, null, userName, "", null);
+                List<ArgumentNode> arguments = getLlmArguments();
+                String rawReport = getCurrentReport();
+                String report = highlightReport(rawReport, arguments);
+                ArgaelFormUtils.updateEditorContent(edtArgumentTree, report);
+
             }
             default -> {
             }
