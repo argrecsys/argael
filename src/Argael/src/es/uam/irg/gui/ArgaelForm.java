@@ -1316,10 +1316,10 @@ public class ArgaelForm extends javax.swing.JFrame {
             for (ArgumentNode argument : arguments) {
                 String argText = argument.getArgument();
                 String argType = argument.getArgumentType().toUpperCase();
-                String aspect = argument.getAspectName();
-                String color = (argType.equals("SUPPORT") ? "#5CA066" : "#CC6666");
-                String template = "<span><span style='font-weight: bold;'>[<span style='color:%s'>%s</span> - <span>%s</span>]</span> \"%s\"</span>";
-                String hlText = String.format(template, color, argType, aspect, argText);
+                String aspect = argument.getAspectName().toUpperCase();
+                String color = (argType.equals("SUPPORT") ? "#A3D9A5" : "#FF9999");
+                String template = "<span style='background-color:%s;'><span style='font-weight: bold;'>[%s]</span> %s</span>";
+                String hlText = String.format(template, color, aspect, argText);
                 report = report.replace(argText, hlText);
             }
         }
